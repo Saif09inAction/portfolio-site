@@ -1,39 +1,158 @@
 // API Service - Replaces Firebase Service
-const API_BASE_URL = 'http://localhost:3001/api';
+// Use localStorage when API is not available (production/deployed sites)
+const isLocalhost = typeof window !== 'undefined' && (
+    window.location.hostname === 'localhost' || 
+    window.location.hostname === '127.0.0.1' ||
+    window.location.hostname.startsWith('192.168.') ||
+    window.location.hostname.startsWith('10.0.')
+);
 
-// Helper function for API calls
+const API_BASE_URL = isLocalhost ? 'http://localhost:3001/api' : null;
+
+// Storage keys for localStorage fallback
+const STORAGE_RATINGS = 'portfolio_ratings';
+const STORAGE_COMMENTS = 'portfolio_comments';
+
+// Helper function for API calls with localStorage fallback
 async function apiCall(endpoint, options = {}) {
-    const headers = {
-        'Content-Type': 'application/json',
-        ...options.headers
-    };
-    
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-        ...options,
-        headers
-    });
-    
-    if (!response.ok) {
-        const error = await response.json().catch(() => ({ error: 'Request failed' }));
-        throw new Error(error.error || 'Request failed');
+    // If API is not available (not localhost), use localStorage immediately
+    if (!API_BASE_URL) {
+        return handleLocalStorageFallback(endpoint, options);
     }
     
-    return response.json();
+    // Only try to fetch if we're on localhost and API is available
+    try {
+        const headers = {
+            'Content-Type': 'application/json',
+            ...options.headers
+        };
+        
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+            ...options,
+            headers
+        });
+        
+        if (!response.ok) {
+            const error = await response.json().catch(() => ({ error: 'Request failed' }));
+            throw new Error(error.error || 'Request failed');
+        }
+        
+        return response.json();
+    } catch (error) {
+        // Fallback to localStorage if API call fails (e.g., server not running, network error, CORS)
+        console.warn('API call failed, using localStorage fallback:', error.message);
+        return handleLocalStorageFallback(endpoint, options);
+    }
+}
+
+// Handle localStorage fallback for API calls
+function handleLocalStorageFallback(endpoint, options = {}) {
+    // Parse endpoint to determine action
+    if (endpoint.includes('/ratings')) {
+        // Parse query parameters from endpoint string
+        const queryMatch = endpoint.match(/\?([^#]+)/);
+        const params = {};
+        if (queryMatch) {
+            queryMatch[1].split('&').forEach(param => {
+                const [key, value] = param.split('=');
+                params[key] = decodeURIComponent(value);
+            });
+        }
+        
+        const itemId = params.itemId;
+        const itemType = params.itemType;
+        const key = `${itemType}_${itemId}`;
+        
+        if (options.method === 'GET' || !options.method) {
+            // Get ratings from localStorage
+            const storage = JSON.parse(localStorage.getItem(STORAGE_RATINGS) || '{}');
+            return Promise.resolve(storage[key] || []);
+        } else if (options.method === 'POST') {
+            // Save rating to localStorage
+            const storage = JSON.parse(localStorage.getItem(STORAGE_RATINGS) || '{}');
+            const data = JSON.parse(options.body || '{}');
+            if (!storage[key]) storage[key] = [];
+            const newRating = { ...data, _id: Date.now().toString(), createdAt: new Date().toISOString() };
+            storage[key].push(newRating);
+            localStorage.setItem(STORAGE_RATINGS, JSON.stringify(storage));
+            return Promise.resolve(newRating);
+        }
+    } else if (endpoint.includes('/comments')) {
+        // Parse query parameters from endpoint string
+        const queryMatch = endpoint.match(/\?([^#]+)/);
+        const params = {};
+        if (queryMatch) {
+            queryMatch[1].split('&').forEach(param => {
+                const [key, value] = param.split('=');
+                params[key] = decodeURIComponent(value);
+            });
+        }
+        
+        const itemId = params.itemId;
+        const itemType = params.itemType;
+        const key = `${itemType}_${itemId}`;
+        
+        if (options.method === 'GET' || !options.method) {
+            // Get comments from localStorage
+            const storage = JSON.parse(localStorage.getItem(STORAGE_COMMENTS) || '{}');
+            return Promise.resolve(storage[key] || []);
+        } else if (options.method === 'POST') {
+            // Save comment to localStorage
+            const storage = JSON.parse(localStorage.getItem(STORAGE_COMMENTS) || '{}');
+            const data = JSON.parse(options.body || '{}');
+            if (!storage[key]) storage[key] = [];
+            const newComment = { ...data, _id: Date.now().toString(), createdAt: new Date().toISOString() };
+            storage[key].push(newComment);
+            localStorage.setItem(STORAGE_COMMENTS, JSON.stringify(storage));
+            return Promise.resolve(newComment);
+        } else if (options.method === 'DELETE') {
+            // Delete comment from localStorage
+            const storage = JSON.parse(localStorage.getItem(STORAGE_COMMENTS) || '{}');
+            const commentId = endpoint.split('/').pop();
+            if (storage[key]) {
+                storage[key] = storage[key].filter(c => c._id !== commentId);
+                localStorage.setItem(STORAGE_COMMENTS, JSON.stringify(storage));
+            }
+            return Promise.resolve({ success: true });
+        }
+    } else if (endpoint.includes('/feedback')) {
+        // Store feedback in localStorage
+        const data = JSON.parse(options.body || '{}');
+        const feedbacks = JSON.parse(localStorage.getItem('portfolio_feedback') || '[]');
+        feedbacks.push({ ...data, _id: Date.now().toString(), createdAt: new Date().toISOString() });
+        localStorage.setItem('portfolio_feedback', JSON.stringify(feedbacks));
+        return Promise.resolve({ success: true, message: 'Feedback saved locally' });
+    }
+    
+    // Default fallback - return empty array for GET requests
+    if (options.method === 'GET' || !options.method) {
+        return Promise.resolve([]);
+    }
+    return Promise.resolve({ success: true });
 }
 
 // Helper for file uploads
 async function uploadFiles(endpoint, formData) {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-        method: 'POST',
-        body: formData
-    });
-    
-    if (!response.ok) {
-        const error = await response.json().catch(() => ({ error: 'Upload failed' }));
-        throw new Error(error.error || 'Upload failed');
+    if (!API_BASE_URL) {
+        // File uploads not supported with localStorage fallback
+        throw new Error('File uploads are not available. API server required.');
     }
     
-    return response.json();
+    try {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            const error = await response.json().catch(() => ({ error: 'Upload failed' }));
+            throw new Error(error.error || 'Upload failed');
+        }
+        
+        return response.json();
+    } catch (error) {
+        throw new Error('Upload failed: ' + error.message);
+    }
 }
 
 // ============================================
@@ -71,6 +190,10 @@ export async function addProject(projectData, files = {}) {
 }
 
 export async function updateProject(projectId, projectData, files = {}) {
+    if (!API_BASE_URL) {
+        throw new Error('Project updates are not available. API server required.');
+    }
+    
     const formData = new FormData();
     
     Object.keys(projectData).forEach(key => {
@@ -89,17 +212,21 @@ export async function updateProject(projectId, projectData, files = {}) {
         });
     }
     
-    const response = await fetch(`${API_BASE_URL}/projects/${projectId}`, {
-        method: 'PUT',
-        body: formData
-    });
-    
-    if (!response.ok) {
-        const error = await response.json().catch(() => ({ error: 'Update failed' }));
-        throw new Error(error.error || 'Update failed');
+    try {
+        const response = await fetch(`${API_BASE_URL}/projects/${projectId}`, {
+            method: 'PUT',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            const error = await response.json().catch(() => ({ error: 'Update failed' }));
+            throw new Error(error.error || 'Update failed');
+        }
+        
+        return response.json();
+    } catch (error) {
+        throw new Error('Update failed: ' + error.message);
     }
-    
-    return response.json();
 }
 
 export async function deleteProject(projectId) {
