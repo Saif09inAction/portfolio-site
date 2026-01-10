@@ -3354,8 +3354,8 @@ body {
         opacity: 1 !important;
     }
 
-    /* Ensure all nav menu items are visible in dropdown */
-    .nav-menu li {
+    /* Ensure ALL navigation menu items are visible when menu is active */
+    .nav-menu.active li {
         display: block !important;
         width: 100% !important;
         margin: 0 !important;
@@ -3363,14 +3363,12 @@ body {
         list-style: none !important;
         visibility: visible !important;
         opacity: 1 !important;
+        animation: fadeInSlide 0.3s ease forwards;
     }
 
-    /* Ensure menu is visible when active */
-    .nav-menu.active li {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        animation: fadeInSlide 0.3s ease forwards;
+    /* Hide menu items when menu is not active */
+    .nav-menu:not(.active) li {
+        display: none !important;
     }
 
     .nav-menu.active li:nth-child(1) { animation-delay: 0.05s; }
