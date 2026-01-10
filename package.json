@@ -8,7 +8,9 @@
     "dev:8000": "npx serve . -p 8000",
     "server": "node server.js",
     "dev:server": "nodemon server.js",
-    "build": "echo 'No build step required for static site'"
+    "build": "echo 'Static site - no build required'",
+    "vercel-build": "echo 'Vercel build - no build required'",
+    "start": "npx serve . -p 3000"
   },
   "dependencies": {
     "express": "^4.18.2",
