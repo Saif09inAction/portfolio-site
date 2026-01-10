@@ -177,10 +177,20 @@ if (mobileMenuToggle && navMenu) {
         navMenu.classList.toggle('active');
         mobileMenuToggle.classList.toggle('active');
         
-        // Debug: Log menu state
+        // Debug: Log menu state and ensure menu is visible
         console.log('Menu toggled. Active:', !isActive);
         console.log('Menu element:', navMenu);
-        console.log('Menu items:', navMenu.querySelectorAll('li'));
+        console.log('Menu classes:', navMenu.className);
+        console.log('Menu items count:', navMenu.querySelectorAll('li').length);
+        console.log('Menu items:', Array.from(navMenu.querySelectorAll('li')).map(li => li.textContent.trim()));
+        
+        // Force menu visibility
+        if (!isActive) {
+            navMenu.style.display = 'flex';
+            navMenu.style.visibility = 'visible';
+            navMenu.style.opacity = '1';
+            navMenu.style.left = '0';
+        }
     });
 
     // Close mobile menu when clicking outside
