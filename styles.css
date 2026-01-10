@@ -2614,8 +2614,21 @@ body {
 /* ============================================
    Responsive Design
    ============================================ */
-/* Tablet and below (max-width: 768px) */
+/* Tablet and below (max-width: 768px) - Mobile fixes */
 @media (max-width: 768px) {
+    /* Prevent horizontal overflow on tablet/mobile */
+    html {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+    }
+
     :root {
         --font-size-4xl: 36px;
         --font-size-3xl: 28px;
@@ -2628,10 +2641,19 @@ body {
 
     .container {
         padding: 0 var(--spacing-sm);
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        margin: 0 auto;
     }
 
     .nav-container {
         padding: var(--spacing-sm);
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     .nav-menu {
@@ -2641,12 +2663,15 @@ body {
         flex-direction: column;
         background: var(--nav-bg);
         width: 100%;
+        max-width: 100%;
         text-align: center;
         transition: left var(--transition-base);
         padding: var(--spacing-md) 0;
         border-top: 1px solid var(--nav-border);
         gap: var(--spacing-sm);
         z-index: 999;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     .nav-menu.active {
@@ -2655,6 +2680,7 @@ body {
 
     .mobile-menu-toggle {
         display: flex;
+        box-sizing: border-box;
     }
 
     .mobile-menu-toggle.active span:nth-child(1) {
@@ -2673,11 +2699,20 @@ body {
         padding: var(--spacing-lg) var(--spacing-sm);
         padding-top: calc(70px + var(--spacing-md));
         text-align: center;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        margin: 0 auto;
     }
 
     .hero-title {
         font-size: var(--font-size-3xl);
         margin-bottom: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .hero-cta {
@@ -2685,28 +2720,65 @@ body {
         align-items: center;
         gap: var(--spacing-sm);
         width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .cta-btn {
         width: 100%;
         max-width: 280px;
         padding: var(--spacing-sm) var(--spacing-md);
+        box-sizing: border-box;
+        margin: 0 auto;
     }
 
     .section {
         padding: var(--spacing-lg) var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        margin: 0 auto;
     }
 
     .section-title {
         font-size: var(--font-size-2xl);
         margin-bottom: var(--spacing-md);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        word-wrap: break-word;
     }
 
     .projects-grid:not(.carousel-wrapper),
     .achievements-grid:not(.carousel-wrapper),
     .ideas-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
         gap: var(--spacing-md);
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+    }
+    
+    /* Ensure overview and about sections are constrained */
+    .overview {
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 auto !important;
+        padding: var(--spacing-sm) !important;
+    }
+    
+    .about-content {
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
     }
     
     .carousel-arrow {
@@ -2727,42 +2799,58 @@ body {
     
     .achievements-grid.carousel-wrapper .achievement-card,
     .projects-grid.carousel-wrapper .project-card {
-        min-width: calc((100% - var(--spacing-sm)) / 2); /* Show 2 cards on tablet */
+        min-width: calc((100% - var(--spacing-sm)) / 2);
         max-width: calc((100% - var(--spacing-sm)) / 2);
         flex: 0 0 calc((100% - var(--spacing-sm)) / 2);
+        box-sizing: border-box;
+        width: calc((100% - var(--spacing-sm)) / 2);
     }
 
     .skills-container.carousel-wrapper .skill-category {
         min-width: calc((100% - var(--spacing-sm)) / 2);
         max-width: calc((100% - var(--spacing-sm)) / 2);
         flex: 0 0 calc((100% - var(--spacing-sm)) / 2);
+        box-sizing: border-box;
+        width: calc((100% - var(--spacing-sm)) / 2);
     }
     
-    /* Editor section tablet styles */
+    /* Editor section tablet styles - properly constrained */
     #editor .achievements-grid.carousel-wrapper,
     #editor .projects-grid.carousel-wrapper,
     #editor .skills-container.carousel-wrapper {
         gap: 0.5rem;
         justify-content: center;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
     
     #editor .achievements-grid.carousel-wrapper .achievement-card,
     #editor .projects-grid.carousel-wrapper .project-card,
     #editor .skills-container.carousel-wrapper .skill-category {
-        min-width: calc((100% - 0.5rem) / 2); /* Show 2 cards on tablet */
+        min-width: calc((100% - 0.5rem) / 2);
         max-width: calc((100% - 0.5rem) / 2);
         flex: 0 0 calc((100% - 0.5rem) / 2);
+        box-sizing: border-box;
+        width: calc((100% - 0.5rem) / 2);
     }
 
     .project-card,
     .achievement-card {
         min-height: auto;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .project-content,
     .achievement-content {
         min-height: auto;
         padding: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .project-title,
@@ -2772,6 +2860,10 @@ body {
         min-height: auto;
         max-height: none;
         margin-bottom: var(--spacing-xs);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .project-desc-short,
@@ -2782,6 +2874,10 @@ body {
         max-height: none;
         line-height: 1.5;
         margin-bottom: var(--spacing-xs);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .project-rating,
@@ -2789,12 +2885,18 @@ body {
         height: auto;
         min-height: auto;
         margin-bottom: var(--spacing-xs);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .project-bottom-section,
     .achievement-bottom-section {
         margin-top: var(--spacing-xs);
         padding-top: var(--spacing-xs);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .project-link,
@@ -2803,6 +2905,10 @@ body {
         min-height: 32px;
         padding: var(--spacing-xs) var(--spacing-sm);
         font-size: var(--font-size-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 0;
     }
 
     /* Skills grid - 2 columns on mobile */
@@ -2810,27 +2916,46 @@ body {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
         gap: var(--spacing-sm) !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
     }
 
     .skills-container:not(.carousel-wrapper) {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: var(--spacing-sm) !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
     }
 
     .skill-category {
-        width: 100%;
-        margin: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
         padding: var(--spacing-sm) !important;
+        box-sizing: border-box !important;
     }
     
     .skill-category-title {
         font-size: 13px !important;
         margin-bottom: var(--spacing-xs) !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        word-wrap: break-word !important;
     }
     
     .skill-tag {
         font-size: 10px !important;
         padding: 4px 6px !important;
+        box-sizing: border-box !important;
+        max-width: 100% !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
     }
 
     .overview-text {
@@ -2916,26 +3041,46 @@ body {
         -ms-text-size-adjust: 100%;
     }
 
+    /* Prevent horizontal overflow on mobile */
+    html {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+    }
+
     body {
         font-size: var(--font-size-base);
         line-height: 1.6;
         overflow-x: hidden;
         width: 100%;
+        max-width: 100%;
+        position: relative;
     }
 
+    /* Ensure all containers are properly constrained */
     .container {
         padding: 0 var(--spacing-sm);
         max-width: 100%;
+        width: 100%;
         overflow-x: hidden;
+        box-sizing: border-box;
+        margin: 0 auto;
     }
 
     .nav-container {
         padding: var(--spacing-sm);
         height: 56px;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     .navbar {
         height: 56px;
+        max-width: 100%;
+        width: 100%;
+        overflow-x: hidden;
     }
 
     .nav-logo {
@@ -2943,7 +3088,8 @@ body {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: calc(100vw - 120px);
+        max-width: calc(100% - 100px);
+        box-sizing: border-box;
     }
 
     .logo-icon {
@@ -2987,16 +3133,34 @@ body {
         padding: var(--spacing-xs);
     }
 
+    /* Hero section - properly centered and constrained */
     .hero {
         padding: var(--spacing-lg) var(--spacing-sm);
         padding-top: calc(56px + var(--spacing-md));
         min-height: auto;
         text-align: center;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        margin: 0 auto;
+    }
+
+    .hero-container {
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 0;
     }
 
     .hero-greeting {
         font-size: var(--font-size-base);
         margin-bottom: var(--spacing-xs);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .hero-title {
@@ -3005,6 +3169,10 @@ body {
         line-height: 1.2;
         word-wrap: break-word;
         overflow-wrap: break-word;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 0;
     }
 
     .hero-subtitle {
@@ -3012,13 +3180,20 @@ body {
         margin-bottom: var(--spacing-md);
         line-height: 1.5;
         padding: 0 var(--spacing-xs);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .hero-cta {
         flex-direction: column;
         gap: var(--spacing-sm);
         width: 100%;
-        padding: 0 var(--spacing-sm);
+        max-width: 100%;
+        padding: 0;
+        box-sizing: border-box;
+        align-items: center;
     }
 
     .cta-btn {
@@ -3028,35 +3203,52 @@ body {
         font-size: var(--font-size-base);
         min-height: 48px;
         touch-action: manipulation;
+        box-sizing: border-box;
+        margin: 0;
     }
 
+    /* Ensure all sections fit within viewport */
     .section {
         padding: var(--spacing-lg) var(--spacing-sm);
         overflow-x: hidden;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0;
     }
 
     .section-title {
         font-size: 20px;
         margin-bottom: var(--spacing-md);
         padding: 0;
-        text-align: left;
+        text-align: center;
         word-wrap: break-word;
         font-weight: 700;
         color: var(--text-primary);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .section-subtitle {
         font-size: var(--font-size-sm);
         padding: 0;
-        text-align: left;
+        text-align: center;
         margin-bottom: var(--spacing-md);
         color: var(--text-secondary);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
-    /* Projects and achievements sections - app-like spacing */
+    /* Projects and achievements sections - properly constrained */
     .projects-section,
     .achievements-section {
         padding: var(--spacing-lg) var(--spacing-sm);
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     /* Mobile App-like Grid Layout - 2-3 cards per row like Amazon/Flipkart */
@@ -3066,23 +3258,28 @@ body {
         display: none !important;
     }
     
-    /* Convert carousels to grid layout on mobile - App-like */
+    /* Convert carousels to grid layout on mobile - properly constrained */
     .carousel-container {
         position: relative;
-        overflow: visible;
+        overflow: hidden;
         display: block !important;
         margin-top: 0 !important;
         gap: 0 !important;
         padding: 0 !important;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .carousel-viewport {
-        overflow: visible !important;
+        overflow: hidden !important;
         width: 100% !important;
+        max-width: 100% !important;
         position: relative !important;
+        box-sizing: border-box;
     }
 
-    /* Grid layout for all carousel wrappers - 2 columns like shopping apps */
+    /* Grid layout for all carousel wrappers - 2 columns, properly constrained */
     .achievements-grid.carousel-wrapper,
     .projects-grid.carousel-wrapper,
     .skills-container.carousel-wrapper {
@@ -3092,10 +3289,12 @@ body {
         padding: 0 !important;
         margin: 0 !important;
         width: 100% !important;
+        max-width: 100% !important;
         transform: none !important;
         transition: none !important;
-        overflow: visible !important;
+        overflow: hidden !important;
         align-items: stretch !important;
+        box-sizing: border-box;
     }
     
     /* Also update non-carousel grids to 2 columns on mobile */
@@ -3103,6 +3302,10 @@ body {
     .achievements-grid:not(.carousel-wrapper) {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: var(--spacing-sm) !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box;
+        overflow: hidden !important;
     }
     
     /* 3 columns on larger phones (375px+) for better view */
@@ -3113,12 +3316,13 @@ body {
         }
     }
 
-    /* Compact mobile app-style cards */
+    /* Compact mobile app-style cards - properly constrained */
     .project-card,
     .achievement-card {
         min-height: auto;
         margin-bottom: 0;
         width: 100%;
+        max-width: 100%;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
         border-radius: var(--radius-md);
         overflow: hidden;
@@ -3126,6 +3330,7 @@ body {
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         display: flex;
         flex-direction: column;
+        box-sizing: border-box;
     }
 
     .project-card:active,
@@ -3142,15 +3347,20 @@ body {
         overflow: hidden;
         background: var(--bg-secondary);
         position: relative;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .project-thumbnail img,
     .achievement-thumbnail img {
         width: 100%;
         height: 100%;
+        max-width: 100%;
         object-fit: cover;
         display: block;
         transition: transform 0.3s ease;
+        box-sizing: border-box;
     }
 
     .project-card:hover .project-thumbnail img,
@@ -3167,6 +3377,10 @@ body {
         flex-direction: column;
         gap: var(--spacing-xs);
         flex: 1;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
     }
 
     .project-title,
@@ -3242,6 +3456,7 @@ body {
         font-weight: 600;
         touch-action: manipulation;
         width: 100%;
+        max-width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -3250,6 +3465,9 @@ body {
         text-transform: uppercase;
         letter-spacing: 0.5px;
         transition: all 0.2s ease;
+        box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     
     .project-link:active,
@@ -3258,26 +3476,96 @@ body {
         opacity: 0.8;
     }
     
-    /* Smooth vertical scrolling for grid */
+    /* Smooth vertical scrolling for grid - no horizontal overflow */
     .projects-section,
     .achievements-section {
         -webkit-overflow-scrolling: touch;
-        overflow-y: auto;
+        overflow-y: visible;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        position: relative;
     }
     
-    /* App-like section header styling */
+    /* Comprehensive mobile overflow fix - ensure all elements fit */
+    img, video, iframe, embed, object, svg {
+        max-width: 100% !important;
+        height: auto;
+        box-sizing: border-box;
+        display: block;
+    }
+    
+    /* Ensure all text elements wrap properly */
+    p, span, div, h1, h2, h3, h4, h5, h6, a, li, td, th, label {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Ensure all sections and containers are properly constrained */
+    section, article, aside, header, footer, main, nav, form {
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Ensure ideas grid is properly constrained */
+    .ideas-grid {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+    }
+    
+    .idea-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 auto !important;
+    }
+    
+    /* Ensure all cards align properly */
+    .project-card,
+    .achievement-card,
+    .idea-card {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    /* Section header styling - centered */
     .section-title {
-        padding: 0 0 var(--spacing-xs) 0;
-        margin-bottom: var(--spacing-md);
+        padding: 0;
+        margin: 0 auto var(--spacing-md) auto;
         border-bottom: 2px solid var(--accent-color);
-        display: inline-block;
-        width: auto;
+        display: block;
+        width: fit-content;
+        max-width: 100%;
+        text-align: center;
+        box-sizing: border-box;
     }
     
-    /* Editor section - same grid layout */
+    /* Editor section - same grid layout, properly constrained */
     #editor .carousel-container {
         display: block !important;
         margin-top: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+    }
+
+    #editor .carousel-viewport {
+        max-width: 100% !important;
+        width: 100% !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
     }
 
     #editor .achievements-grid.carousel-wrapper,
@@ -3287,22 +3575,28 @@ body {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: var(--spacing-sm) !important;
         padding: 0 !important;
+        margin: 0 !important;
         width: 100% !important;
+        max-width: 100% !important;
         transform: none !important;
-        overflow: visible !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
     }
     
     #editor .project-card,
     #editor .achievement-card {
-        width: 100%;
-        margin: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
     }
     
-    /* Ensure cards maintain aspect ratio and don't overflow */
+    /* Ensure all cards maintain aspect ratio and don't overflow */
     .project-card,
     .achievement-card {
         max-width: 100%;
         box-sizing: border-box;
+        width: 100%;
     }
 
     button,
@@ -3326,54 +3620,93 @@ body {
 
     .idea-card {
         padding: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 0;
     }
 
     .idea-title {
         font-size: var(--font-size-lg);
         margin-bottom: var(--spacing-xs);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .idea-problem {
         font-size: var(--font-size-sm);
         line-height: 1.5;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .overview {
         padding: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 0 auto;
+        text-align: center;
     }
 
     .overview-text {
         font-size: var(--font-size-sm);
         line-height: 1.6;
         margin-bottom: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .subsection-title {
         font-size: var(--font-size-lg);
         margin-bottom: var(--spacing-sm);
-        padding: 0 var(--spacing-xs);
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        word-wrap: break-word;
     }
 
     .skill-category-title {
         font-size: var(--font-size-base);
         margin-bottom: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .skill-tag {
         font-size: var(--font-size-sm);
         padding: 0.25rem 0.5rem;
+        box-sizing: border-box;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
     }
 
     .modal-overlay {
         padding: var(--spacing-xs);
-        align-items: flex-start;
+        align-items: center;
+        justify-content: center;
         padding-top: var(--spacing-sm);
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     .modal-container {
-        max-width: 100%;
-        width: calc(100vw - 2 * var(--spacing-xs));
-        margin: 0;
+        max-width: calc(100% - 2 * var(--spacing-xs));
+        width: 100%;
+        margin: 0 auto;
         max-height: calc(100vh - 2 * var(--spacing-xs));
         border-radius: var(--radius-md);
         padding: var(--spacing-sm);
@@ -3381,6 +3714,7 @@ body {
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        box-sizing: border-box;
     }
 
     .modal-content {
@@ -3500,30 +3834,54 @@ body {
     .about-content {
         flex-direction: column;
         gap: var(--spacing-md);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 0;
     }
 
     .about-intro {
         padding: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        text-align: center;
     }
 
     .about-text {
         font-size: var(--font-size-sm);
         line-height: 1.6;
         margin-bottom: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .detail-item {
         padding: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .detail-item-title {
         font-size: var(--font-size-base);
         margin-bottom: var(--spacing-xs);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .detail-item-subtitle {
         font-size: var(--font-size-sm);
         line-height: 1.5;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .contact-links {
@@ -3531,6 +3889,10 @@ body {
         align-items: stretch;
         gap: var(--spacing-sm);
         padding: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 0 auto;
     }
 
     .contact-link {
@@ -3539,6 +3901,11 @@ body {
         padding: var(--spacing-sm);
         font-size: var(--font-size-base);
         min-height: 44px;
+        box-sizing: border-box;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     /* Ensure modal body scrolls properly */
@@ -3588,8 +3955,98 @@ body {
     /* Ensure images scale properly on mobile */
     .project-thumbnail img,
     .achievement-thumbnail img {
+        max-width: 100% !important;
+        height: auto !important;
+        width: 100% !important;
+        display: block !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Ensure ideas grid is properly constrained on mobile */
+    .ideas-grid {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        grid-template-columns: 1fr !important;
+    }
+    
+    .idea-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 auto var(--spacing-sm) auto !important;
+    }
+    
+    /* Final overflow prevention - ensure nothing exceeds viewport */
+    html, body {
+        overflow-x: hidden !important;
+        position: relative;
+        width: 100%;
         max-width: 100%;
-        height: auto;
+    }
+    
+    /* Ensure all containers center properly - no negative margins */
+    .container,
+    .section {
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: var(--spacing-sm);
+        padding-right: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .carousel-container {
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: var(--spacing-sm);
+        padding-right: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .carousel-viewport {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Ensure buttons are properly sized and aligned - centered */
+    .project-link,
+    .achievement-content .project-link,
+    .achievement-bottom-section .project-link,
+    .modal-action-btn,
+    .cta-btn,
+    .contact-link {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Center all grids properly */
+    .projects-grid,
+    .achievements-grid,
+    .ideas-grid,
+    .skills-container {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 }
 
