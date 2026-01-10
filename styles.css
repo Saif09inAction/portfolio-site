@@ -3404,11 +3404,11 @@ body {
         transform: translateX(-100%) !important;
     }
 
-    /* Compact dropdown menu below hamburger menu - NOT full screen */
+    /* Compact dropdown menu below hamburger - Mobile Phone (480px) - NOT full screen */
     .nav-menu.active {
         display: flex !important;
         position: absolute !important;
-        top: 100% !important;
+        top: calc(100% + var(--spacing-xs)) !important;
         right: var(--spacing-xs) !important;
         left: auto !important;
         bottom: auto !important;
@@ -3418,23 +3418,23 @@ body {
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
         width: auto !important;
-        min-width: 200px !important;
+        min-width: 180px !important;
         max-width: calc(100vw - var(--spacing-md)) !important;
         text-align: left !important;
-        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease !important;
+        transition: opacity 0.2s ease, transform 0.2s ease !important;
         padding: var(--spacing-xs) 0 !important;
         border: 1px solid var(--border-color) !important;
         border-radius: var(--radius-md) !important;
         gap: 0 !important;
         z-index: 10000 !important;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
         min-height: auto !important;
-        max-height: calc(100vh - 100px) !important;
+        max-height: calc(100vh - 120px) !important;
         height: auto !important;
         overflow-y: auto !important;
         overflow-x: hidden !important;
         -webkit-overflow-scrolling: touch !important;
-        margin: var(--spacing-xs) 0 0 0 !important;
+        margin: 0 !important;
         list-style: none !important;
         visibility: visible !important;
         opacity: 1 !important;
@@ -3560,16 +3560,12 @@ body {
         color: var(--accent-color) !important;
     }
 
+    .nav-menu.active .nav-link:hover,
+    .nav-menu.active .nav-link:focus,
     .nav-menu.active .nav-link:active {
         background: var(--bg-secondary) !important;
         color: var(--accent-color) !important;
         transform: scale(0.98);
-    }
-
-    .nav-menu.active .nav-link:hover,
-    .nav-menu.active .nav-link:active {
-        background: var(--bg-secondary) !important;
-        color: var(--accent-color) !important;
     }
 
     /* Ensure menu text is visible with high contrast */
