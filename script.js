@@ -184,61 +184,96 @@ if (mobileMenuToggle && navMenu) {
         console.log('Menu items count:', navMenu.querySelectorAll('li').length);
         console.log('Menu items:', Array.from(navMenu.querySelectorAll('li')).map(li => li.textContent.trim()));
         
-        // Force menu visibility with all necessary styles
+        // Force menu visibility with all necessary styles - make it VERY visible
         if (!isActive) {
-            navMenu.style.display = 'flex';
-            navMenu.style.position = 'fixed';
-            navMenu.style.top = '60px';
-            navMenu.style.left = '0';
-            navMenu.style.right = '0';
-            navMenu.style.width = '100vw';
-            navMenu.style.maxWidth = '100vw';
-            navMenu.style.height = 'auto';
-            navMenu.style.minHeight = 'auto';
-            navMenu.style.visibility = 'visible';
-            navMenu.style.opacity = '1';
-            navMenu.style.zIndex = '10000';
+            // Move menu to body to escape any parent overflow clipping
+            const menuParent = navMenu.parentElement;
+            if (menuParent && menuParent.classList.contains('nav-container')) {
+                // Temporarily move to body for better positioning
+                document.body.appendChild(navMenu);
+            }
             
-            // Get theme and set appropriate background color
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            const bgColor = isDark ? '#1a1a1a' : '#ffffff';
-            navMenu.style.backgroundColor = bgColor;
-            navMenu.style.background = bgColor;
-            navMenu.style.pointerEvents = 'auto';
+            // Set ALL required styles explicitly
+            navMenu.style.cssText = `
+                display: flex !important;
+                position: fixed !important;
+                top: 60px !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100vw !important;
+                max-width: 100vw !important;
+                min-width: 100vw !important;
+                height: auto !important;
+                min-height: 300px !important;
+                flex-direction: column !important;
+                background-color: ${isDark ? '#1a1a1a' : '#ffffff'} !important;
+                background: ${isDark ? '#1a1a1a' : '#ffffff'} !important;
+                backdrop-filter: blur(20px) !important;
+                -webkit-backdrop-filter: blur(20px) !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                z-index: 10000 !important;
+                pointer-events: auto !important;
+                padding: 1rem 0 !important;
+                margin: 0 !important;
+                border-top: 2px solid ${isDark ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.2)'} !important;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                list-style: none !important;
+                text-align: center !important;
+            `;
             
-            // Add visible border
-            navMenu.style.borderTop = isDark ? '2px solid rgba(255, 255, 255, 0.2)' : '2px solid rgba(0, 0, 0, 0.1)';
-            navMenu.style.boxShadow = '0 10px 40px rgba(0, 0, 0, 0.5)';
-            
-            // Ensure all menu items are visible
+            // Ensure all menu items are visible with explicit colors
             const menuItems = navMenu.querySelectorAll('li');
             menuItems.forEach((li, index) => {
-                li.style.display = 'block';
-                li.style.visibility = 'visible';
-                li.style.opacity = '1';
+                li.style.cssText = `
+                    display: block !important;
+                    width: 100% !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    list-style: none !important;
+                    visibility: visible !important;
+                    opacity: 1 !important;
+                    min-height: 56px !important;
+                    height: auto !important;
+                `;
                 
                 const link = li.querySelector('.nav-link');
                 if (link) {
-                    link.style.display = 'flex';
-                    link.style.visibility = 'visible';
-                    link.style.opacity = '1';
                     const textColor = isDark ? '#ffffff' : '#000000';
-                    link.style.color = textColor;
-                    link.style.backgroundColor = 'transparent';
-                    link.style.width = '100%';
-                    link.style.height = 'auto';
-                    link.style.minHeight = '56px';
-                    link.style.padding = 'var(--spacing-md) var(--spacing-lg)';
-                    link.style.textAlign = 'center';
-                    link.style.justifyContent = 'center';
-                    link.style.alignItems = 'center';
-                    link.style.fontSize = 'var(--font-size-base)';
-                    link.style.fontWeight = '600';
+                    link.style.cssText = `
+                        display: flex !important;
+                        visibility: visible !important;
+                        opacity: 1 !important;
+                        color: ${textColor} !important;
+                        background-color: transparent !important;
+                        width: 100% !important;
+                        height: auto !important;
+                        min-height: 56px !important;
+                        padding: 1rem 1.5rem !important;
+                        text-align: center !important;
+                        justify-content: center !important;
+                        align-items: center !important;
+                        font-size: 15px !important;
+                        font-weight: 600 !important;
+                        text-decoration: none !important;
+                        border-bottom: 1px solid ${isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'} !important;
+                        cursor: pointer !important;
+                    `;
                 }
             });
             
             console.log('Menu forced visible. Background:', navMenu.style.backgroundColor);
             console.log('Menu computed styles:', window.getComputedStyle(navMenu));
+            console.log('Menu bounding rect:', navMenu.getBoundingClientRect());
+        } else {
+            // When closing, move menu back to original position
+            const navbar = document.getElementById('navbar');
+            const navContainer = navbar?.querySelector('.nav-container');
+            if (navContainer && !navContainer.contains(navMenu)) {
+                navContainer.insertBefore(navMenu, navContainer.querySelector('.nav-controls'));
+            }
         }
     });
 
