@@ -855,6 +855,13 @@ async function loadComments() {
             </div>
         `;
     }).join('');
+    } catch (error) {
+        console.error('Error loading comments:', error);
+        const commentsList = document.getElementById('commentsList');
+        if (commentsList) {
+            commentsList.innerHTML = '<p class="error">Error loading comments. Please try again.</p>';
+        }
+    }
 }
 
 // Load ratings from localStorage
