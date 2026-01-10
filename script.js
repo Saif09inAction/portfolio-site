@@ -189,11 +189,18 @@ if (mobileMenuToggle && navMenu) {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         
         if (!isActive) {
-            // Move menu to body to escape any parent overflow clipping
-            const menuParent = navMenu.parentElement;
-            if (menuParent && menuParent.classList.contains('nav-container')) {
-                // Temporarily move to body for better positioning
-                document.body.appendChild(navMenu);
+            // Don't move menu - keep it in nav-container but ensure parent allows overflow
+            const navbar = document.getElementById('navbar');
+            const navContainer = navMenu.parentElement;
+            
+            // Ensure parent containers don't clip the menu
+            if (navbar) {
+                navbar.style.overflow = 'visible';
+                navbar.style.overflowY = 'visible';
+            }
+            if (navContainer) {
+                navContainer.style.overflow = 'visible';
+                navContainer.style.overflowY = 'visible';
             }
             
             // Set ALL required styles explicitly with theme colors
@@ -275,12 +282,19 @@ if (mobileMenuToggle && navMenu) {
             console.log('Menu computed styles:', window.getComputedStyle(navMenu));
             console.log('Menu bounding rect:', navMenu.getBoundingClientRect());
             console.log('Menu visible in viewport:', navMenu.getBoundingClientRect().top >= 0);
+            console.log('Menu items visible:', navMenu.querySelectorAll('li').length, 'items');
+            console.log('Menu links visible:', navMenu.querySelectorAll('.nav-link').length, 'links');
         } else {
-            // When closing, move menu back to original position
+            // When closing, restore parent overflow settings
             const navbar = document.getElementById('navbar');
-            const navContainer = navbar?.querySelector('.nav-container');
-            if (navContainer && !navContainer.contains(navMenu)) {
-                navContainer.insertBefore(navMenu, navContainer.querySelector('.nav-controls'));
+            if (navbar) {
+                navbar.style.overflow = '';
+                navbar.style.overflowY = '';
+            }
+            const navContainer = navMenu.parentElement;
+            if (navContainer) {
+                navContainer.style.overflow = '';
+                navContainer.style.overflowY = '';
             }
         }
     });
