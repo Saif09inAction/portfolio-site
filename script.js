@@ -162,9 +162,11 @@ let lastScroll = 0;
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
     
-    if (currentScroll > 100) {
+    if (currentScroll > 50) {
+        navbar.classList.add('scrolled');
         navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
     } else {
+        navbar.classList.remove('scrolled');
         navbar.style.boxShadow = 'none';
     }
     
