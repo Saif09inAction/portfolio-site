@@ -3316,9 +3316,17 @@ body {
         border-radius: 8px;
     }
 
-    .nav-menu {
-        position: fixed !important;
+    /* Hide mobile menu by default on phone */
+    .nav-menu:not(.active) {
+        display: none !important;
         left: -100% !important;
+    }
+
+    /* Show mobile menu when hamburger is clicked */
+    .nav-menu.active {
+        display: flex !important;
+        position: fixed !important;
+        left: 0 !important;
         top: 60px !important;
         flex-direction: column !important;
         background: var(--nav-bg) !important;
@@ -3336,15 +3344,8 @@ body {
         max-height: calc(100vh - 60px) !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
-        display: flex !important;
         margin: 0 !important;
         list-style: none !important;
-        visibility: visible !important;
-    }
-
-    .nav-menu.active {
-        left: 0 !important;
-        display: flex !important;
         visibility: visible !important;
     }
 
