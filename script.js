@@ -94,36 +94,21 @@ loadTranslations();
 // ============================================
 // Smooth Scrolling
 // ============================================
-function getNavbarHeight() {
-    const navbar = document.getElementById('navbar');
-    if (!navbar) return 80;
-    // Get actual computed height dynamically
-    const computedHeight = navbar.offsetHeight;
-    // Fallback: 60px for mobile, 80px for desktop
-    return computedHeight || (window.innerWidth <= 768 ? 60 : 80);
-}
-
-function smoothScrollTo(targetElement, delay = 0) {
-    if (!targetElement) return;
-    
-    setTimeout(() => {
-        const navbarHeight = getNavbarHeight();
-        const offsetTop = targetElement.offsetTop - navbarHeight;
-        window.scrollTo({
-            top: Math.max(0, offsetTop), // Ensure not negative
-            behavior: 'smooth'
-        });
-    }, delay);
-}
-
-// Handle navigation links (exclude nav-links as they have special handling)
-document.querySelectorAll('a[href^="#"]:not(.nav-link)').forEach(anchor => {
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
-        if (href !== '#' && href !== '') {
+        // Skip nav-link as it's handled separately
+        if (href !== '#' && href !== '' && !this.classList.contains('nav-link')) {
             e.preventDefault();
             const target = document.querySelector(href);
-            smoothScrollTo(target);
+            if (target) {
+                const isMobile = window.innerWidth <= 768;
+                const offsetTop = target.offsetTop - (isMobile ? 60 : 80);
+                window.scrollTo({
+                    top: Math.max(0, offsetTop),
+                    behavior: 'smooth'
+                });
+            }
         }
     });
 });
@@ -133,7 +118,14 @@ document.querySelectorAll('[data-scroll]').forEach(button => {
     button.addEventListener('click', function() {
         const targetId = this.getAttribute('data-scroll');
         const target = document.getElementById(targetId);
-        smoothScrollTo(target);
+        if (target) {
+            const isMobile = window.innerWidth <= 768;
+            const offsetTop = target.offsetTop - (isMobile ? 60 : 80);
+            window.scrollTo({
+                top: Math.max(0, offsetTop),
+                behavior: 'smooth'
+            });
+        }
     });
 });
 
@@ -148,27 +140,36 @@ mobileMenuToggle.addEventListener('click', () => {
     mobileMenuToggle.classList.toggle('active');
 });
 
-// Handle navigation links with mobile menu close
+// Close mobile menu when clicking on a link and handle smooth scroll
 document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        
-        // Only handle anchor links
-        if (href && href.startsWith('#') && href !== '#') {
+    link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
             e.preventDefault();
+            const targetId = href.substring(1);
+            const target = document.getElementById(targetId);
             
             // Close mobile menu first
-            if (navMenu && navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                mobileMenuToggle.classList.remove('active');
-            }
+            navMenu.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
             
-            // Scroll to target with delay to ensure menu closes smoothly
-            const target = document.querySelector(href);
+            // Then scroll to target with proper offset for mobile
             if (target) {
-                // Wait for menu close animation (300ms) before scrolling
-                smoothScrollTo(target, 300);
+                const isMobile = window.innerWidth <= 768;
+                const offsetTop = target.offsetTop - (isMobile ? 60 : 80);
+                
+                // Small delay to ensure menu closes smoothly
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: Math.max(0, offsetTop),
+                        behavior: 'smooth'
+                    });
+                }, 100);
             }
+        } else {
+            // For external links, just close menu
+            navMenu.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
         }
     });
 });
@@ -334,7 +335,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = document.querySelector(window.location.hash);
         if (target) {
             setTimeout(() => {
-                smoothScrollTo(target, 0);
+                const offsetTop = target.offsetTop - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
             }, 100);
         }
     }
@@ -2096,7 +2101,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             const target = document.querySelector(window.location.hash);
             if (target) {
                 setTimeout(() => {
-                    smoothScrollTo(target, 0);
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
                 }, 100);
             }
         }
