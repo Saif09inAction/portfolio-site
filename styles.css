@@ -3293,9 +3293,9 @@ body {
         z-index: 1000 !important;
     }
 
-    /* Ensure menu can escape navbar container */
+    /* Ensure menu can escape navbar container - use absolute for dropdown, not fixed */
     .navbar .nav-menu.active {
-        position: fixed !important;
+        position: absolute !important;
         z-index: 10000 !important;
         overflow: visible !important;
     }
@@ -3345,13 +3345,14 @@ body {
 
     .nav-container .nav-menu.active {
         position: absolute !important;
-        top: 100% !important;
-        right: var(--spacing-xs) !important;
+        top: calc(100% + 4px) !important;
+        right: 8px !important;
         left: auto !important;
         z-index: 10000 !important;
         overflow: visible !important;
         width: auto !important;
         min-width: 180px !important;
+        max-width: calc(100vw - 16px) !important;
     }
 
     .nav-logo {

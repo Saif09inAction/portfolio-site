@@ -184,22 +184,66 @@ if (mobileMenuToggle && navMenu) {
         console.log('Menu items count:', navMenu.querySelectorAll('li').length);
         console.log('Menu items:', Array.from(navMenu.querySelectorAll('li')).map(li => li.textContent.trim()));
         
-        // Compact dropdown menu - let CSS handle positioning
-        // Just ensure menu is visible
+        // Check computed styles for debugging
         if (!isActive) {
-            // Menu is opening - ensure nav-container allows overflow for dropdown
+            setTimeout(() => {
+                const computedStyle = window.getComputedStyle(navMenu);
+                const rect = navMenu.getBoundingClientRect();
+                console.log('Menu computed display:', computedStyle.display);
+                console.log('Menu computed position:', computedStyle.position);
+                console.log('Menu computed visibility:', computedStyle.visibility);
+                console.log('Menu computed opacity:', computedStyle.opacity);
+                console.log('Menu computed z-index:', computedStyle.zIndex);
+                console.log('Menu bounding rect:', rect);
+                console.log('Menu visible?', rect.width > 0 && rect.height > 0 && rect.top >= 0);
+            }, 50);
+        }
+        
+        // Compact dropdown menu - ensure menu is visible and properly positioned
+        if (!isActive) {
+            // Menu is opening - ensure nav-container and navbar allow overflow for dropdown
             const navContainer = navMenu.parentElement;
+            const navbar = document.getElementById('navbar');
+            
             if (navContainer) {
                 navContainer.style.overflow = 'visible';
                 navContainer.style.overflowY = 'visible';
+                navContainer.style.position = 'relative';
             }
+            if (navbar) {
+                navbar.style.overflow = 'visible';
+                navbar.style.overflowY = 'visible';
+            }
+            
+            // Force menu to be visible with explicit styles
+            navMenu.style.display = 'flex';
+            navMenu.style.position = 'absolute';
+            navMenu.style.top = 'calc(100% + 4px)';
+            navMenu.style.right = '8px';
+            navMenu.style.left = 'auto';
+            navMenu.style.visibility = 'visible';
+            navMenu.style.opacity = '1';
+            navMenu.style.zIndex = '10000';
         } else {
             // Menu is closing - restore parent overflow
             const navContainer = navMenu.parentElement;
+            const navbar = document.getElementById('navbar');
+            
             if (navContainer) {
                 navContainer.style.overflow = '';
                 navContainer.style.overflowY = '';
             }
+            if (navbar) {
+                navbar.style.overflow = '';
+                navbar.style.overflowY = '';
+            }
+            
+            // Clear inline styles to let CSS handle it
+            navMenu.style.display = '';
+            navMenu.style.position = '';
+            navMenu.style.top = '';
+            navMenu.style.right = '';
+            navMenu.style.left = '';
         }
     });
 
@@ -704,6 +748,8 @@ function saveCommentToAPI(itemId, itemType, commentData) {
         };
         storage[key].push(newComment);
         localStorage.setItem(STORAGE_COMMENTS, JSON.stringify(storage));
+        console.log(`Comment saved for ${itemType} ${itemId} by ${commentData.author}`);
+        console.log(`Total comments for this item: ${storage[key].length}`);
         return true;
     } catch (error) {
         console.error('Error saving comment:', error);
@@ -749,6 +795,8 @@ function saveRatingToAPI(itemId, itemType, rating) {
         });
         
         localStorage.setItem(STORAGE_RATINGS, JSON.stringify(storage));
+        console.log(`Rating saved: ${rating} stars for ${itemType} ${itemId} by user ${userId}`);
+        console.log(`Total ratings for this item: ${storage[key].length}`);
         return true;
     } catch (error) {
         console.error('Error saving rating:', error);
@@ -758,13 +806,26 @@ function saveRatingToAPI(itemId, itemType, rating) {
 
 // Load and display comments (localStorage version)
 async function loadComments() {
-    const comments = getCommentsFromAPI(currentItemId, currentItemType);
-    const commentsList = document.getElementById('commentsList');
-    
-    if (comments.length === 0) {
-        commentsList.innerHTML = '<p class="no-comments" data-translate="modal.comments.none">No comments yet. Be the first to comment!</p>';
+    if (!currentItemId || !currentItemType) {
+        console.warn('Cannot load comments: currentItemId or currentItemType is missing');
         return;
     }
+    
+    try {
+        const comments = getCommentsFromAPI(currentItemId, currentItemType);
+        const commentsList = document.getElementById('commentsList');
+        
+        console.log(`Loading ${comments.length} comments for ${currentItemType} ${currentItemId}`);
+        
+        if (!commentsList) {
+            console.error('Comments list element not found');
+            return;
+        }
+        
+        if (comments.length === 0) {
+            commentsList.innerHTML = '<p class="no-comments" data-translate="modal.comments.none">No comments yet. Be the first to comment!</p>';
+            return;
+        }
     
     commentsList.innerHTML = comments.map((comment, index) => {
         const userId = localStorage.getItem('userId') || '';
@@ -798,11 +859,16 @@ async function loadComments() {
 
 // Load ratings from localStorage
 async function loadRatings() {
-    if (!currentItemId || !currentItemType) return;
+    if (!currentItemId || !currentItemType) {
+        console.warn('Cannot load ratings: currentItemId or currentItemType is missing');
+        return;
+    }
     
     try {
         const ratings = getRatingsFromAPI(currentItemId, currentItemType);
+        console.log(`Loading ${ratings.length} ratings for ${currentItemType} ${currentItemId}`);
         const avgRating = calculateAverageRatingFromRatings(ratings);
+        console.log(`Average rating: ${avgRating}`);
         
         // Update average rating display
         const avgStars = document.querySelectorAll('#modalAverageRating .star');
@@ -1051,9 +1117,15 @@ function openDetailModal(itemId, itemType) {
             };
         }
         
-        // Load comments and ratings
-        loadComments();
-        loadRatings();
+        // Load comments and ratings with error handling
+        try {
+            console.log('Loading comments and ratings for:', itemId, itemType);
+            loadComments();
+            loadRatings();
+            console.log('Comments and ratings loaded successfully');
+        } catch (error) {
+            console.error('Error loading comments/ratings:', error);
+        }
         
         // Show modal
         detailModal.classList.add('active');
