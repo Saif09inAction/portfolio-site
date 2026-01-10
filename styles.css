@@ -2664,8 +2664,8 @@ body {
         overflow-x: hidden;
     }
 
-    /* Hide desktop menu on mobile/tablet */
-    .nav-menu {
+    /* Hide desktop menu on mobile/tablet - show hamburger instead */
+    .nav-menu:not(.active) {
         display: none !important;
     }
 
@@ -2682,7 +2682,7 @@ body {
         width: 100% !important;
         max-width: 100% !important;
         text-align: center !important;
-        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease !important;
         padding: var(--spacing-md) 0 !important;
         border-top: 1px solid var(--border-color) !important;
         gap: 0 !important;
@@ -2693,6 +2693,7 @@ body {
         -webkit-overflow-scrolling: touch !important;
         list-style: none !important;
         visibility: visible !important;
+        opacity: 1 !important;
         margin: 0 !important;
     }
 
@@ -3317,9 +3318,19 @@ body {
     }
 
     /* Hide mobile menu by default on phone - slide off screen */
-    .nav-menu {
-        position: fixed !important;
+    /* Hide menu by default on mobile phone */
+    .nav-menu:not(.active) {
+        display: none !important;
         left: -100% !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+
+    /* Show mobile menu when hamburger is clicked - slide in */
+    .nav-menu.active {
+        display: flex !important;
+        position: fixed !important;
+        left: 0 !important;
         top: 60px !important;
         flex-direction: column !important;
         background: var(--nav-bg) !important;
@@ -3337,16 +3348,8 @@ body {
         max-height: calc(100vh - 60px) !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
-        display: flex !important;
         margin: 0 !important;
         list-style: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-    }
-
-    /* Show mobile menu when hamburger is clicked - slide in */
-    .nav-menu.active {
-        left: 0 !important;
         visibility: visible !important;
         opacity: 1 !important;
     }
