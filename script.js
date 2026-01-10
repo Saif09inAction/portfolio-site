@@ -278,12 +278,34 @@ if (mobileMenuToggle && navMenu) {
                 }
             });
             
+            const rect = navMenu.getBoundingClientRect();
+            const computedStyle = window.getComputedStyle(navMenu);
+            
+            console.log('=== MENU VISIBILITY DEBUG ===');
             console.log('Menu forced visible. Background:', navMenu.style.backgroundColor);
-            console.log('Menu computed styles:', window.getComputedStyle(navMenu));
-            console.log('Menu bounding rect:', navMenu.getBoundingClientRect());
-            console.log('Menu visible in viewport:', navMenu.getBoundingClientRect().top >= 0);
+            console.log('Menu computed display:', computedStyle.display);
+            console.log('Menu computed visibility:', computedStyle.visibility);
+            console.log('Menu computed opacity:', computedStyle.opacity);
+            console.log('Menu computed position:', computedStyle.position);
+            console.log('Menu computed z-index:', computedStyle.zIndex);
+            console.log('Menu computed top:', computedStyle.top);
+            console.log('Menu computed left:', computedStyle.left);
+            console.log('Menu computed width:', computedStyle.width);
+            console.log('Menu computed height:', computedStyle.height);
+            console.log('Menu bounding rect:', rect);
+            console.log('Menu visible in viewport:', rect.top >= 0 && rect.left >= 0 && rect.width > 0 && rect.height > 0);
             console.log('Menu items visible:', navMenu.querySelectorAll('li').length, 'items');
             console.log('Menu links visible:', navMenu.querySelectorAll('.nav-link').length, 'links');
+            
+            // Check if menu is actually visible
+            if (rect.width === 0 || rect.height === 0) {
+                console.error('ERROR: Menu has zero dimensions!');
+                navMenu.style.minHeight = '400px';
+                navMenu.style.height = 'auto';
+            }
+            if (rect.top < 0 || rect.left < 0) {
+                console.error('ERROR: Menu is positioned off-screen!');
+            }
         } else {
             // When closing, restore parent overflow settings
             const navbar = document.getElementById('navbar');
