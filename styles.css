@@ -3326,7 +3326,7 @@ body {
         opacity: 0 !important;
     }
 
-    /* Show mobile menu when hamburger is clicked - slide in */
+    /* Show mobile menu when hamburger is clicked - ALL NAVIGATION SHORTCUTS VISIBLE */
     .nav-menu.active {
         display: flex !important;
         position: fixed !important;
@@ -3343,7 +3343,7 @@ body {
         padding: var(--spacing-md) 0 !important;
         border-top: 1px solid var(--border-color) !important;
         gap: 0 !important;
-        z-index: 999 !important;
+        z-index: 9999 !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
         max-height: calc(100vh - 60px) !important;
         overflow-y: auto !important;
@@ -3352,6 +3352,12 @@ body {
         list-style: none !important;
         visibility: visible !important;
         opacity: 1 !important;
+    }
+
+    /* Ensure menu is above all other content */
+    .nav-menu.active {
+        z-index: 9999 !important;
+        pointer-events: auto !important;
     }
 
     /* Ensure ALL navigation menu items are visible when menu is active */
@@ -3412,12 +3418,26 @@ body {
         cursor: pointer !important;
     }
 
-    /* Ensure nav links are visible in active menu */
+    /* Ensure ALL navigation links are visible in active menu - Home, Developer, Editor, Ideas, About, Contact */
     .nav-menu.active .nav-link {
         color: var(--text-primary) !important;
         display: flex !important;
         visibility: visible !important;
         opacity: 1 !important;
+        background: transparent !important;
+        width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
+        align-items: center !important;
+        min-height: 56px !important;
+        padding: var(--spacing-md) var(--spacing-lg) !important;
+        font-size: var(--font-size-base) !important;
+        font-weight: 600 !important;
+        border-bottom: 1px solid var(--border-color) !important;
+    }
+
+    .nav-menu.active .nav-link:last-child {
+        border-bottom: none !important;
     }
 
     .nav-link::before {
