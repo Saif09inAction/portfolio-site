@@ -2669,32 +2669,49 @@ body {
         display: none !important;
     }
 
-    /* Show mobile menu only when hamburger is clicked */
+    /* Show mobile menu only when hamburger is clicked - Tablet (768px) */
     .nav-menu.active {
         display: flex !important;
         position: fixed !important;
         left: 0 !important;
         top: 64px !important;
+        right: 0 !important;
         flex-direction: column !important;
-        background: var(--nav-bg) !important;
+        background: var(--bg-primary) !important;
+        background-color: var(--bg-primary) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
-        width: 100% !important;
-        max-width: 100% !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        min-width: 100vw !important;
         text-align: center !important;
         transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease !important;
         padding: var(--spacing-md) 0 !important;
-        border-top: 1px solid var(--border-color) !important;
+        border-top: 2px solid var(--border-color) !important;
         gap: 0 !important;
-        z-index: 999 !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+        z-index: 10000 !important;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+        min-height: 200px !important;
         max-height: calc(100vh - 64px) !important;
+        height: auto !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
         list-style: none !important;
         visibility: visible !important;
         opacity: 1 !important;
         margin: 0 !important;
+        pointer-events: auto !important;
+    }
+
+    [data-theme="dark"] .nav-menu.active {
+        background: #1a1a1a !important;
+        background-color: #1a1a1a !important;
+    }
+
+    [data-theme="light"] .nav-menu.active,
+    body:not([data-theme]) .nav-menu.active {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
     }
 
     /* Show hamburger menu button on mobile */
@@ -2718,25 +2735,33 @@ body {
         display: none !important;
     }
 
-    /* Mobile menu when active on tablet */
-    .nav-menu.active {
-        top: 64px !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-        display: flex !important;
-        flex-direction: column !important;
-        position: fixed !important;
-        list-style: none !important;
-        left: 0 !important;
-    }
-
+    /* Ensure menu items are visible on tablet */
     .nav-menu.active li {
         display: block !important;
         width: 100% !important;
+        max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         list-style: none !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        min-height: 56px !important;
+    }
+
+    .nav-menu.active .nav-link {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: var(--text-primary) !important;
+    }
+
+    [data-theme="dark"] .nav-menu.active .nav-link {
+        color: #ffffff !important;
+    }
+
+    [data-theme="light"] .nav-menu.active .nav-link,
+    body:not([data-theme]) .nav-menu.active .nav-link {
+        color: #000000 !important;
     }
 
     .mobile-menu-toggle {
