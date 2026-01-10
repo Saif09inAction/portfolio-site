@@ -48,40 +48,23 @@ Set up Firestore security rules:
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Projects - read for all, write for authenticated admin
-    match /projects/{projectId} {
+    // Comments collection - allow everyone to read and create
+    // Users can only update/delete their own comments
+    match /comments/{commentId} {
       allow read: if true;
-      allow write: if request.auth != null;
-      
-      match /comments/{commentId} {
-        allow read: if true;
-        allow create: if true;
-        allow update, delete: if request.auth != null || 
-          resource.data.userId == request.auth.uid;
-      }
-      
-      match /ratings/{ratingId} {
-        allow read: if true;
-        allow create, update: if true;
-      }
+      allow create: if true;
+      allow update, delete: if resource.data.userId == request.auth.uid || 
+        request.resource.data.userId == request.auth.uid;
     }
     
-    // Achievements - same as projects
-    match /achievements/{achievementId} {
+    // Ratings collection - allow everyone to read and create/update
+    // Users can only update their own ratings
+    match /ratings/{ratingId} {
       allow read: if true;
-      allow write: if request.auth != null;
-      
-      match /comments/{commentId} {
-        allow read: if true;
-        allow create: if true;
-        allow update, delete: if request.auth != null || 
-          resource.data.userId == request.auth.uid;
-      }
-      
-      match /ratings/{ratingId} {
-        allow read: if true;
-        allow create, update: if true;
-      }
+      allow create: if true;
+      allow update: if resource.data.userId == request.auth.uid || 
+        request.resource.data.userId == request.auth.uid;
+      allow delete: if false; // Prevent deletion of ratings
     }
     
     // Messages - read/write for authenticated admin only
@@ -97,6 +80,23 @@ service cloud.firestore {
   }
 }
 ```
+
+**Important**: After setting up the rules, you also need to create Firestore indexes for the queries:
+
+1. Go to Firebase Console > Firestore Database > Indexes
+2. Click "Create Index"
+3. For Comments query:
+   - Collection ID: `comments`
+   - Fields to index:
+     - `itemId` (Ascending)
+     - `itemType` (Ascending)
+     - `timestamp` (Descending)
+4. For Ratings query:
+   - Collection ID: `ratings`
+   - Fields to index:
+     - `itemId` (Ascending)
+     - `itemType` (Ascending)
+     - `userId` (Ascending)
 
 ### 4. Storage Rules
 

@@ -2015,6 +2015,7 @@ body {
 .modal-comments-section {
     margin: var(--spacing-lg) 0;
     position: static;
+    display: block !important;
 }
 
 .modal-rating-section h3,
