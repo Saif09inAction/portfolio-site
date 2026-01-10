@@ -144,6 +144,11 @@ body {
     align-items: center;
 }
 
+/* Hide hamburger menu on desktop */
+.mobile-menu-toggle {
+    display: none;
+}
+
 .nav-link {
     color: var(--text-primary);
     text-decoration: none;
@@ -2659,26 +2664,41 @@ body {
         overflow-x: hidden;
     }
 
+    /* Hide desktop menu on mobile/tablet */
     .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 70px;
-        flex-direction: column;
-        background: var(--nav-bg);
-        width: 100%;
-        max-width: 100%;
-        text-align: center;
-        transition: left var(--transition-base);
-        padding: var(--spacing-md) 0;
-        border-top: 1px solid var(--nav-border);
-        gap: var(--spacing-sm);
-        z-index: 999;
-        box-sizing: border-box;
-        overflow-x: hidden;
+        display: none !important;
     }
 
+    /* Show mobile menu only when hamburger is clicked */
     .nav-menu.active {
-        left: 0;
+        display: flex !important;
+        position: fixed !important;
+        left: 0 !important;
+        top: 64px !important;
+        flex-direction: column !important;
+        background: var(--nav-bg) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        text-align: center !important;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        padding: var(--spacing-md) 0 !important;
+        border-top: 1px solid var(--border-color) !important;
+        gap: 0 !important;
+        z-index: 999 !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+        max-height: calc(100vh - 64px) !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        list-style: none !important;
+        visibility: visible !important;
+        margin: 0 !important;
+    }
+
+    /* Show hamburger menu button on mobile */
+    .mobile-menu-toggle {
+        display: flex !important;
     }
 
     /* Enhanced Mobile Navbar for Tablet */
@@ -2692,7 +2712,13 @@ body {
         height: 64px;
     }
 
-    .nav-menu {
+    /* Ensure desktop menu is hidden on tablet */
+    .nav-menu:not(.active) {
+        display: none !important;
+    }
+
+    /* Mobile menu when active on tablet */
+    .nav-menu.active {
         top: 64px !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
@@ -2701,9 +2727,10 @@ body {
         flex-direction: column !important;
         position: fixed !important;
         list-style: none !important;
+        left: 0 !important;
     }
 
-    .nav-menu li {
+    .nav-menu.active li {
         display: block !important;
         width: 100% !important;
         margin: 0 !important;
