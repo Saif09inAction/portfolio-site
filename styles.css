@@ -3572,16 +3572,17 @@ body {
         margin-right: 0;
     }
     
-    /* Section header styling - centered */
+    /* Section header styling - centered properly */
     .section-title {
-        padding: 0;
+        padding: 0 var(--spacing-sm);
         margin: 0 auto var(--spacing-md) auto;
         border-bottom: 2px solid var(--accent-color);
         display: block;
-        width: fit-content;
+        width: 100%;
         max-width: 100%;
         text-align: center;
         box-sizing: border-box;
+        word-wrap: break-word;
     }
     
     /* Editor section - same grid layout, properly constrained */
