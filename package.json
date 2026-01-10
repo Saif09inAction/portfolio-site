@@ -9,7 +9,7 @@
     "server": "node server.js",
     "dev:server": "nodemon server.js",
     "build": "echo 'Static site - no build required'",
-    "vercel-build": "echo 'Vercel build - no build required'",
+    "vercel-build": "node build.js",
     "start": "npx serve . -p 3000"
   },
   "dependencies": {
