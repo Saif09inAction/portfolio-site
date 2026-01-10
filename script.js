@@ -178,7 +178,8 @@ if (mobileMenuToggle && navMenu) {
 
     // Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!navMenu.contains(e.target) && 
+        if (navMenu && mobileMenuToggle && 
+            !navMenu.contains(e.target) && 
             !mobileMenuToggle.contains(e.target) && 
             !navLogo?.contains(e.target)) {
             navMenu.classList.remove('active');
@@ -186,7 +187,6 @@ if (mobileMenuToggle && navMenu) {
         }
     });
 }
-
 
 // Close mobile menu when clicking on a link and handle smooth scroll
 document.querySelectorAll('.nav-link').forEach(link => {
@@ -199,8 +199,12 @@ document.querySelectorAll('.nav-link').forEach(link => {
             const target = document.getElementById(targetId);
             
             // Close mobile menu first
-            navMenu.classList.remove('active');
-            mobileMenuToggle.classList.remove('active');
+            const navMenuEl = document.getElementById('navMenu');
+            const mobileMenuToggleEl = document.getElementById('mobileMenuToggle');
+            if (navMenuEl && mobileMenuToggleEl) {
+                navMenuEl.classList.remove('active');
+                mobileMenuToggleEl.classList.remove('active');
+            }
             
             // Then scroll to target with proper offset for mobile
             if (target) {
@@ -217,8 +221,12 @@ document.querySelectorAll('.nav-link').forEach(link => {
             }
         } else {
             // For external links, just close menu
-            navMenu.classList.remove('active');
-            mobileMenuToggle.classList.remove('active');
+            const navMenuEl = document.getElementById('navMenu');
+            const mobileMenuToggleEl = document.getElementById('mobileMenuToggle');
+            if (navMenuEl && mobileMenuToggleEl) {
+                navMenuEl.classList.remove('active');
+                mobileMenuToggleEl.classList.remove('active');
+            }
         }
     });
 });
