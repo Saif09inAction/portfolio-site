@@ -3043,17 +3043,22 @@ body {
         -webkit-overflow-scrolling: touch;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
-        padding: 0 var(--spacing-sm);
-        margin: 0 calc(-1 * var(--spacing-sm));
-        width: 100vw;
-        max-width: 100vw;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .carousel-container {
+        padding: 0;
+        margin: 0;
     }
 
     .carousel-wrapper {
         display: flex;
         flex-direction: row;
         gap: var(--spacing-sm);
-        padding: var(--spacing-sm) 0;
+        padding: var(--spacing-sm);
         width: max-content;
         scroll-snap-type: none;
         transition: none;
@@ -3063,25 +3068,25 @@ body {
     
     .achievements-grid.carousel-wrapper .achievement-card,
     .projects-grid.carousel-wrapper .project-card {
-        min-width: calc(100vw - 2 * var(--spacing-sm) - var(--spacing-sm));
-        max-width: calc(100vw - 2 * var(--spacing-sm) - var(--spacing-sm));
-        flex: 0 0 calc(100vw - 2 * var(--spacing-sm) - var(--spacing-sm));
+        min-width: calc(100% - var(--spacing-sm));
+        max-width: calc(100% - var(--spacing-sm));
+        flex: 0 0 calc(100% - var(--spacing-sm));
         scroll-snap-align: start;
         scroll-snap-stop: always;
     }
 
     .skills-container.carousel-wrapper .skill-category {
-        min-width: calc(100vw - 2 * var(--spacing-sm) - var(--spacing-sm));
-        max-width: calc(100vw - 2 * var(--spacing-sm) - var(--spacing-sm));
-        flex: 0 0 calc(100vw - 2 * var(--spacing-sm) - var(--spacing-sm));
+        min-width: calc(100% - var(--spacing-sm));
+        max-width: calc(100% - var(--spacing-sm));
+        flex: 0 0 calc(100% - var(--spacing-sm));
         scroll-snap-align: start;
         scroll-snap-stop: always;
     }
     
     /* Editor section mobile - native scroll */
     #editor .carousel-viewport {
-        padding: 0 var(--spacing-sm);
-        margin: 0 calc(-1 * var(--spacing-sm));
+        padding: 0;
+        margin: 0;
     }
 
     #editor .achievements-grid.carousel-wrapper,
@@ -3089,14 +3094,15 @@ body {
     #editor .skills-container.carousel-wrapper {
         gap: var(--spacing-sm);
         justify-content: flex-start;
+        padding: var(--spacing-sm);
     }
     
     #editor .achievements-grid.carousel-wrapper .achievement-card,
     #editor .projects-grid.carousel-wrapper .project-card,
     #editor .skills-container.carousel-wrapper .skill-category {
-        min-width: calc(100vw - 2 * var(--spacing-sm) - var(--spacing-sm));
-        max-width: calc(100vw - 2 * var(--spacing-sm) - var(--spacing-sm));
-        flex: 0 0 calc(100vw - 2 * var(--spacing-sm) - var(--spacing-sm));
+        min-width: calc(100% - var(--spacing-sm));
+        max-width: calc(100% - var(--spacing-sm));
+        flex: 0 0 calc(100% - var(--spacing-sm));
         scroll-snap-align: start;
         scroll-snap-stop: always;
     }
