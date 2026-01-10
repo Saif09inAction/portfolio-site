@@ -184,12 +184,41 @@ if (mobileMenuToggle && navMenu) {
         console.log('Menu items count:', navMenu.querySelectorAll('li').length);
         console.log('Menu items:', Array.from(navMenu.querySelectorAll('li')).map(li => li.textContent.trim()));
         
-        // Force menu visibility
+        // Force menu visibility with all necessary styles
         if (!isActive) {
             navMenu.style.display = 'flex';
+            navMenu.style.position = 'fixed';
+            navMenu.style.top = '60px';
+            navMenu.style.left = '0';
+            navMenu.style.right = '0';
+            navMenu.style.width = '100vw';
+            navMenu.style.maxWidth = '100vw';
+            navMenu.style.height = 'auto';
+            navMenu.style.minHeight = 'auto';
             navMenu.style.visibility = 'visible';
             navMenu.style.opacity = '1';
-            navMenu.style.left = '0';
+            navMenu.style.zIndex = '10000';
+            navMenu.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary') || '#ffffff';
+            navMenu.style.pointerEvents = 'auto';
+            
+            // Ensure all menu items are visible
+            const menuItems = navMenu.querySelectorAll('li');
+            menuItems.forEach((li, index) => {
+                li.style.display = 'block';
+                li.style.visibility = 'visible';
+                li.style.opacity = '1';
+                
+                const link = li.querySelector('.nav-link');
+                if (link) {
+                    link.style.display = 'flex';
+                    link.style.visibility = 'visible';
+                    link.style.opacity = '1';
+                    link.style.color = getComputedStyle(document.documentElement).getPropertyValue('--text-primary') || '#000000';
+                }
+            });
+            
+            console.log('Menu forced visible. Background:', navMenu.style.backgroundColor);
+            console.log('Menu computed styles:', window.getComputedStyle(navMenu));
         }
     });
 
