@@ -1,0 +1,833 @@
+{
+  "en": {
+    "nav": {
+      "home": "Home",
+      "developer": "Developer",
+      "editor": "Editor",
+      "ideas": "Ideas",
+      "about": "About",
+      "contact": "Contact"
+    },
+    "hero": {
+      "greeting": "My Name Is Saif Salmani And I Am A",
+      "title1": "Developer",
+      "title2": "& Video Editor",
+      "location": "based in mumbai,india",
+      "cta": {
+        "developer": "I'm here for Development",
+        "editor": "I'm here for Editing"
+      }
+    },
+    "developer": {
+      "title": "Developer",
+      "overview": "I'm a passionate developer and problem solver, turning complex challenges into elegant solutions through code.",
+      "achievements": {
+        "title": "Achievements & Hackathons",
+        "item1": {
+          "name": "Hackathon Winner 2024",
+          "desc": "Built an innovative solution that won first place."
+        },
+        "item2": {
+          "name": "Tech Innovation Challenge",
+          "desc": "Reached finals with a creative web application."
+        },
+        "item3": {
+          "name": "Code Sprint 2023",
+          "desc": "Active participant in 48-hour coding challenge."
+        }
+      },
+      "skills": {
+        "title": "Skills",
+        "languages": "Programming Languages",
+        "technologies": "Technologies & Tools"
+      },
+      "projects": {
+        "title": "Projects",
+        "view": "View Project",
+        "comments": "Comments:",
+        "comments.placeholder": "No comments yet",
+        "item1": {
+          "title": "E-Commerce Platform",
+          "desc": "A full-stack e-commerce solution with payment integration."
+        },
+        "item2": {
+          "title": "Task Management App",
+          "desc": "Collaborative task management with real-time updates."
+        },
+        "item3": {
+          "title": "Portfolio Website",
+          "desc": "Modern, responsive portfolio showcasing my work."
+        }
+      }
+    },
+    "editor": {
+      "title": "Video Editor",
+      "overview": "I specialize in video editing and content creation, bringing stories to life through visual storytelling and creative post-production.",
+      "achievements": {
+        "title": "Achievements & Workshops",
+        "item1": {
+          "name": "Advanced Video Editing Workshop",
+          "skill": "Advanced Techniques"
+        },
+        "item2": {
+          "name": "Content Creation Masterclass",
+          "skill": "Storytelling & Engagement"
+        },
+        "item3": {
+          "name": "Motion Graphics Certification",
+          "skill": "Motion Design"
+        }
+      },
+      "skills": {
+        "title": "Skills",
+        "software": "Software Proficiency",
+        "content": "Content Types"
+      },
+      "projects": {
+        "title": "Editing Projects",
+        "view": "Watch Video",
+        "comments": "Comments:",
+        "comments.placeholder": "No comments yet",
+        "item1": {
+          "title": "Brand Commercial",
+          "desc": "High-energy commercial for a tech startup."
+        },
+        "item2": {
+          "title": "Event Highlights Reel",
+          "desc": "Dynamic highlights from a major tech conference."
+        },
+        "item3": {
+          "title": "Documentary Short",
+          "desc": "Emotional storytelling piece about local artists."
+        }
+      }
+    },
+    "ideas": {
+      "title": "Ideas",
+      "subtitle": "Project and startup ideas I'm working on or exploring",
+      "status": {
+        "idea": "Idea",
+        "progress": "In Progress",
+        "built": "Built"
+      },
+      "item1": {
+        "title": "AI-Powered Learning Platform",
+        "problem": "Personalized learning experiences using AI to adapt to individual learning styles and pace."
+      },
+      "item2": {
+        "title": "Sustainable E-Commerce App",
+        "problem": "Connecting eco-conscious consumers with sustainable brands and products."
+      },
+      "item3": {
+        "title": "Local Event Discovery",
+        "problem": "Platform for discovering and sharing local events and meetups in your area."
+      },
+      "item4": {
+        "title": "Video Collaboration Tool",
+        "problem": "Real-time collaborative video editing platform for remote teams."
+      }
+    },
+    "about": {
+      "title": "About",
+      "intro": "I'm Saif, a passionate developer and video editor with a love for creating impactful digital experiences. Whether it's building robust applications or crafting compelling visual stories, I bring creativity and technical expertise to every project.",
+      "education": {
+        "title": "Education",
+        "item1": {
+          "degree": "Bachelor of Science in Computer Science",
+          "school": "[University Name]"
+        }
+      },
+      "achievements": {
+        "title": "Key Achievements",
+        "item1": "Winner of multiple hackathons",
+        "item2": "Published open-source projects",
+        "item3": "Video content with 100K+ views",
+        "item4": "Certified in multiple technologies"
+      },
+      "skills": {
+        "title": "Skills Summary",
+        "desc": "Proficient in full-stack development, video editing, motion graphics, and content creation. Always learning and exploring new technologies and creative techniques."
+      },
+      "internships": {
+        "title": "Internships",
+        "item1": {
+          "role": "Software Development Intern",
+          "company": "[Company Name]"
+        }
+      },
+      "resume": "Download Resume"
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Let's connect and create something amazing together"
+    },
+    "footer": {
+      "text": "© 2024 Saif. All rights reserved."
+    }
+  },
+  "fr": {
+    "nav": {
+      "home": "Accueil",
+      "developer": "Développeur",
+      "editor": "Monteur",
+      "ideas": "Idées",
+      "about": "À propos",
+      "contact": "Contact"
+    },
+    "hero": {
+      "greeting": "je m'appelle Saif et je suis",
+      "title1": "Développeur",
+      "title2": "& Monteur Vidéo",
+      "location": "basé à [Votre Localisation]",
+      "cta": {
+        "developer": "Je suis là pour le Développement",
+        "editor": "Je suis là pour le Montage"
+      }
+    },
+    "developer": {
+      "title": "Développeur",
+      "overview": "Je suis un développeur passionné et un résolveur de problèmes, transformant des défis complexes en solutions élégantes grâce au code.",
+      "achievements": {
+        "title": "Réalisations & Hackathons",
+        "item1": {
+          "name": "Vainqueur du Hackathon 2024",
+          "desc": "Créé une solution innovante qui a remporté la première place."
+        },
+        "item2": {
+          "name": "Défi Innovation Technologique",
+          "desc": "Atteint les finales avec une application web créative."
+        },
+        "item3": {
+          "name": "Code Sprint 2023",
+          "desc": "Participant actif dans un défi de codage de 48 heures."
+        }
+      },
+      "skills": {
+        "title": "Compétences",
+        "languages": "Langages de Programmation",
+        "technologies": "Technologies & Outils"
+      },
+      "projects": {
+        "title": "Projets",
+        "view": "Voir le Projet",
+        "comments": "Commentaires :",
+        "comments.placeholder": "Aucun commentaire pour le moment",
+        "item1": {
+          "title": "Plateforme E-Commerce",
+          "desc": "Une solution e-commerce full-stack avec intégration de paiement."
+        },
+        "item2": {
+          "title": "Application de Gestion de Tâches",
+          "desc": "Gestion collaborative de tâches avec mises à jour en temps réel."
+        },
+        "item3": {
+          "title": "Site Web Portfolio",
+          "desc": "Portfolio moderne et responsive présentant mon travail."
+        }
+      }
+    },
+    "editor": {
+      "title": "Monteur Vidéo",
+      "overview": "Je me spécialise dans le montage vidéo et la création de contenu, donnant vie aux histoires grâce à la narration visuelle et à la post-production créative.",
+      "achievements": {
+        "title": "Réalisations & Ateliers",
+        "item1": {
+          "name": "Atelier de Montage Vidéo Avancé",
+          "skill": "Techniques Avancées"
+        },
+        "item2": {
+          "name": "Masterclass de Création de Contenu",
+          "skill": "Narration & Engagement"
+        },
+        "item3": {
+          "name": "Certification Motion Graphics",
+          "skill": "Design Motion"
+        }
+      },
+      "skills": {
+        "title": "Compétences",
+        "software": "Maîtrise des Logiciels",
+        "content": "Types de Contenu"
+      },
+      "projects": {
+        "title": "Projets de Montage",
+        "view": "Regarder la Vidéo",
+        "comments": "Commentaires :",
+        "comments.placeholder": "Aucun commentaire pour le moment",
+        "item1": {
+          "title": "Publicité de Marque",
+          "desc": "Publicité haute énergie pour une startup technologique."
+        },
+        "item2": {
+          "title": "Reel des Moments Forts d'un Événement",
+          "desc": "Moments forts dynamiques d'une grande conférence technologique."
+        },
+        "item3": {
+          "title": "Court Métrage Documentaire",
+          "desc": "Pièce de narration émotionnelle sur des artistes locaux."
+        }
+      }
+    },
+    "ideas": {
+      "title": "Idées",
+      "subtitle": "Idées de projets et de startups sur lesquelles je travaille ou que j'explore",
+      "status": {
+        "idea": "Idée",
+        "progress": "En Cours",
+        "built": "Construit"
+      },
+      "item1": {
+        "title": "Plateforme d'Apprentissage Alimentée par l'IA",
+        "problem": "Expériences d'apprentissage personnalisées utilisant l'IA pour s'adapter aux styles et rythmes d'apprentissage individuels."
+      },
+      "item2": {
+        "title": "Application E-Commerce Durable",
+        "problem": "Connecter les consommateurs soucieux de l'environnement avec des marques et produits durables."
+      },
+      "item3": {
+        "title": "Découverte d'Événements Locaux",
+        "problem": "Plateforme pour découvrir et partager des événements et rencontres locaux dans votre région."
+      },
+      "item4": {
+        "title": "Outil de Collaboration Vidéo",
+        "problem": "Plateforme de montage vidéo collaborative en temps réel pour les équipes distantes."
+      }
+    },
+    "about": {
+      "title": "À propos",
+      "intro": "Je suis Saif, un développeur et monteur vidéo passionné avec un amour pour créer des expériences numériques percutantes. Que ce soit construire des applications robustes ou créer des histoires visuelles convaincantes, j'apporte créativité et expertise technique à chaque projet.",
+      "education": {
+        "title": "Éducation",
+        "item1": {
+          "degree": "Licence en Informatique",
+          "school": "[Nom de l'Université]"
+        }
+      },
+      "achievements": {
+        "title": "Réalisations Clés",
+        "item1": "Vainqueur de plusieurs hackathons",
+        "item2": "Projets open-source publiés",
+        "item3": "Contenu vidéo avec plus de 100K vues",
+        "item4": "Certifié dans plusieurs technologies"
+      },
+      "skills": {
+        "title": "Résumé des Compétences",
+        "desc": "Compétent en développement full-stack, montage vidéo, motion graphics et création de contenu. Toujours en train d'apprendre et d'explorer de nouvelles technologies et techniques créatives."
+      },
+      "internships": {
+        "title": "Stages",
+        "item1": {
+          "role": "Stagiaire en Développement Logiciel",
+          "company": "[Nom de l'Entreprise]"
+        }
+      },
+      "resume": "Télécharger le CV"
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Connectons-nous et créons quelque chose d'extraordinaire ensemble"
+    },
+    "footer": {
+      "text": "© 2024 Saif. Tous droits réservés."
+    }
+  },
+  "hi": {
+    "nav": {
+      "home": "होम",
+      "developer": "डेवलपर",
+      "editor": "एडिटर",
+      "ideas": "विचार",
+      "about": "के बारे में",
+      "contact": "संपर्क"
+    },
+    "hero": {
+      "greeting": "मेरा नाम सैफ है और मैं एक हूं",
+      "title1": "डेवलपर",
+      "title2": "और वीडियो एडिटर",
+      "location": "मुंबई, भारत में स्थित",
+      "cta": {
+        "developer": "मैं डेवलपमेंट के लिए यहां हूं",
+        "editor": "मैं एडिटिंग के लिए यहां हूं"
+      }
+    },
+    "developer": {
+      "title": "डेवलपर",
+      "overview": "मैं एक उत्साही डेवलपर और समस्या समाधानकर्ता हूं, जो जटिल चुनौतियों को कोड के माध्यम से सुरुचिपूर्ण समाधानों में बदलता हूं।",
+      "achievements": {
+        "title": "उपलब्धियां और हैकथॉन",
+        "item1": {
+          "name": "हैकथॉन विजेता 2024",
+          "desc": "एक नवीन समाधान बनाया जिसने प्रथम स्थान जीता।"
+        },
+        "item2": {
+          "name": "टेक इनोवेशन चैलेंज",
+          "desc": "एक रचनात्मक वेब एप्लिकेशन के साथ फाइनल में पहुंचे।"
+        },
+        "item3": {
+          "name": "कोड स्प्रिंट 2023",
+          "desc": "48-घंटे की कोडिंग चुनौती में सक्रिय भागीदार।"
+        }
+      },
+      "skills": {
+        "title": "कौशल",
+        "languages": "प्रोग्रामिंग भाषाएं",
+        "technologies": "तकनीकें और उपकरण"
+      },
+      "projects": {
+        "title": "प्रोजेक्ट्स",
+        "view": "प्रोजेक्ट देखें",
+        "comments": "टिप्पणियां:",
+        "comments.placeholder": "अभी तक कोई टिप्पणी नहीं",
+        "item1": {
+          "title": "ई-कॉमर्स प्लेटफॉर्म",
+          "desc": "भुगतान एकीकरण के साथ एक फुल-स्टैक ई-कॉमर्स समाधान।"
+        },
+        "item2": {
+          "title": "टास्क मैनेजमेंट ऐप",
+          "desc": "रीयल-टाइम अपडेट के साथ सहयोगात्मक कार्य प्रबंधन।"
+        },
+        "item3": {
+          "title": "पोर्टफोलियो वेबसाइट",
+          "desc": "आधुनिक, रेस्पॉन्सिव पोर्टफोलियो जो मेरे काम को प्रदर्शित करता है।"
+        }
+      }
+    },
+    "editor": {
+      "title": "वीडियो एडिटर",
+      "overview": "मैं वीडियो एडिटिंग और कंटेंट क्रिएशन में विशेषज्ञ हूं, दृश्य कहानी कहने और रचनात्मक पोस्ट-प्रोडक्शन के माध्यम से कहानियों को जीवंत बनाता हूं।",
+      "achievements": {
+        "title": "उपलब्धियां और वर्कशॉप",
+        "item1": {
+          "name": "एडवांस्ड वीडियो एडिटिंग वर्कशॉप",
+          "skill": "उन्नत तकनीकें"
+        },
+        "item2": {
+          "name": "कंटेंट क्रिएशन मास्टरक्लास",
+          "skill": "कहानी कहना और संलग्नता"
+        },
+        "item3": {
+          "name": "मोशन ग्राफिक्स प्रमाणन",
+          "skill": "मोशन डिज़ाइन"
+        }
+      },
+      "skills": {
+        "title": "कौशल",
+        "software": "सॉफ्टवेयर दक्षता",
+        "content": "कंटेंट प्रकार"
+      },
+      "projects": {
+        "title": "एडिटिंग प्रोजेक्ट्स",
+        "view": "वीडियो देखें",
+        "comments": "टिप्पणियां:",
+        "comments.placeholder": "अभी तक कोई टिप्पणी नहीं",
+        "item1": {
+          "title": "ब्रांड कमर्शियल",
+          "desc": "एक टेक स्टार्टअप के लिए उच्च-ऊर्जा कमर्शियल।"
+        },
+        "item2": {
+          "title": "इवेंट हाइलाइट्स रील",
+          "desc": "एक प्रमुख टेक सम्मेलन से गतिशील हाइलाइट्स।"
+        },
+        "item3": {
+          "title": "डॉक्यूमेंट्री शॉर्ट",
+          "desc": "स्थानीय कलाकारों के बारे में भावनात्मक कहानी कहने का टुकड़ा।"
+        }
+      }
+    },
+    "ideas": {
+      "title": "विचार",
+      "subtitle": "प्रोजेक्ट और स्टार्टअप विचार जिन पर मैं काम कर रहा हूं या खोज रहा हूं",
+      "status": {
+        "idea": "विचार",
+        "progress": "प्रगति में",
+        "built": "निर्मित"
+      },
+      "item1": {
+        "title": "AI-पावर्ड लर्निंग प्लेटफॉर्म",
+        "problem": "व्यक्तिगत शिक्षण शैलियों और गति के अनुकूल होने के लिए AI का उपयोग करके व्यक्तिगत शिक्षण अनुभव।"
+      },
+      "item2": {
+        "title": "स्थायी ई-कॉमर्स ऐप",
+        "problem": "पर्यावरण-जागरूक उपभोक्ताओं को स्थायी ब्रांडों और उत्पादों से जोड़ना।"
+      },
+      "item3": {
+        "title": "स्थानीय इवेंट डिस्कवरी",
+        "problem": "आपके क्षेत्र में स्थानीय इवेंट्स और मीटअप्स की खोज और साझाकरण के लिए प्लेटफॉर्म।"
+      },
+      "item4": {
+        "title": "वीडियो सहयोग उपकरण",
+        "problem": "रिमोट टीमों के लिए रीयल-टाइम सहयोगात्मक वीडियो एडिटिंग प्लेटफॉर्म।"
+      }
+    },
+    "about": {
+      "title": "के बारे में",
+      "intro": "मैं सैफ हूं, एक उत्साही डेवलपर और वीडियो एडिटर जो प्रभावशाली डिजिटल अनुभव बनाने का शौक रखता है। चाहे यह मजबूत एप्लिकेशन बनाना हो या सम्मोहक दृश्य कहानियां तैयार करना हो, मैं हर प्रोजेक्ट में रचनात्मकता और तकनीकी विशेषज्ञता लाता हूं।",
+      "education": {
+        "title": "शिक्षा",
+        "item1": {
+          "degree": "कंप्यूटर विज्ञान में स्नातक",
+          "school": "[विश्वविद्यालय का नाम]"
+        }
+      },
+      "achievements": {
+        "title": "मुख्य उपलब्धियां",
+        "item1": "कई हैकथॉन के विजेता",
+        "item2": "प्रकाशित ओपन-सोर्स प्रोजेक्ट्स",
+        "item3": "100K+ व्यूज के साथ वीडियो कंटेंट",
+        "item4": "कई तकनीकों में प्रमाणित"
+      },
+      "skills": {
+        "title": "कौशल सारांश",
+        "desc": "फुल-स्टैक डेवलपमेंट, वीडियो एडिटिंग, मोशन ग्राफिक्स, और कंटेंट क्रिएशन में कुशल। हमेशा नई तकनीकों और रचनात्मक तकनीकों को सीखने और खोजने में।"
+      },
+      "internships": {
+        "title": "इंटर्नशिप",
+        "item1": {
+          "role": "सॉफ्टवेयर डेवलपमेंट इंटर्न",
+          "company": "[कंपनी का नाम]"
+        }
+      },
+      "resume": "रिज्यूम डाउनलोड करें"
+    },
+    "contact": {
+      "title": "संपर्क",
+      "subtitle": "आइए जुड़ें और एक साथ कुछ अद्भुत बनाएं"
+    },
+    "footer": {
+      "text": "© 2024 सैफ। सभी अधिकार सुरक्षित।"
+    }
+  },
+  "mr": {
+    "nav": {
+      "home": "मुख्यपृष्ठ",
+      "developer": "डेव्हलपर",
+      "editor": "एडिटर",
+      "ideas": "कल्पना",
+      "about": "बद्दल",
+      "contact": "संपर्क"
+    },
+    "hero": {
+      "greeting": "माझे नाव सैफ आहे आणि मी एक आहे",
+      "title1": "डेव्हलपर",
+      "title2": "आणि व्हिडिओ एडिटर",
+      "location": "मुंबई, भारत मध्ये स्थित",
+      "cta": {
+        "developer": "मी डेव्हलपमेंटसाठी येथे आहे",
+        "editor": "मी एडिटिंगसाठी येथे आहे"
+      }
+    },
+    "developer": {
+      "title": "डेव्हलपर",
+      "overview": "मी एक उत्साही डेव्हलपर आणि समस्या सोडवणारा आहे, जो जटिल आव्हानांना कोडद्वारे सुरेख उपायांमध्ये रूपांतरित करतो।",
+      "achievements": {
+        "title": "यश आणि हॅकथॉन",
+        "item1": {
+          "name": "हॅकथॉन विजेता 2024",
+          "desc": "एक नवीन उपाय तयार केला ज्याने प्रथम स्थान मिळवले।"
+        },
+        "item2": {
+          "name": "टेक इनोव्हेशन चॅलेंज",
+          "desc": "सर्जनशील वेब अनुप्रयोगासह फायनलमध्ये पोहोचले।"
+        },
+        "item3": {
+          "name": "कोड स्प्रिंट 2023",
+          "desc": "48-तासांच्या कोडिंग चॅलेंजमध्ये सक्रिय सहभागी।"
+        }
+      },
+      "skills": {
+        "title": "कौशल्ये",
+        "languages": "प्रोग्रामिंग भाषा",
+        "technologies": "तंत्रज्ञान आणि साधने"
+      },
+      "projects": {
+        "title": "प्रोजेक्ट्स",
+        "view": "प्रोजेक्ट पहा",
+        "comments": "टिप्पण्या:",
+        "comments.placeholder": "अद्याप कोणतीही टिप्पणी नाही",
+        "item1": {
+          "title": "ई-कॉमर्स प्लॅटफॉर्म",
+          "desc": "पेमेंट एकत्रीकरणासह एक फुल-स्टॅक ई-कॉमर्स उपाय।"
+        },
+        "item2": {
+          "title": "टास्क मॅनेजमेंट अॅप",
+          "desc": "रीयल-टाइम अपडेटसह सहकारी कार्य व्यवस्थापन।"
+        },
+        "item3": {
+          "title": "पोर्टफोलिओ वेबसाइट",
+          "desc": "आधुनिक, प्रतिसादात्मक पोर्टफोलिओ जे माझे काम प्रदर्शित करते।"
+        }
+      }
+    },
+    "editor": {
+      "title": "व्हिडिओ एडिटर",
+      "overview": "मी व्हिडिओ एडिटिंग आणि सामग्री निर्मितीमध्ये विशेषज्ञ आहे, दृश्य कथा सांगणे आणि सर्जनशील पोस्ट-प्रोडक्शनद्वारे कथा जिवंत करतो।",
+      "achievements": {
+        "title": "यश आणि कार्यशाळा",
+        "item1": {
+          "name": "प्रगत व्हिडिओ एडिटिंग कार्यशाळा",
+          "skill": "प्रगत तंत्रे"
+        },
+        "item2": {
+          "name": "सामग्री निर्मिती मास्टरक्लास",
+          "skill": "कथा सांगणे आणि जुळवणूक"
+        },
+        "item3": {
+          "name": "मोशन ग्राफिक्स प्रमाणपत्र",
+          "skill": "मोशन डिझाइन"
+        }
+      },
+      "skills": {
+        "title": "कौशल्ये",
+        "software": "सॉफ्टवेअर प्रावीण्य",
+        "content": "सामग्री प्रकार"
+      },
+      "projects": {
+        "title": "एडिटिंग प्रोजेक्ट्स",
+        "view": "व्हिडिओ पहा",
+        "comments": "टिप्पण्या:",
+        "comments.placeholder": "अद्याप कोणतीही टिप्पणी नाही",
+        "item1": {
+          "title": "ब्रँड कमर्शियल",
+          "desc": "टेक स्टार्टअपसाठी उच्च-ऊर्जा कमर्शियल।"
+        },
+        "item2": {
+          "title": "इव्हेंट हायलाइट्स रील",
+          "desc": "एक प्रमुख टेक परिषदेतील गतिशील हायलाइट्स।"
+        },
+        "item3": {
+          "title": "डॉक्युमेंटरी शॉर्ट",
+          "desc": "स्थानिक कलाकारांबद्दल भावनिक कथा सांगण्याचा तुकडा।"
+        }
+      }
+    },
+    "ideas": {
+      "title": "कल्पना",
+      "subtitle": "प्रोजेक्ट आणि स्टार्टअप कल्पना ज्यावर मी काम करत आहे किंवा शोधत आहे",
+      "status": {
+        "idea": "कल्पना",
+        "progress": "प्रगतीत",
+        "built": "बांधले"
+      },
+      "item1": {
+        "title": "AI-पॉवर्ड लर्निंग प्लॅटफॉर्म",
+        "problem": "वैयक्तिक शिक्षण शैली आणि वेगाशी जुळवून घेण्यासाठी AI वापरून वैयक्तिक शिक्षण अनुभव।"
+      },
+      "item2": {
+        "title": "शाश्वत ई-कॉमर्स अॅप",
+        "problem": "पर्यावरण-जागरूक ग्राहकांना शाश्वत ब्रँड आणि उत्पादनांशी जोडणे।"
+      },
+      "item3": {
+        "title": "स्थानिक इव्हेंट डिस्कव्हरी",
+        "problem": "तुमच्या क्षेत्रातील स्थानिक इव्हेंट्स आणि मीटअप्स शोधण्यासाठी आणि सामायिक करण्यासाठी प्लॅटफॉर्म।"
+      },
+      "item4": {
+        "title": "व्हिडिओ सहयोग साधन",
+        "problem": "रिमोट टीम्ससाठी रीयल-टाइम सहकारी व्हिडिओ एडिटिंग प्लॅटफॉर्म।"
+      }
+    },
+    "about": {
+      "title": "बद्दल",
+      "intro": "मी सैफ आहे, एक उत्साही डेव्हलपर आणि व्हिडिओ एडिटर जो प्रभावी डिजिटल अनुभव तयार करण्याची आवड आहे। चाहे ते मजबूत अनुप्रयोग तयार करणे असो किंवा सम्मोहक दृश्य कथा तयार करणे असो, मी प्रत्येक प्रोजेक्टमध्ये सर्जनशीलता आणि तांत्रिक विशेषज्ञता आणतो।",
+      "education": {
+        "title": "शिक्षण",
+        "item1": {
+          "degree": "संगणक विज्ञानातील स्नातक",
+          "school": "[विश्वविद्यालयाचे नाव]"
+        }
+      },
+      "achievements": {
+        "title": "मुख्य यश",
+        "item1": "अनेक हॅकथॉनचे विजेता",
+        "item2": "प्रकाशित ओपन-सोर्स प्रोजेक्ट्स",
+        "item3": "100K+ व्ह्यूजसह व्हिडिओ सामग्री",
+        "item4": "अनेक तंत्रज्ञानांमध्ये प्रमाणित"
+      },
+      "skills": {
+        "title": "कौशल्ये सारांश",
+        "desc": "फुल-स्टॅक डेव्हलपमेंट, व्हिडिओ एडिटिंग, मोशन ग्राफिक्स, आणि सामग्री निर्मितीमध्ये कुशल। नेहमी नवीन तंत्रज्ञान आणि सर्जनशील तंत्रे शिकत आणि शोधत आहे।"
+      },
+      "internships": {
+        "title": "इंटर्नशिप",
+        "item1": {
+          "role": "सॉफ्टवेअर डेव्हलपमेंट इंटर्न",
+          "company": "[कंपनीचे नाव]"
+        }
+      },
+      "resume": "रिज्यूमे डाउनलोड करा"
+    },
+    "contact": {
+      "title": "संपर्क",
+      "subtitle": "चला जुळू आणि एकत्र काहीतरी अद्भुत बनवू"
+    },
+    "footer": {
+      "text": "© 2024 सैफ। सर्व हक्क राखीव।"
+    }
+  },
+  "ur": {
+    "nav": {
+      "home": "ہوم",
+      "developer": "ڈویلپر",
+      "editor": "ایڈیٹر",
+      "ideas": "خیالات",
+      "about": "کے بارے میں",
+      "contact": "رابطہ"
+    },
+    "hero": {
+      "greeting": "میرا نام سعید ہے اور میں ایک ہوں",
+      "title1": "ڈویلپر",
+      "title2": "اور ویڈیو ایڈیٹر",
+      "location": "ممبئی، بھارت میں مقیم",
+      "cta": {
+        "developer": "میں ڈویلپمنٹ کے لیے یہاں ہوں",
+        "editor": "میں ایڈیٹنگ کے لیے یہاں ہوں"
+      }
+    },
+    "developer": {
+      "title": "ڈویلپر",
+      "overview": "میں ایک پرجوش ڈویلپر اور مسئلہ حل کرنے والا ہوں، جو پیچیدہ چیلنجوں کو کوڈ کے ذریعے خوبصورت حل میں تبدیل کرتا ہوں۔",
+      "achievements": {
+        "title": "کامیابیاں اور ہیکاتھون",
+        "item1": {
+          "name": "ہیکاتھون فاتح 2024",
+          "desc": "ایک اختراعی حل بنایا جس نے پہلی پوزیشن حاصل کی۔"
+        },
+        "item2": {
+          "name": "ٹیک انوویشن چیلنج",
+          "desc": "ایک تخلیقی ویب ایپلیکیشن کے ساتھ فائنل تک پہنچے۔"
+        },
+        "item3": {
+          "name": "کوڈ اسپرنٹ 2023",
+          "desc": "48 گھنٹے کی کوڈنگ چیلنج میں سرگرم شرکت کار۔"
+        }
+      },
+      "skills": {
+        "title": "مہارتیں",
+        "languages": "پروگرامنگ زبانیں",
+        "technologies": "ٹیکنالوجیز اور ٹولز"
+      },
+      "projects": {
+        "title": "پروجیکٹس",
+        "view": "پروجیکٹ دیکھیں",
+        "comments": "تبصرے:",
+        "comments.placeholder": "ابھی تک کوئی تبصرہ نہیں",
+        "item1": {
+          "title": "ای کامرس پلیٹ فارم",
+          "desc": "ادائیگی کے انضمام کے ساتھ ایک مکمل اسٹیک ای کامرس حل۔"
+        },
+        "item2": {
+          "title": "ٹاسک مینجمنٹ ایپ",
+          "desc": "ریئل ٹائم اپ ڈیٹس کے ساتھ تعاونی کام کا انتظام۔"
+        },
+        "item3": {
+          "title": "پورٹ فولیو ویب سائٹ",
+          "desc": "جدید، ذمہ دار پورٹ فولیو جو میرا کام دکھاتا ہے۔"
+        }
+      }
+    },
+    "editor": {
+      "title": "ویڈیو ایڈیٹر",
+      "overview": "میں ویڈیو ایڈیٹنگ اور مواد کی تخلیق میں مہارت رکھتا ہوں، بصری کہانی سنانے اور تخلیقی پوسٹ پروڈکشن کے ذریعے کہانیوں کو زندہ کرتا ہوں۔",
+      "achievements": {
+        "title": "کامیابیاں اور ورکشاپس",
+        "item1": {
+          "name": "ایڈوانسڈ ویڈیو ایڈیٹنگ ورکشاپ",
+          "skill": "ایڈوانسڈ تکنیکیں"
+        },
+        "item2": {
+          "name": "مواد کی تخلیق ماسٹرکلاس",
+          "skill": "کہانی سنانا اور مشغولیت"
+        },
+        "item3": {
+          "name": "موشن گرافکس سرٹیفیکیشن",
+          "skill": "موشن ڈیزائن"
+        }
+      },
+      "skills": {
+        "title": "مہارتیں",
+        "software": "سافٹ ویئر مہارت",
+        "content": "مواد کی اقسام"
+      },
+      "projects": {
+        "title": "ایڈیٹنگ پروجیکٹس",
+        "view": "ویڈیو دیکھیں",
+        "comments": "تبصرے:",
+        "comments.placeholder": "ابھی تک کوئی تبصرہ نہیں",
+        "item1": {
+          "title": "برانڈ کمرشل",
+          "desc": "ٹیک اسٹارٹ اپ کے لیے اعلی توانائی کمرشل۔"
+        },
+        "item2": {
+          "title": "ایونٹ ہائی لائٹس ریئل",
+          "desc": "ایک بڑے ٹیک کانفرنس سے متحرک ہائی لائٹس۔"
+        },
+        "item3": {
+          "title": "ڈاکیومنٹری شارٹ",
+          "desc": "مقامی فنکاروں کے بارے میں جذباتی کہانی سنانے کا ٹکڑا۔"
+        }
+      }
+    },
+    "ideas": {
+      "title": "خیالات",
+      "subtitle": "پروجیکٹ اور اسٹارٹ اپ کے خیالات جن پر میں کام کر رہا ہوں یا تلاش کر رہا ہوں",
+      "status": {
+        "idea": "خیال",
+        "progress": "جاری",
+        "built": "بنایا"
+      },
+      "item1": {
+        "title": "AI پاورڈ لرننگ پلیٹ فارم",
+        "problem": "انفرادی سیکھنے کے انداز اور رفتار کے مطابق ڈھالنے کے لیے AI استعمال کرتے ہوئے ذاتی نوعیت کا سیکھنے کا تجربہ۔"
+      },
+      "item2": {
+        "title": "پائیدار ای کامرس ایپ",
+        "problem": "ماحول بیدار صارفین کو پائیدار برانڈز اور مصنوعات سے جوڑنا۔"
+      },
+      "item3": {
+        "title": "مقامی ایونٹ ڈسکوری",
+        "problem": "آپ کے علاقے میں مقامی ایونٹس اور میٹ اپس کی دریافت اور اشتراک کے لیے پلیٹ فارم۔"
+      },
+      "item4": {
+        "title": "ویڈیو تعاون کا ٹول",
+        "problem": "ریموٹ ٹیمز کے لیے ریئل ٹائم تعاونی ویڈیو ایڈیٹنگ پلیٹ فارم۔"
+      }
+    },
+    "about": {
+      "title": "کے بارے میں",
+      "intro": "میں سعید ہوں، ایک پرجوش ڈویلپر اور ویڈیو ایڈیٹر جو متاثر کن ڈیجیٹل تجربات بنانے کا شوق رکھتا ہے۔ چاہے یہ مضبوط ایپلیکیشنز بنانا ہو یا متاثر کن بصری کہانیاں تیار کرنا ہو، میں ہر پروجیکٹ میں تخلیقی صلاحیت اور تکنیکی مہارت لاتا ہوں۔",
+      "education": {
+        "title": "تعلیم",
+        "item1": {
+          "degree": "کمپیوٹر سائنس میں بیچلر آف سائنس",
+          "school": "[یونیورسٹی کا نام]"
+        }
+      },
+      "achievements": {
+        "title": "اہم کامیابیاں",
+        "item1": "کئی ہیکاتھون کے فاتح",
+        "item2": "شائع شدہ اوپن سورس پروجیکٹس",
+        "item3": "100K+ ویوز کے ساتھ ویڈیو مواد",
+        "item4": "کئی ٹیکنالوجیز میں سرٹیفائیڈ"
+      },
+      "skills": {
+        "title": "مہارتوں کا خلاصہ",
+        "desc": "مکمل اسٹیک ڈویلپمنٹ، ویڈیو ایڈیٹنگ، موشن گرافکس، اور مواد کی تخلیق میں ماہر۔ ہمیشہ نئی ٹیکنالوجیز اور تخلیقی تکنیکوں کو سیکھنے اور دریافت کرنے میں۔"
+      },
+      "internships": {
+        "title": "انٹرنشپس",
+        "item1": {
+          "role": "سافٹ ویئر ڈویلپمنٹ انٹرن",
+          "company": "[کمپنی کا نام]"
+        }
+      },
+      "resume": "ریزیومے ڈاؤن لوڈ کریں"
+    },
+    "contact": {
+      "title": "رابطہ",
+      "subtitle": "آئیں جڑیں اور مل کر کچھ حیرت انگیز بنائیں"
+    },
+    "footer": {
+      "text": "© 2024 سعید۔ تمام حقوق محفوظ ہیں۔"
+    }
+  }
+}
+
