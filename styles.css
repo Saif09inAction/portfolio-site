@@ -3063,29 +3063,29 @@ body {
         will-change: auto;
     }
     
+    /* Mobile carousel - full width cards with native scroll */
+    .section {
+        overflow-x: hidden;
+    }
+
     .achievements-grid.carousel-wrapper .achievement-card,
     .projects-grid.carousel-wrapper .project-card {
-        min-width: calc(100vw - 3 * var(--spacing-sm));
-        max-width: calc(100vw - 3 * var(--spacing-sm));
-        flex: 0 0 calc(100vw - 3 * var(--spacing-sm));
+        min-width: calc(100% - var(--spacing-sm));
+        max-width: calc(100% - var(--spacing-sm));
+        flex: 0 0 calc(100% - var(--spacing-sm));
         scroll-snap-align: start;
         scroll-snap-stop: always;
     }
 
     .skills-container.carousel-wrapper .skill-category {
-        min-width: calc(100vw - 3 * var(--spacing-sm));
-        max-width: calc(100vw - 3 * var(--spacing-sm));
-        flex: 0 0 calc(100vw - 3 * var(--spacing-sm));
+        min-width: calc(100% - var(--spacing-sm));
+        max-width: calc(100% - var(--spacing-sm));
+        flex: 0 0 calc(100% - var(--spacing-sm));
         scroll-snap-align: start;
         scroll-snap-stop: always;
     }
     
-    /* Editor section mobile - native scroll */
-    #editor .carousel-viewport {
-        padding: 0;
-        margin: 0;
-    }
-
+    /* Editor section mobile - same as above */
     #editor .achievements-grid.carousel-wrapper,
     #editor .projects-grid.carousel-wrapper,
     #editor .skills-container.carousel-wrapper {
@@ -3097,9 +3097,9 @@ body {
     #editor .achievements-grid.carousel-wrapper .achievement-card,
     #editor .projects-grid.carousel-wrapper .project-card,
     #editor .skills-container.carousel-wrapper .skill-category {
-        min-width: calc(100vw - 3 * var(--spacing-sm));
-        max-width: calc(100vw - 3 * var(--spacing-sm));
-        flex: 0 0 calc(100vw - 3 * var(--spacing-sm));
+        min-width: calc(100% - var(--spacing-sm));
+        max-width: calc(100% - var(--spacing-sm));
+        flex: 0 0 calc(100% - var(--spacing-sm));
         scroll-snap-align: start;
         scroll-snap-stop: always;
     }
