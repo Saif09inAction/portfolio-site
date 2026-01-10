@@ -106,6 +106,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    overflow: visible;
+}
+
+/* Ensure nav-menu can break out of container when active */
+.nav-container .nav-menu.active {
+    position: fixed !important;
 }
 
 .nav-logo {
@@ -3273,6 +3280,13 @@ body {
         z-index: 1000 !important;
     }
 
+    /* Ensure menu can escape navbar container */
+    .navbar .nav-menu.active {
+        position: fixed !important;
+        z-index: 10000 !important;
+        overflow: visible !important;
+    }
+
     /* Ensure menu appears BELOW navbar, not behind it */
     .navbar + * {
         margin-top: 60px;
@@ -3302,10 +3316,22 @@ body {
         width: 100%;
         box-sizing: border-box;
         overflow-x: hidden;
+        overflow-y: visible !important;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: var(--spacing-xs);
+        position: relative;
+    }
+
+    /* Ensure menu can escape nav-container when active */
+    .nav-container .nav-menu.active {
+        position: fixed !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: 60px !important;
+        z-index: 10000 !important;
+        overflow: visible !important;
     }
 
     .nav-logo {
