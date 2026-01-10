@@ -3399,13 +3399,23 @@ body {
         min-height: 56px;
         line-height: 1.5;
         touch-action: manipulation;
-        color: var(--text-primary);
+        color: var(--text-primary) !important;
+        background: transparent !important;
         text-decoration: none;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         border-bottom: 1px solid var(--border-color);
         position: relative;
-        overflow: hidden;
+        overflow: visible !important;
         width: 100% !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        cursor: pointer !important;
+    }
+
+    /* Ensure nav links are visible in active menu */
+    .nav-menu.active .nav-link {
+        color: var(--text-primary) !important;
+        display: flex !important;
         visibility: visible !important;
         opacity: 1 !important;
     }

@@ -172,8 +172,15 @@ if (mobileMenuToggle && navMenu) {
     // Toggle mobile menu dropdown when clicking hamburger (3 lines)
     mobileMenuToggle.addEventListener('click', (e) => {
         e.stopPropagation();
+        e.preventDefault();
+        const isActive = navMenu.classList.contains('active');
         navMenu.classList.toggle('active');
         mobileMenuToggle.classList.toggle('active');
+        
+        // Debug: Log menu state
+        console.log('Menu toggled. Active:', !isActive);
+        console.log('Menu element:', navMenu);
+        console.log('Menu items:', navMenu.querySelectorAll('li'));
     });
 
     // Close mobile menu when clicking outside
