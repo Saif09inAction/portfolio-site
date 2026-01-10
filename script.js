@@ -187,32 +187,6 @@ if (mobileMenuToggle && navMenu) {
     });
 }
 
-// ============================================
-// Logo Click Handler - Navigate to Home
-// ============================================
-const navLogo = document.querySelector('.nav-logo');
-if (navLogo) {
-    navLogo.addEventListener('click', (e) => {
-        e.preventDefault();
-        const homeSection = document.getElementById('home');
-        if (homeSection) {
-            // Close mobile menu if open
-            navMenu.classList.remove('active');
-            mobileMenuToggle.classList.remove('active');
-            
-            // Scroll to home with proper offset for mobile
-            const isMobile = window.innerWidth <= 768;
-            const offsetTop = homeSection.offsetTop - (isMobile ? 60 : 80);
-            window.scrollTo({
-                top: Math.max(0, offsetTop),
-                behavior: 'smooth'
-            });
-        }
-    });
-    
-    // Make logo cursor pointer
-    navLogo.style.cursor = 'pointer';
-}
 
 // Close mobile menu when clicking on a link and handle smooth scroll
 document.querySelectorAll('.nav-link').forEach(link => {
