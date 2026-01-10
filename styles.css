@@ -2805,8 +2805,32 @@ body {
         font-size: var(--font-size-sm);
     }
 
-    .skills-container {
-        grid-template-columns: 1fr;
+    /* Skills grid - 2 columns on mobile */
+    .skills-container.carousel-wrapper {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--spacing-sm) !important;
+    }
+
+    .skills-container:not(.carousel-wrapper) {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--spacing-sm) !important;
+    }
+
+    .skill-category {
+        width: 100%;
+        margin: 0;
+        padding: var(--spacing-sm) !important;
+    }
+    
+    .skill-category-title {
+        font-size: 13px !important;
+        margin-bottom: var(--spacing-xs) !important;
+    }
+    
+    .skill-tag {
+        font-size: 10px !important;
+        padding: 4px 6px !important;
     }
 
     .overview-text {
@@ -3012,111 +3036,112 @@ body {
     }
 
     .section-title {
-        font-size: var(--font-size-xl);
-        margin-bottom: var(--spacing-sm);
+        font-size: 20px;
+        margin-bottom: var(--spacing-md);
         padding: 0;
-        text-align: center;
+        text-align: left;
         word-wrap: break-word;
+        font-weight: 700;
+        color: var(--text-primary);
     }
 
     .section-subtitle {
         font-size: var(--font-size-sm);
         padding: 0;
-        text-align: center;
+        text-align: left;
         margin-bottom: var(--spacing-md);
+        color: var(--text-secondary);
+    }
+    
+    /* Projects and achievements sections - app-like spacing */
+    .projects-section,
+    .achievements-section {
+        padding: var(--spacing-lg) var(--spacing-sm);
     }
 
-    /* Hide carousel arrows on mobile - use native scrolling instead */
+    /* Mobile App-like Grid Layout - 2-3 cards per row like Amazon/Flipkart */
+    
+    /* Hide carousel arrows on mobile */
     .carousel-arrow {
         display: none !important;
     }
     
+    /* Convert carousels to grid layout on mobile - App-like */
     .carousel-container {
-        gap: 0;
-        padding: 0;
-        margin: 0;
         position: relative;
-        overflow: hidden;
+        overflow: visible;
+        display: block !important;
+        margin-top: 0 !important;
+        gap: 0 !important;
+        padding: 0 !important;
     }
 
     .carousel-viewport {
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        padding: 0;
-        margin: 0;
-        width: 100%;
-        max-width: 100%;
+        overflow: visible !important;
+        width: 100% !important;
+        position: relative !important;
     }
 
-    .carousel-wrapper {
-        display: flex;
-        flex-direction: row;
-        gap: var(--spacing-sm);
-        padding: var(--spacing-sm);
-        width: max-content;
-        scroll-snap-type: none;
-        transition: none;
+    /* Grid layout for all carousel wrappers - 2 columns like shopping apps */
+    .achievements-grid.carousel-wrapper,
+    .projects-grid.carousel-wrapper,
+    .skills-container.carousel-wrapper {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--spacing-sm) !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
         transform: none !important;
-        will-change: auto;
+        transition: none !important;
+        overflow: visible !important;
+        align-items: stretch !important;
     }
     
-    /* Mobile carousel - full width cards with native scroll */
-    .section {
-        overflow-x: hidden;
-    }
-
-    .achievements-grid.carousel-wrapper .achievement-card,
-    .projects-grid.carousel-wrapper .project-card {
-        min-width: calc(100% - var(--spacing-sm));
-        max-width: calc(100% - var(--spacing-sm));
-        flex: 0 0 calc(100% - var(--spacing-sm));
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
-    }
-
-    .skills-container.carousel-wrapper .skill-category {
-        min-width: calc(100% - var(--spacing-sm));
-        max-width: calc(100% - var(--spacing-sm));
-        flex: 0 0 calc(100% - var(--spacing-sm));
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
+    /* Also update non-carousel grids to 2 columns on mobile */
+    .projects-grid:not(.carousel-wrapper),
+    .achievements-grid:not(.carousel-wrapper) {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--spacing-sm) !important;
     }
     
-    /* Editor section mobile - same as above */
-    #editor .achievements-grid.carousel-wrapper,
-    #editor .projects-grid.carousel-wrapper,
-    #editor .skills-container.carousel-wrapper {
-        gap: var(--spacing-sm);
-        justify-content: flex-start;
-        padding: var(--spacing-sm);
-    }
-    
-    #editor .achievements-grid.carousel-wrapper .achievement-card,
-    #editor .projects-grid.carousel-wrapper .project-card,
-    #editor .skills-container.carousel-wrapper .skill-category {
-        min-width: calc(100% - var(--spacing-sm));
-        max-width: calc(100% - var(--spacing-sm));
-        flex: 0 0 calc(100% - var(--spacing-sm));
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
+    /* 3 columns on larger phones (375px+) for better view */
+    @media (min-width: 375px) {
+        .achievements-grid.carousel-wrapper,
+        .projects-grid.carousel-wrapper {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
     }
 
+    /* Compact mobile app-style cards */
     .project-card,
     .achievement-card {
         min-height: auto;
         margin-bottom: 0;
         width: 100%;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        background: var(--card-bg);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .project-card:active,
+    .achievement-card:active {
+        transform: scale(0.98);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
     }
 
     .project-thumbnail,
     .achievement-thumbnail {
-        height: 200px;
-        min-height: 200px;
+        height: 140px;
+        min-height: 140px;
+        max-height: 140px;
         overflow: hidden;
+        background: var(--bg-secondary);
+        position: relative;
     }
 
     .project-thumbnail img,
@@ -3125,26 +3150,33 @@ body {
         height: 100%;
         object-fit: cover;
         display: block;
+        transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-thumbnail img,
+    .achievement-card:hover .achievement-thumbnail img {
+        transform: scale(1.05);
     }
 
     .project-content,
     .achievement-content {
         min-height: auto;
-        padding: var(--spacing-md);
-        padding-bottom: var(--spacing-sm);
+        padding: var(--spacing-sm);
+        padding-bottom: var(--spacing-xs);
         display: flex;
         flex-direction: column;
-        gap: var(--spacing-sm);
+        gap: var(--spacing-xs);
+        flex: 1;
     }
 
     .project-title,
     .achievement-name {
-        font-size: var(--font-size-lg);
+        font-size: 13px;
         height: auto;
         min-height: auto;
-        max-height: none;
+        max-height: 2.6em;
         margin-bottom: 0;
-        line-height: 1.4;
+        line-height: 1.3;
         font-weight: 600;
         word-wrap: break-word;
         overflow-wrap: break-word;
@@ -3153,20 +3185,21 @@ body {
         line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        color: var(--text-primary);
     }
 
     .project-desc-short,
     .achievement-desc {
-        font-size: var(--font-size-sm);
+        font-size: 11px;
         height: auto;
         min-height: auto;
-        max-height: 4em;
-        line-height: 1.5;
+        max-height: 2.4em;
+        line-height: 1.4;
         margin-bottom: 0;
         color: var(--text-secondary);
         display: -webkit-box;
-        -webkit-line-clamp: 3;
-        line-clamp: 3;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
@@ -3174,43 +3207,104 @@ body {
     .project-rating,
     .achievement-rating {
         height: auto;
-        min-height: 24px;
-        font-size: var(--font-size-sm);
+        min-height: 18px;
+        font-size: 11px;
         margin-bottom: 0;
         display: flex;
         align-items: center;
-        gap: var(--spacing-xs);
+        gap: 4px;
     }
 
     .stars {
-        font-size: var(--font-size-sm);
+        font-size: 11px;
     }
 
     .rating-value {
-        font-size: var(--font-size-sm);
+        font-size: 11px;
+        font-weight: 600;
     }
 
     .project-bottom-section,
     .achievement-bottom-section {
-        margin-top: var(--spacing-sm);
-        padding-top: var(--spacing-sm);
+        margin-top: auto;
+        padding-top: var(--spacing-xs);
         border-top: 1px solid var(--border-color);
-        gap: var(--spacing-sm);
+        gap: var(--spacing-xs);
     }
 
     .project-link,
     .achievement-content .project-link,
     .achievement-bottom-section .project-link {
         height: auto;
-        min-height: 44px;
-        padding: var(--spacing-sm) var(--spacing-md);
-        font-size: var(--font-size-base);
+        min-height: 32px;
+        padding: 6px 8px;
+        font-size: 11px;
+        font-weight: 600;
         touch-action: manipulation;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
         white-space: nowrap;
+        border-radius: var(--radius-sm);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.2s ease;
+    }
+    
+    .project-link:active,
+    .achievement-content .project-link:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+    
+    /* Smooth vertical scrolling for grid */
+    .projects-section,
+    .achievements-section {
+        -webkit-overflow-scrolling: touch;
+        overflow-y: auto;
+    }
+    
+    /* App-like section header */
+    .section-title {
+        position: sticky;
+        top: 56px;
+        background: var(--bg-primary);
+        z-index: 10;
+        padding: var(--spacing-sm) 0;
+        margin-bottom: var(--spacing-md);
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    /* Editor section - same grid layout */
+    #editor .carousel-container {
+        display: block !important;
+        margin-top: 0 !important;
+    }
+
+    #editor .achievements-grid.carousel-wrapper,
+    #editor .projects-grid.carousel-wrapper,
+    #editor .skills-container.carousel-wrapper {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--spacing-sm) !important;
+        padding: 0 !important;
+        width: 100% !important;
+        transform: none !important;
+        overflow: visible !important;
+    }
+    
+    #editor .project-card,
+    #editor .achievement-card {
+        width: 100%;
+        margin: 0;
+    }
+    
+    /* Ensure cards maintain aspect ratio and don't overflow */
+    .project-card,
+    .achievement-card {
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     button,
