@@ -94,19 +94,36 @@ loadTranslations();
 // ============================================
 // Smooth Scrolling
 // ============================================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+function getNavbarHeight() {
+    const navbar = document.getElementById('navbar');
+    if (!navbar) return 80;
+    // Get actual computed height dynamically
+    const computedHeight = navbar.offsetHeight;
+    // Fallback: 60px for mobile, 80px for desktop
+    return computedHeight || (window.innerWidth <= 768 ? 60 : 80);
+}
+
+function smoothScrollTo(targetElement, delay = 0) {
+    if (!targetElement) return;
+    
+    setTimeout(() => {
+        const navbarHeight = getNavbarHeight();
+        const offsetTop = targetElement.offsetTop - navbarHeight;
+        window.scrollTo({
+            top: Math.max(0, offsetTop), // Ensure not negative
+            behavior: 'smooth'
+        });
+    }, delay);
+}
+
+// Handle navigation links (exclude nav-links as they have special handling)
+document.querySelectorAll('a[href^="#"]:not(.nav-link)').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
         if (href !== '#' && href !== '') {
             e.preventDefault();
             const target = document.querySelector(href);
-            if (target) {
-                const offsetTop = target.offsetTop - 80; // Account for fixed navbar
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
-            }
+            smoothScrollTo(target);
         }
     });
 });
@@ -116,13 +133,7 @@ document.querySelectorAll('[data-scroll]').forEach(button => {
     button.addEventListener('click', function() {
         const targetId = this.getAttribute('data-scroll');
         const target = document.getElementById(targetId);
-        if (target) {
-            const offsetTop = target.offsetTop - 80;
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
-        }
+        smoothScrollTo(target);
     });
 });
 
@@ -137,11 +148,28 @@ mobileMenuToggle.addEventListener('click', () => {
     mobileMenuToggle.classList.toggle('active');
 });
 
-// Close mobile menu when clicking on a link
+// Handle navigation links with mobile menu close
 document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        mobileMenuToggle.classList.remove('active');
+    link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        
+        // Only handle anchor links
+        if (href && href.startsWith('#') && href !== '#') {
+            e.preventDefault();
+            
+            // Close mobile menu first
+            if (navMenu && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+            }
+            
+            // Scroll to target with delay to ensure menu closes smoothly
+            const target = document.querySelector(href);
+            if (target) {
+                // Wait for menu close animation (300ms) before scrolling
+                smoothScrollTo(target, 300);
+            }
+        }
     });
 });
 
@@ -306,11 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = document.querySelector(window.location.hash);
         if (target) {
             setTimeout(() => {
-                const offsetTop = target.offsetTop - 80;
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
+                smoothScrollTo(target, 0);
             }, 100);
         }
     }
@@ -2072,11 +2096,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const target = document.querySelector(window.location.hash);
             if (target) {
                 setTimeout(() => {
-                    const offsetTop = target.offsetTop - 80;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
+                    smoothScrollTo(target, 0);
                 }, 100);
             }
         }
