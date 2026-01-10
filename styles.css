@@ -3549,6 +3549,19 @@ body {
         border-bottom: none !important;
     }
 
+    /* Hover and active states for dropdown links */
+    .nav-menu.active .nav-link:hover,
+    .nav-menu.active .nav-link:focus {
+        background: var(--bg-secondary) !important;
+        color: var(--accent-color) !important;
+    }
+
+    .nav-menu.active .nav-link:active {
+        background: var(--bg-secondary) !important;
+        color: var(--accent-color) !important;
+        transform: scale(0.98);
+    }
+
     .nav-menu.active .nav-link:hover,
     .nav-menu.active .nav-link:active {
         background: var(--bg-secondary) !important;

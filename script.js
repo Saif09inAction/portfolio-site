@@ -220,39 +220,32 @@ document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
         e.stopPropagation();
         const href = link.getAttribute('href');
+        
+        // Always close mobile menu when clicking any link
+        const navMenuEl = document.getElementById('navMenu');
+        const mobileMenuToggleEl = document.getElementById('mobileMenuToggle');
+        if (navMenuEl && mobileMenuToggleEl) {
+            navMenuEl.classList.remove('active');
+            mobileMenuToggleEl.classList.remove('active');
+        }
+        
         if (href && href.startsWith('#')) {
             e.preventDefault();
             const targetId = href.substring(1);
             const target = document.getElementById(targetId);
             
-            // Close mobile menu first
-            const navMenuEl = document.getElementById('navMenu');
-            const mobileMenuToggleEl = document.getElementById('mobileMenuToggle');
-            if (navMenuEl && mobileMenuToggleEl) {
-                navMenuEl.classList.remove('active');
-                mobileMenuToggleEl.classList.remove('active');
-            }
-            
-            // Then scroll to target with proper offset for mobile
+            // Scroll to target with proper offset for mobile
             if (target) {
                 const isMobile = window.innerWidth <= 768;
                 const offsetTop = target.offsetTop - (isMobile ? 60 : 80);
                 
-                // Small delay to ensure menu closes smoothly
+                // Small delay to ensure menu closes smoothly before scrolling
                 setTimeout(() => {
                     window.scrollTo({
                         top: Math.max(0, offsetTop),
                         behavior: 'smooth'
                     });
-                }, 100);
-            }
-        } else {
-            // For external links, just close menu
-            const navMenuEl = document.getElementById('navMenu');
-            const mobileMenuToggleEl = document.getElementById('mobileMenuToggle');
-            if (navMenuEl && mobileMenuToggleEl) {
-                navMenuEl.classList.remove('active');
-                mobileMenuToggleEl.classList.remove('active');
+                }, 150);
             }
         }
     });
