@@ -185,6 +185,9 @@ if (mobileMenuToggle && navMenu) {
         console.log('Menu items:', Array.from(navMenu.querySelectorAll('li')).map(li => li.textContent.trim()));
         
         // Force menu visibility with all necessary styles - make it VERY visible
+        // Get theme first
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        
         if (!isActive) {
             // Move menu to body to escape any parent overflow clipping
             const menuParent = navMenu.parentElement;
@@ -193,7 +196,12 @@ if (mobileMenuToggle && navMenu) {
                 document.body.appendChild(navMenu);
             }
             
-            // Set ALL required styles explicitly
+            // Set ALL required styles explicitly with theme colors
+            const bgColor = isDark ? '#1a1a1a' : '#ffffff';
+            const textColor = isDark ? '#ffffff' : '#000000';
+            const borderColor = isDark ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.2)';
+            const linkBorderColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+            
             navMenu.style.cssText = `
                 display: flex !important;
                 position: fixed !important;
@@ -206,8 +214,8 @@ if (mobileMenuToggle && navMenu) {
                 height: auto !important;
                 min-height: 300px !important;
                 flex-direction: column !important;
-                background-color: ${isDark ? '#1a1a1a' : '#ffffff'} !important;
-                background: ${isDark ? '#1a1a1a' : '#ffffff'} !important;
+                background-color: ${bgColor} !important;
+                background: ${bgColor} !important;
                 backdrop-filter: blur(20px) !important;
                 -webkit-backdrop-filter: blur(20px) !important;
                 visibility: visible !important;
@@ -216,7 +224,7 @@ if (mobileMenuToggle && navMenu) {
                 pointer-events: auto !important;
                 padding: 1rem 0 !important;
                 margin: 0 !important;
-                border-top: 2px solid ${isDark ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.2)'} !important;
+                border-top: 2px solid ${borderColor} !important;
                 box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
                 overflow-y: auto !important;
                 overflow-x: hidden !important;
@@ -241,7 +249,6 @@ if (mobileMenuToggle && navMenu) {
                 
                 const link = li.querySelector('.nav-link');
                 if (link) {
-                    const textColor = isDark ? '#ffffff' : '#000000';
                     link.style.cssText = `
                         display: flex !important;
                         visibility: visible !important;
@@ -258,7 +265,7 @@ if (mobileMenuToggle && navMenu) {
                         font-size: 15px !important;
                         font-weight: 600 !important;
                         text-decoration: none !important;
-                        border-bottom: 1px solid ${isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'} !important;
+                        border-bottom: 1px solid ${linkBorderColor} !important;
                         cursor: pointer !important;
                     `;
                 }
@@ -267,6 +274,7 @@ if (mobileMenuToggle && navMenu) {
             console.log('Menu forced visible. Background:', navMenu.style.backgroundColor);
             console.log('Menu computed styles:', window.getComputedStyle(navMenu));
             console.log('Menu bounding rect:', navMenu.getBoundingClientRect());
+            console.log('Menu visible in viewport:', navMenu.getBoundingClientRect().top >= 0);
         } else {
             // When closing, move menu back to original position
             const navbar = document.getElementById('navbar');
