@@ -2790,11 +2790,31 @@ body {
     
     .carousel-container {
         gap: var(--spacing-xs);
-        padding: 0 var(--spacing-xs);
+        padding: 0 var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
     }
 
     .carousel-viewport {
         padding: 0;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+    
+    .carousel-wrapper {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
     
     .achievements-grid.carousel-wrapper .achievement-card,
@@ -2804,6 +2824,7 @@ body {
         flex: 0 0 calc((100% - var(--spacing-sm)) / 2);
         box-sizing: border-box;
         width: calc((100% - var(--spacing-sm)) / 2);
+        margin: 0;
     }
 
     .skills-container.carousel-wrapper .skill-category {
@@ -2812,9 +2833,18 @@ body {
         flex: 0 0 calc((100% - var(--spacing-sm)) / 2);
         box-sizing: border-box;
         width: calc((100% - var(--spacing-sm)) / 2);
+        margin: 0;
     }
     
     /* Editor section tablet styles - properly constrained */
+    #editor .carousel-container {
+        padding: 0 var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+    
     #editor .achievements-grid.carousel-wrapper,
     #editor .projects-grid.carousel-wrapper,
     #editor .skills-container.carousel-wrapper {
@@ -2824,6 +2854,8 @@ body {
         max-width: 100%;
         box-sizing: border-box;
         overflow-x: hidden;
+        padding: 0;
+        margin: 0;
     }
     
     #editor .achievements-grid.carousel-wrapper .achievement-card,
@@ -2834,6 +2866,7 @@ body {
         flex: 0 0 calc((100% - 0.5rem) / 2);
         box-sizing: border-box;
         width: calc((100% - 0.5rem) / 2);
+        margin: 0;
     }
 
     .project-card,
@@ -3988,36 +4021,50 @@ body {
         max-width: 100%;
     }
     
-    /* Ensure all containers center properly - no negative margins */
-    .container,
+    /* Ensure all containers center properly - no negative margins or overflow */
+    .container {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: var(--spacing-sm) !important;
+        padding-right: var(--spacing-sm) !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+    
     .section {
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: var(--spacing-sm);
-        padding-right: var(--spacing-sm);
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: var(--spacing-sm) !important;
+        padding-right: var(--spacing-sm) !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
     }
     
     .carousel-container {
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: var(--spacing-sm);
-        padding-right: var(--spacing-sm);
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: var(--spacing-sm) !important;
+        padding-right: var(--spacing-sm) !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
     }
     
     .carousel-viewport {
-        padding-left: 0;
-        padding-right: 0;
-        margin-left: 0;
-        margin-right: 0;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
     }
     
     /* Ensure buttons are properly sized and aligned - centered */
@@ -4027,26 +4074,51 @@ body {
     .modal-action-btn,
     .cta-btn,
     .contact-link {
-        margin-left: auto;
-        margin-right: auto;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
     
-    /* Center all grids properly */
+    /* Center all grids properly - prevent overflow */
     .projects-grid,
     .achievements-grid,
     .ideas-grid,
     .skills-container {
-        margin-left: auto;
-        margin-right: auto;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+        padding: 0 !important;
+    }
+    
+    /* Ensure all grid items are properly constrained */
+    .project-card,
+    .achievement-card,
+    .idea-card,
+    .skill-category {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Ensure all wrapper elements don't overflow */
+    .carousel-wrapper {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
 }
 
