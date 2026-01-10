@@ -216,21 +216,24 @@ if (mobileMenuToggle && navMenu) {
 }
 
 // Close mobile menu when clicking on a link and handle smooth scroll
+// This ensures menu disappears after clicking any option and scrolls to that section
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
         e.stopPropagation();
-        const href = link.getAttribute('href');
+        e.preventDefault();
         
-        // Always close mobile menu when clicking any link
+        const href = link.getAttribute('href');
         const navMenuEl = document.getElementById('navMenu');
         const mobileMenuToggleEl = document.getElementById('mobileMenuToggle');
+        
+        // Always close mobile menu immediately when clicking any link
         if (navMenuEl && mobileMenuToggleEl) {
             navMenuEl.classList.remove('active');
             mobileMenuToggleEl.classList.remove('active');
         }
         
+        // Handle navigation to section
         if (href && href.startsWith('#')) {
-            e.preventDefault();
             const targetId = href.substring(1);
             const target = document.getElementById(targetId);
             
@@ -245,7 +248,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
                         top: Math.max(0, offsetTop),
                         behavior: 'smooth'
                     });
-                }, 150);
+                }, 100);
             }
         }
     });
