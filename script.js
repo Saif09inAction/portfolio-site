@@ -184,139 +184,21 @@ if (mobileMenuToggle && navMenu) {
         console.log('Menu items count:', navMenu.querySelectorAll('li').length);
         console.log('Menu items:', Array.from(navMenu.querySelectorAll('li')).map(li => li.textContent.trim()));
         
-        // Force menu visibility with all necessary styles - make it VERY visible
-        // Get theme first
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        
+        // Compact dropdown menu - let CSS handle positioning
+        // Just ensure menu is visible
         if (!isActive) {
-            // Store original parent for restoring later
-            if (!navMenu.dataset.originalParent) {
-                navMenu.dataset.originalParent = navMenu.parentElement?.tagName || 'nav-container';
-            }
-            
-            // Move menu to body to escape any parent overflow clipping - this is CRITICAL for visibility
-            const currentParent = navMenu.parentElement;
-            if (currentParent && currentParent !== document.body) {
-                document.body.appendChild(navMenu);
-                console.log('Menu moved to body to escape overflow clipping');
-            }
-            
-            // Set ALL required styles explicitly with theme colors
-            const bgColor = isDark ? '#1a1a1a' : '#ffffff';
-            const textColor = isDark ? '#ffffff' : '#000000';
-            const borderColor = isDark ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.2)';
-            const linkBorderColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-            
-            navMenu.style.cssText = `
-                display: flex !important;
-                position: fixed !important;
-                top: 60px !important;
-                left: 0 !important;
-                right: 0 !important;
-                width: 100vw !important;
-                max-width: 100vw !important;
-                min-width: 100vw !important;
-                height: auto !important;
-                min-height: 300px !important;
-                flex-direction: column !important;
-                background-color: ${bgColor} !important;
-                background: ${bgColor} !important;
-                backdrop-filter: blur(20px) !important;
-                -webkit-backdrop-filter: blur(20px) !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-                z-index: 10000 !important;
-                pointer-events: auto !important;
-                padding: 1rem 0 !important;
-                margin: 0 !important;
-                border-top: 2px solid ${borderColor} !important;
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
-                overflow-y: auto !important;
-                overflow-x: hidden !important;
-                list-style: none !important;
-                text-align: center !important;
-            `;
-            
-            // Ensure all menu items are visible with explicit colors
-            const menuItems = navMenu.querySelectorAll('li');
-            menuItems.forEach((li, index) => {
-                li.style.cssText = `
-                    display: block !important;
-                    width: 100% !important;
-                    margin: 0 !important;
-                    padding: 0 !important;
-                    list-style: none !important;
-                    visibility: visible !important;
-                    opacity: 1 !important;
-                    min-height: 56px !important;
-                    height: auto !important;
-                `;
-                
-                const link = li.querySelector('.nav-link');
-                if (link) {
-                    link.style.cssText = `
-                        display: flex !important;
-                        visibility: visible !important;
-                        opacity: 1 !important;
-                        color: ${textColor} !important;
-                        background-color: transparent !important;
-                        width: 100% !important;
-                        height: auto !important;
-                        min-height: 56px !important;
-                        padding: 1rem 1.5rem !important;
-                        text-align: center !important;
-                        justify-content: center !important;
-                        align-items: center !important;
-                        font-size: 15px !important;
-                        font-weight: 600 !important;
-                        text-decoration: none !important;
-                        border-bottom: 1px solid ${linkBorderColor} !important;
-                        cursor: pointer !important;
-                    `;
-                }
-            });
-            
-            const rect = navMenu.getBoundingClientRect();
-            const computedStyle = window.getComputedStyle(navMenu);
-            
-            console.log('=== MENU VISIBILITY DEBUG ===');
-            console.log('Menu forced visible. Background:', navMenu.style.backgroundColor);
-            console.log('Menu computed display:', computedStyle.display);
-            console.log('Menu computed visibility:', computedStyle.visibility);
-            console.log('Menu computed opacity:', computedStyle.opacity);
-            console.log('Menu computed position:', computedStyle.position);
-            console.log('Menu computed z-index:', computedStyle.zIndex);
-            console.log('Menu computed top:', computedStyle.top);
-            console.log('Menu computed left:', computedStyle.left);
-            console.log('Menu computed width:', computedStyle.width);
-            console.log('Menu computed height:', computedStyle.height);
-            console.log('Menu bounding rect:', rect);
-            console.log('Menu visible in viewport:', rect.top >= 0 && rect.left >= 0 && rect.width > 0 && rect.height > 0);
-            console.log('Menu items visible:', navMenu.querySelectorAll('li').length, 'items');
-            console.log('Menu links visible:', navMenu.querySelectorAll('.nav-link').length, 'links');
-            
-            // Check if menu is actually visible
-            if (rect.width === 0 || rect.height === 0) {
-                console.error('ERROR: Menu has zero dimensions!');
-                navMenu.style.minHeight = '400px';
-                navMenu.style.height = 'auto';
-            }
-            if (rect.top < 0 || rect.left < 0) {
-                console.error('ERROR: Menu is positioned off-screen!');
+            // Menu is opening - ensure nav-container allows overflow for dropdown
+            const navContainer = navMenu.parentElement;
+            if (navContainer) {
+                navContainer.style.overflow = 'visible';
+                navContainer.style.overflowY = 'visible';
             }
         } else {
-            // When closing, move menu back to original position in nav-container
-            const navbar = document.getElementById('navbar');
-            const navContainer = navbar?.querySelector('.nav-container');
-            if (navContainer && navMenu.parentElement === document.body) {
-                // Find where nav-menu should be (before nav-controls)
-                const navControls = navContainer.querySelector('.nav-controls');
-                if (navControls) {
-                    navContainer.insertBefore(navMenu, navControls);
-                } else {
-                    navContainer.appendChild(navMenu);
-                }
-                console.log('Menu moved back to nav-container');
+            // Menu is closing - restore parent overflow
+            const navContainer = navMenu.parentElement;
+            if (navContainer) {
+                navContainer.style.overflow = '';
+                navContainer.style.overflowY = '';
             }
         }
     });
