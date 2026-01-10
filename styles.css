@@ -110,9 +110,11 @@ body {
     overflow: visible;
 }
 
-/* Ensure nav-menu can break out of container when active */
-.nav-container .nav-menu.active {
-    position: fixed !important;
+/* Ensure nav-menu appears as dropdown when active on mobile */
+@media (max-width: 768px) {
+    .nav-container .nav-menu.active {
+        position: absolute !important;
+    }
 }
 
 .nav-logo {
@@ -2669,6 +2671,8 @@ body {
         width: 100%;
         box-sizing: border-box;
         overflow-x: hidden;
+        overflow-y: visible !important;
+        position: relative !important;
     }
 
     /* Hide desktop menu on mobile/tablet - show hamburger instead */
@@ -2680,7 +2684,7 @@ body {
     .nav-menu.active {
         display: flex !important;
         position: absolute !important;
-        top: 100% !important;
+        top: calc(100% + var(--spacing-xs)) !important;
         right: var(--spacing-xs) !important;
         left: auto !important;
         flex-direction: column !important;
@@ -2700,14 +2704,14 @@ body {
         z-index: 10000 !important;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
         min-height: auto !important;
-        max-height: calc(100vh - 100px) !important;
+        max-height: calc(100vh - 120px) !important;
         height: auto !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
         list-style: none !important;
         visibility: visible !important;
         opacity: 1 !important;
-        margin: var(--spacing-xs) 0 0 0 !important;
+        margin: 0 !important;
         pointer-events: auto !important;
         transform: translateY(0) scale(1) !important;
     }
@@ -3491,12 +3495,12 @@ body {
         display: none !important;
     }
 
-    .nav-menu.active li:nth-child(1) { animation-delay: 0.02s; }
-    .nav-menu.active li:nth-child(2) { animation-delay: 0.04s; }
-    .nav-menu.active li:nth-child(3) { animation-delay: 0.06s; }
-    .nav-menu.active li:nth-child(4) { animation-delay: 0.08s; }
-    .nav-menu.active li:nth-child(5) { animation-delay: 0.1s; }
-    .nav-menu.active li:nth-child(6) { animation-delay: 0.12s; }
+    .nav-menu.active li:nth-child(1) { animation-delay: 0s; }
+    .nav-menu.active li:nth-child(2) { animation-delay: 0.02s; }
+    .nav-menu.active li:nth-child(3) { animation-delay: 0.04s; }
+    .nav-menu.active li:nth-child(4) { animation-delay: 0.06s; }
+    .nav-menu.active li:nth-child(5) { animation-delay: 0.08s; }
+    .nav-menu.active li:nth-child(6) { animation-delay: 0.1s; }
 
     .nav-link {
         padding: var(--spacing-sm) var(--spacing-md);
