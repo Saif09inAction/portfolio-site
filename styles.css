@@ -3263,10 +3263,17 @@ body {
         color: var(--text-primary);
         text-decoration: none;
         transition: transform 0.2s ease;
+        cursor: pointer !important;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
     }
 
     .nav-logo:active {
         transform: scale(0.95);
+    }
+
+    .nav-logo:hover {
+        opacity: 0.8;
     }
 
     .logo-icon {
@@ -3305,26 +3312,57 @@ body {
         display: flex !important;
         margin: 0 !important;
         list-style: none !important;
+        visibility: visible !important;
     }
 
     .nav-menu.active {
         left: 0 !important;
+        display: flex !important;
+        visibility: visible !important;
     }
 
-    /* Ensure all nav menu items are visible */
+    /* Ensure all nav menu items are visible in dropdown */
     .nav-menu li {
         display: block !important;
         width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         list-style: none !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Ensure menu is visible when active */
+    .nav-menu.active li {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        animation: fadeInSlide 0.3s ease forwards;
+    }
+
+    .nav-menu.active li:nth-child(1) { animation-delay: 0.05s; }
+    .nav-menu.active li:nth-child(2) { animation-delay: 0.1s; }
+    .nav-menu.active li:nth-child(3) { animation-delay: 0.15s; }
+    .nav-menu.active li:nth-child(4) { animation-delay: 0.2s; }
+    .nav-menu.active li:nth-child(5) { animation-delay: 0.25s; }
+    .nav-menu.active li:nth-child(6) { animation-delay: 0.3s; }
+
+    @keyframes fadeInSlide {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
     }
 
     .nav-link {
         padding: var(--spacing-md) var(--spacing-lg);
         font-size: var(--font-size-base);
         font-weight: 600;
-        display: flex;
+        display: flex !important;
         align-items: center;
         justify-content: center;
         min-height: 56px;
@@ -3336,6 +3374,9 @@ body {
         border-bottom: 1px solid var(--border-color);
         position: relative;
         overflow: hidden;
+        width: 100% !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 
     .nav-link::before {

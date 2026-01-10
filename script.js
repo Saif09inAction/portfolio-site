@@ -130,19 +130,94 @@ document.querySelectorAll('[data-scroll]').forEach(button => {
 });
 
 // ============================================
+// Logo Click Handler - Navigate to Home (Mobile & Desktop)
+// ============================================
+const navLogo = document.querySelector('.nav-logo');
+if (navLogo) {
+    navLogo.addEventListener('click', (e) => {
+        e.preventDefault();
+        const homeSection = document.getElementById('home');
+        if (homeSection) {
+            // Close mobile menu if open
+            const navMenu = document.getElementById('navMenu');
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            if (navMenu && mobileMenuToggle) {
+                navMenu.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+            }
+            
+            // Scroll to home with proper offset for mobile
+            const isMobile = window.innerWidth <= 768;
+            const offsetTop = homeSection.offsetTop - (isMobile ? 60 : 80);
+            window.scrollTo({
+                top: Math.max(0, offsetTop),
+                behavior: 'smooth'
+            });
+        }
+    });
+    
+    // Make logo cursor pointer and add hover effect
+    navLogo.style.cursor = 'pointer';
+    navLogo.setAttribute('role', 'button');
+    navLogo.setAttribute('aria-label', 'Navigate to home');
+}
+
+// ============================================
 // Mobile Menu Toggle
 // ============================================
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const navMenu = document.getElementById('navMenu');
 
-mobileMenuToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    mobileMenuToggle.classList.toggle('active');
-});
+if (mobileMenuToggle && navMenu) {
+    // Toggle mobile menu dropdown when clicking hamburger (3 lines)
+    mobileMenuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navMenu.classList.toggle('active');
+        mobileMenuToggle.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && 
+            !mobileMenuToggle.contains(e.target) && 
+            !navLogo?.contains(e.target)) {
+            navMenu.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
+        }
+    });
+}
+
+// ============================================
+// Logo Click Handler - Navigate to Home
+// ============================================
+const navLogo = document.querySelector('.nav-logo');
+if (navLogo) {
+    navLogo.addEventListener('click', (e) => {
+        e.preventDefault();
+        const homeSection = document.getElementById('home');
+        if (homeSection) {
+            // Close mobile menu if open
+            navMenu.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
+            
+            // Scroll to home with proper offset for mobile
+            const isMobile = window.innerWidth <= 768;
+            const offsetTop = homeSection.offsetTop - (isMobile ? 60 : 80);
+            window.scrollTo({
+                top: Math.max(0, offsetTop),
+                behavior: 'smooth'
+            });
+        }
+    });
+    
+    // Make logo cursor pointer
+    navLogo.style.cursor = 'pointer';
+}
 
 // Close mobile menu when clicking on a link and handle smooth scroll
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
+        e.stopPropagation();
         const href = link.getAttribute('href');
         if (href && href.startsWith('#')) {
             e.preventDefault();
@@ -172,14 +247,6 @@ document.querySelectorAll('.nav-link').forEach(link => {
             mobileMenuToggle.classList.remove('active');
         }
     });
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!navMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-        navMenu.classList.remove('active');
-        mobileMenuToggle.classList.remove('active');
-    }
 });
 
 // ============================================
