@@ -3234,6 +3234,7 @@ body {
         max-width: 100%;
         width: 100%;
         overflow-x: hidden;
+        overflow-y: visible !important;
         backdrop-filter: blur(25px) saturate(180%);
         -webkit-backdrop-filter: blur(25px) saturate(180%);
         background: rgba(255, 255, 255, 0.97);
@@ -3245,6 +3246,11 @@ body {
         left: 0 !important;
         right: 0 !important;
         z-index: 1000 !important;
+    }
+
+    /* Ensure menu appears BELOW navbar, not behind it */
+    .navbar + * {
+        margin-top: 60px;
     }
 
     [data-theme="dark"] .navbar {
@@ -3341,30 +3347,52 @@ body {
         -webkit-backdrop-filter: blur(20px) !important;
         width: 100vw !important;
         max-width: 100vw !important;
+        min-width: 100vw !important;
         text-align: center !important;
         transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease !important;
         padding: var(--spacing-md) 0 !important;
         padding-top: var(--spacing-md) !important;
         padding-bottom: var(--spacing-md) !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
         border-top: 2px solid var(--border-color) !important;
         gap: 0 !important;
         z-index: 10000 !important;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
-        min-height: auto !important;
+        min-height: 200px !important;
         max-height: calc(100vh - 60px) !important;
         height: auto !important;
         overflow-y: auto !important;
+        overflow-x: hidden !important;
         -webkit-overflow-scrolling: touch !important;
         margin: 0 !important;
         list-style: none !important;
         visibility: visible !important;
         opacity: 1 !important;
         pointer-events: auto !important;
+        transform: none !important;
+        clip: auto !important;
+        clip-path: none !important;
     }
 
+    /* Dark theme menu background */
     [data-theme="dark"] .nav-menu.active {
-        background: var(--bg-primary) !important;
-        background-color: var(--bg-primary) !important;
+        background: #1a1a1a !important;
+        background-color: #1a1a1a !important;
+        border-top: 2px solid rgba(255, 255, 255, 0.2) !important;
+    }
+
+    /* Light theme menu background */
+    [data-theme="light"] .nav-menu.active,
+    body:not([data-theme]) .nav-menu.active {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        border-top: 2px solid rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Ensure menu is always visible with high contrast */
+    .nav-menu.active {
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
     }
 
     /* Ensure ALL navigation menu items are visible when menu is active */
@@ -3454,13 +3482,22 @@ body {
         border-bottom: none !important;
     }
 
-    /* Ensure menu text is visible */
+    /* Ensure menu text is visible with high contrast */
     .nav-menu.active .nav-link,
     .nav-menu.active .nav-link span,
     .nav-menu.active .nav-link * {
         color: var(--text-primary) !important;
         visibility: visible !important;
         opacity: 1 !important;
+    }
+
+    [data-theme="dark"] .nav-menu.active .nav-link {
+        color: #ffffff !important;
+    }
+
+    [data-theme="light"] .nav-menu.active .nav-link,
+    body:not([data-theme]) .nav-menu.active .nav-link {
+        color: #000000 !important;
     }
 
     .nav-link::before {

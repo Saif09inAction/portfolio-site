@@ -198,8 +198,17 @@ if (mobileMenuToggle && navMenu) {
             navMenu.style.visibility = 'visible';
             navMenu.style.opacity = '1';
             navMenu.style.zIndex = '10000';
-            navMenu.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary') || '#ffffff';
+            
+            // Get theme and set appropriate background color
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const bgColor = isDark ? '#1a1a1a' : '#ffffff';
+            navMenu.style.backgroundColor = bgColor;
+            navMenu.style.background = bgColor;
             navMenu.style.pointerEvents = 'auto';
+            
+            // Add visible border
+            navMenu.style.borderTop = isDark ? '2px solid rgba(255, 255, 255, 0.2)' : '2px solid rgba(0, 0, 0, 0.1)';
+            navMenu.style.boxShadow = '0 10px 40px rgba(0, 0, 0, 0.5)';
             
             // Ensure all menu items are visible
             const menuItems = navMenu.querySelectorAll('li');
@@ -213,7 +222,18 @@ if (mobileMenuToggle && navMenu) {
                     link.style.display = 'flex';
                     link.style.visibility = 'visible';
                     link.style.opacity = '1';
-                    link.style.color = getComputedStyle(document.documentElement).getPropertyValue('--text-primary') || '#000000';
+                    const textColor = isDark ? '#ffffff' : '#000000';
+                    link.style.color = textColor;
+                    link.style.backgroundColor = 'transparent';
+                    link.style.width = '100%';
+                    link.style.height = 'auto';
+                    link.style.minHeight = '56px';
+                    link.style.padding = 'var(--spacing-md) var(--spacing-lg)';
+                    link.style.textAlign = 'center';
+                    link.style.justifyContent = 'center';
+                    link.style.alignItems = 'center';
+                    link.style.fontSize = 'var(--font-size-base)';
+                    link.style.fontWeight = '600';
                 }
             });
             
