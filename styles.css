@@ -1834,7 +1834,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: var(--spacing-md);
-    overflow-y: auto;
+    overflow: hidden;
     opacity: 0;
     transition: opacity var(--transition-base);
 }
@@ -1850,13 +1850,14 @@ body {
     max-width: 900px;
     width: 100%;
     max-height: 90vh;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
     position: relative;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     transform: scale(0.9);
     transition: transform var(--transition-base);
     z-index: 2001;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-overlay.active .modal-container {
@@ -1890,6 +1891,11 @@ body {
 
 .modal-content {
     padding: var(--spacing-lg);
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    min-height: 0;
+    -webkit-overflow-scrolling: touch;
 }
 
 .modal-header {
@@ -1949,10 +1955,22 @@ body {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
+    overflow: visible;
+}
+
+.modal-body > * {
+    overflow: visible;
+    max-height: none;
 }
 
 .modal-description h3,
 .modal-technologies h3,
+.modal-rating-section,
+.modal-comments-section {
+    margin: var(--spacing-lg) 0;
+    position: static;
+}
+
 .modal-rating-section h3,
 .modal-comments-section h3 {
     font-size: var(--font-size-xl);
@@ -1961,10 +1979,17 @@ body {
     color: var(--text-primary);
 }
 
+.modal-description {
+    overflow: visible;
+}
+
 .modal-description p {
     font-size: var(--font-size-base);
     color: var(--text-secondary);
     line-height: 1.8;
+    overflow: visible;
+    max-height: none;
+    height: auto;
 }
 
 /* Technologies Section */
@@ -2250,6 +2275,7 @@ body {
     padding: var(--spacing-md);
     background: var(--bg-secondary);
     border-radius: var(--radius-lg);
+    position: static;
 }
 
 .modal-action-btn {
@@ -3152,10 +3178,11 @@ body {
         max-width: 95%;
         margin: var(--spacing-sm);
         max-height: 90vh;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden;
         position: relative;
         padding-top: calc(var(--spacing-md) + 44px + var(--spacing-sm));
+        display: flex;
+        flex-direction: column;
     }
 
     .modal-header {
@@ -4494,8 +4521,7 @@ body {
         justify-content: center;
         padding-top: var(--spacing-sm);
         box-sizing: border-box;
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: hidden;
     }
 
     .modal-container {
@@ -4557,9 +4583,6 @@ body {
     }
 
     .modal-body {
-        max-height: calc(100vh - 350px);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
         padding: var(--spacing-sm) 0;
     }
 
@@ -4575,10 +4598,17 @@ body {
         font-weight: 600;
     }
 
+    .modal-description {
+        overflow: visible;
+    }
+
     .modal-description p {
         font-size: var(--font-size-sm);
         line-height: 1.7;
         color: var(--text-secondary);
+        overflow: visible;
+        max-height: none;
+        height: auto;
     }
 
     .technologies-tags {
@@ -4592,10 +4622,9 @@ body {
         width: 100%;
         padding: var(--spacing-sm) 0;
         border-top: 1px solid var(--border-color);
-        margin-top: auto;
+        margin-top: var(--spacing-md);
         flex-shrink: 0;
-        position: sticky;
-        bottom: 0;
+        position: static;
         background: var(--bg-primary);
     }
 
@@ -4650,11 +4679,13 @@ body {
 
     .modal-container {
         position: relative !important;
-        overflow: visible !important;
+        overflow: hidden !important;
         z-index: 2001 !important;
         margin: var(--spacing-sm) !important;
         padding-top: calc(var(--spacing-md) + 48px + var(--spacing-sm)) !important;
         max-height: calc(100vh - (var(--spacing-sm) * 2) - 48px - var(--spacing-md)) !important;
+        display: flex !important;
+        flex-direction: column !important;
     }
 
     /* Adjust modal content padding for mobile */
@@ -4748,12 +4779,15 @@ body {
         justify-content: center;
     }
 
-    /* Ensure modal body scrolls properly */
+    /* Modal body should not have its own scrolling - content handles it */
     .modal-body {
-        max-height: calc(100vh - 250px);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
         padding: var(--spacing-sm) 0;
+        overflow: visible;
+    }
+
+    .modal-body > * {
+        overflow: visible;
+        max-height: none;
     }
 
     /* Improve scrollbar visibility on mobile */
