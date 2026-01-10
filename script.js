@@ -1,17 +1,6 @@
 // ============================================
-// API Integration (MongoDB Backend)
+// localStorage-based Data Storage (No API needed)
 // ============================================
-import {
-    getProjects,
-    getAchievements,
-    getComments,
-    addComment,
-    updateComment,
-    deleteComment,
-    getRatings,
-    submitRating,
-    submitFeedback
-} from "./api-service.js";
 
 // ============================================
 // Theme Management
@@ -429,7 +418,7 @@ function formatDate(dateString) {
 
 // Edit comment
 async function editComment(index) {
-    const comments = await getCommentsFromAPI(currentItemId, currentItemType);
+    const comments = getCommentsFromAPI(currentItemId, currentItemType);
     const comment = comments[index];
     
     if (!comment) return;
@@ -463,10 +452,10 @@ async function saveCommentEdit(commentId) {
     }
     
     try {
-        await updateComment(currentItemId, currentItemType, commentId, {
+        updateCommentInAPI(currentItemId, currentItemType, commentId, {
             text: newText
         });
-        await loadComments();
+        loadComments();
     } catch (error) {
         console.error('Error updating comment:', error);
         alert('Error updating comment. Please try again.');
@@ -475,30 +464,53 @@ async function saveCommentEdit(commentId) {
 
 // Cancel comment edit
 async function cancelCommentEdit() {
-    await loadComments();
+    loadComments();
 }
 
 // Delete comment
-async function deleteCommentHandler(commentId) {
+function deleteCommentHandler(commentId) {
     if (!confirm('Are you sure you want to delete this comment?')) {
         return;
     }
     
     try {
-        await deleteCommentFromAPI(currentItemId, currentItemType, commentId);
-        await loadComments();
+        deleteCommentFromAPI(currentItemId, currentItemType, commentId);
+        loadComments();
     } catch (error) {
         console.error('Error deleting comment:', error);
         alert('Error deleting comment. Please try again.');
     }
 }
 
-async function deleteCommentFromAPI(itemId, itemType, commentId) {
+function deleteCommentFromAPI(itemId, itemType, commentId) {
     try {
-        await deleteComment(itemId, itemType, commentId);
+        const storage = JSON.parse(localStorage.getItem(STORAGE_COMMENTS) || '{}');
+        const key = `${itemType}_${itemId}`;
+        if (storage[key]) {
+            storage[key] = storage[key].filter(c => (c._id || c.id) !== commentId);
+            localStorage.setItem(STORAGE_COMMENTS, JSON.stringify(storage));
+        }
         return true;
     } catch (error) {
         console.error('Error deleting comment:', error);
+        throw error;
+    }
+}
+
+function updateCommentInAPI(itemId, itemType, commentId, commentData) {
+    try {
+        const storage = JSON.parse(localStorage.getItem(STORAGE_COMMENTS) || '{}');
+        const key = `${itemType}_${itemId}`;
+        if (storage[key]) {
+            const index = storage[key].findIndex(c => (c._id || c.id) === commentId);
+            if (index !== -1) {
+                storage[key][index] = { ...storage[key][index], ...commentData };
+                localStorage.setItem(STORAGE_COMMENTS, JSON.stringify(storage));
+            }
+        }
+        return true;
+    } catch (error) {
+        console.error('Error updating comment:', error);
         throw error;
     }
 }
@@ -533,8 +545,8 @@ function clearRatingInput() {
     document.getElementById('ratingText').textContent = 'Click to rate';
 }
 
-async function getCurrentRating() {
-    const ratings = await getRatingsFromAPI(currentItemId, currentItemType);
+function getCurrentRating() {
+    const ratings = getRatingsFromAPI(currentItemId, currentItemType);
     const userId = localStorage.getItem('userId') || '';
     const userRating = ratings.find(r => r.userId === userId);
     return userRating ? userRating.rating : null;
@@ -557,13 +569,15 @@ window.saveCommentEdit = saveCommentEdit;
 window.cancelCommentEdit = cancelCommentEdit;
 
 // ============================================
-// API Integration - MongoDB Backend
+// localStorage-based Data Storage (No API needed)
 // ============================================
-async function getCommentsFromAPI(itemId, itemType) {
+function getCommentsFromAPI(itemId, itemType) {
     try {
-        const comments = await getComments(itemId, itemType);
+        const storage = JSON.parse(localStorage.getItem(STORAGE_COMMENTS) || '{}');
+        const key = `${itemType}_${itemId}`;
+        const comments = storage[key] || [];
         return comments.map(comment => ({
-            id: comment._id || comment.id,
+            id: comment._id || comment.id || `comment_${Date.now()}_${Math.random()}`,
             userId: comment.userId || '',
             author: comment.author || '',
             text: comment.text || '',
@@ -575,9 +589,18 @@ async function getCommentsFromAPI(itemId, itemType) {
     }
 }
 
-async function saveCommentToAPI(itemId, itemType, commentData) {
+function saveCommentToAPI(itemId, itemType, commentData) {
     try {
-        await addComment(itemId, itemType, commentData);
+        const storage = JSON.parse(localStorage.getItem(STORAGE_COMMENTS) || '{}');
+        const key = `${itemType}_${itemId}`;
+        if (!storage[key]) storage[key] = [];
+        const newComment = {
+            ...commentData,
+            _id: `comment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            timestamp: new Date().toISOString()
+        };
+        storage[key].push(newComment);
+        localStorage.setItem(STORAGE_COMMENTS, JSON.stringify(storage));
         return true;
     } catch (error) {
         console.error('Error saving comment:', error);
@@ -585,11 +608,13 @@ async function saveCommentToAPI(itemId, itemType, commentData) {
     }
 }
 
-async function getRatingsFromAPI(itemId, itemType) {
+function getRatingsFromAPI(itemId, itemType) {
     try {
-        const ratings = await getRatings(itemId, itemType);
+        const storage = JSON.parse(localStorage.getItem(STORAGE_RATINGS) || '{}');
+        const key = `${itemType}_${itemId}`;
+        const ratings = storage[key] || [];
         return ratings.map(rating => ({
-            id: rating._id || rating.id,
+            id: rating._id || rating.id || `rating_${Date.now()}_${Math.random()}`,
             userId: rating.userId || '',
             rating: rating.rating || 0,
             timestamp: rating.timestamp ? new Date(rating.timestamp).getTime() : Date.now()
@@ -600,11 +625,27 @@ async function getRatingsFromAPI(itemId, itemType) {
     }
 }
 
-async function saveRatingToAPI(itemId, itemType, rating) {
+function saveRatingToAPI(itemId, itemType, rating) {
     try {
         const userId = localStorage.getItem('userId') || `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
         localStorage.setItem('userId', userId);
-        await submitRating(itemId, itemType, { userId, rating });
+        
+        const storage = JSON.parse(localStorage.getItem(STORAGE_RATINGS) || '{}');
+        const key = `${itemType}_${itemId}`;
+        if (!storage[key]) storage[key] = [];
+        
+        // Remove existing rating from this user
+        storage[key] = storage[key].filter(r => r.userId !== userId);
+        
+        // Add new rating
+        storage[key].push({
+            userId,
+            rating,
+            _id: `rating_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            timestamp: new Date().toISOString()
+        });
+        
+        localStorage.setItem(STORAGE_RATINGS, JSON.stringify(storage));
         return true;
     } catch (error) {
         console.error('Error saving rating:', error);
@@ -612,9 +653,9 @@ async function saveRatingToAPI(itemId, itemType, rating) {
     }
 }
 
-// Load and display comments (API version)
+// Load and display comments (localStorage version)
 async function loadComments() {
-    const comments = await getCommentsFromAPI(currentItemId, currentItemType);
+    const comments = getCommentsFromAPI(currentItemId, currentItemType);
     const commentsList = document.getElementById('commentsList');
     
     if (comments.length === 0) {
@@ -652,12 +693,12 @@ async function loadComments() {
     }).join('');
 }
 
-// Load ratings from API
+// Load ratings from localStorage
 async function loadRatings() {
     if (!currentItemId || !currentItemType) return;
     
     try {
-        const ratings = await getRatingsFromAPI(currentItemId, currentItemType);
+        const ratings = getRatingsFromAPI(currentItemId, currentItemType);
         const avgRating = calculateAverageRatingFromRatings(ratings);
         
         // Update average rating display
@@ -690,8 +731,8 @@ function calculateAverageRatingFromRatings(ratings) {
     return (sum / ratings.length).toFixed(1);
 }
 
-// Add comment handler - uses API
-async function addCommentHandler() {
+// Add comment handler - uses localStorage
+function addCommentHandler() {
     if (!currentItemId || !currentItemType) {
         alert('Error: No item selected.');
         return;
@@ -717,7 +758,7 @@ async function addCommentHandler() {
         const userId = localStorage.getItem('userId') || `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
         localStorage.setItem('userId', userId);
         
-        await saveCommentToAPI(currentItemId, currentItemType, {
+        saveCommentToAPI(currentItemId, currentItemType, {
             userId,
             author,
             text
@@ -726,17 +767,17 @@ async function addCommentHandler() {
         // Clear inputs and reload comments
         authorInput.value = '';
         textInput.value = '';
-        await loadComments();
+        loadComments();
     } catch (error) {
         console.error('Error posting comment:', error);
         alert('Error posting comment. Please try again.');
     }
 }
 
-// Save rating (API version)
-async function saveRatingToAPIWrapper(rating) {
-    await saveRatingToAPI(currentItemId, currentItemType, rating);
-    await loadRatings();
+// Save rating (localStorage version)
+function saveRatingToAPIWrapper(rating) {
+    saveRatingToAPI(currentItemId, currentItemType, rating);
+    loadRatings();
 }
 
 // Setup rating input (called when modal opens)
@@ -754,10 +795,10 @@ function setupRatingInput() {
     const newRatingStars = document.querySelectorAll('.rating-star');
     
     newRatingStars.forEach((star, index) => {
-        star.addEventListener('click', async () => {
+        star.addEventListener('click', () => {
             const rating = index + 1;
             setRatingInput(rating);
-            await saveRatingToAPIWrapper(rating);
+            saveRatingToAPIWrapper(rating);
         });
         
         star.addEventListener('mouseenter', () => {
@@ -768,9 +809,9 @@ function setupRatingInput() {
     
     const ratingInput = document.getElementById('ratingInput');
     if (ratingInput) {
-        ratingInput.addEventListener('mouseleave', async () => {
+        ratingInput.addEventListener('mouseleave', () => {
             if (currentItemId && currentItemType) {
-                const ratings = await getRatingsFromAPI(currentItemId, currentItemType);
+                const ratings = getRatingsFromAPI(currentItemId, currentItemType);
                 const userId = localStorage.getItem('userId') || '';
                 const userRating = ratings.find(r => r.userId === userId);
                 if (userRating) {
@@ -784,7 +825,7 @@ function setupRatingInput() {
 }
 
 // Open detail modal for projects/achievements
-async function openDetailModal(itemId, itemType) {
+function openDetailModal(itemId, itemType) {
     currentItemId = itemId;
     currentItemType = itemType;
     const detailModal = document.getElementById('detailModal');
@@ -908,8 +949,8 @@ async function openDetailModal(itemId, itemType) {
         }
         
         // Load comments and ratings
-        await loadComments();
-        await loadRatings();
+        loadComments();
+        loadRatings();
         
         // Show modal
         detailModal.classList.add('active');
@@ -920,9 +961,9 @@ async function openDetailModal(itemId, itemType) {
             setupRatingInput();
             
             // Load user's existing rating
-            setTimeout(async () => {
+            setTimeout(() => {
                 if (currentItemId && currentItemType) {
-                    const ratings = await getRatingsFromAPI(currentItemId, currentItemType);
+                    const ratings = getRatingsFromAPI(currentItemId, currentItemType);
                     const userId = localStorage.getItem('userId') || '';
                     const userRating = ratings.find(r => r.userId === userId);
                     if (userRating) {
@@ -1225,9 +1266,9 @@ const HARDCODED_ACHIEVEMENTS = [
 // ============================================
 // Load Hardcoded Projects and Achievements
 // ============================================
-async function loadProjectsFromAPI() {
+function loadProjectsFromAPI() {
     try {
-        // Use hardcoded projects instead of API
+        // Use hardcoded projects
         const projects = HARDCODED_PROJECTS;
         
         // Update developer projects
@@ -1235,7 +1276,7 @@ async function loadProjectsFromAPI() {
         const devGrid = document.querySelector('#developer .projects-grid');
         if (devGrid) {
             if (devProjects.length > 0) {
-                const cards = await Promise.all(devProjects.map(project => createProjectCard(project, 'developer')));
+                const cards = devProjects.map(project => createProjectCard(project, 'developer'));
                 devGrid.innerHTML = cards.join('');
             } else {
                 devGrid.innerHTML = '<p>No developer projects yet.</p>';
@@ -1247,7 +1288,7 @@ async function loadProjectsFromAPI() {
         const editGrid = document.querySelector('#editor .projects-grid.carousel-wrapper');
         if (editGrid) {
             if (editProjects.length > 0) {
-                const cards = await Promise.all(editProjects.map(project => createProjectCard(project, 'editor')));
+                const cards = editProjects.map(project => createProjectCard(project, 'editor'));
                 editGrid.innerHTML = cards.join('');
             } else {
                 editGrid.innerHTML = '<p>No editor projects yet.</p>';
@@ -1273,9 +1314,9 @@ async function loadProjectsFromAPI() {
     }
 }
 
-async function loadAchievementsFromAPI() {
+function loadAchievementsFromAPI() {
     try {
-        // Use hardcoded achievements instead of API
+        // Use hardcoded achievements
         const achievements = HARDCODED_ACHIEVEMENTS;
         
         // Update developer achievements
@@ -1283,7 +1324,7 @@ async function loadAchievementsFromAPI() {
         const devGrid = document.querySelector('#developer .achievements-grid');
         if (devGrid) {
             if (devAchievements.length > 0) {
-                const cards = await Promise.all(devAchievements.map(achievement => createAchievementCard(achievement, 'developer')));
+                const cards = devAchievements.map(achievement => createAchievementCard(achievement, 'developer'));
                 devGrid.innerHTML = cards.join('');
             } else {
                 devGrid.innerHTML = '<p>No developer achievements yet.</p>';
@@ -1295,7 +1336,7 @@ async function loadAchievementsFromAPI() {
         const editGrid = document.querySelector('#editor .achievements-grid.carousel-wrapper');
         if (editGrid) {
             if (editAchievements.length > 0) {
-                const cards = await Promise.all(editAchievements.map(achievement => createAchievementCard(achievement, 'editor')));
+                const cards = editAchievements.map(achievement => createAchievementCard(achievement, 'editor'));
                 editGrid.innerHTML = cards.join('');
             } else {
                 editGrid.innerHTML = '<p>No editor achievements yet.</p>';
@@ -1324,14 +1365,14 @@ async function loadAchievementsFromAPI() {
     }
 }
 
-async function createProjectCard(project, type) {
+function createProjectCard(project, type) {
     const projectId = project.id || project._id;
-    // Get ratings for this project - handle errors gracefully
+    // Get ratings from localStorage - handle errors gracefully
     let avgRating = '0.0';
     try {
-        const ratings = await getRatings(projectId, 'project');
+        const ratings = getRatingsFromAPI(projectId, 'project');
         avgRating = ratings.length > 0 
-            ? (ratings.reduce((acc, r) => acc + r.rating, 0) / ratings.length).toFixed(1)
+            ? (ratings.reduce((acc, r) => acc + (r.rating || 0), 0) / ratings.length).toFixed(1)
             : '0.0';
     } catch (error) {
         console.warn('Could not load ratings for project:', projectId, error);
@@ -1366,16 +1407,16 @@ async function createProjectCard(project, type) {
     `;
 }
 
-async function createAchievementCard(achievement, type) {
+function createAchievementCard(achievement, type) {
     const achievementId = achievement.id || achievement._id;
     const thumbnailUrl = achievement.thumbnail ? (achievement.thumbnail.startsWith('http') ? achievement.thumbnail : achievement.thumbnail) : '';
     
-    // Get ratings for achievement - handle errors gracefully
+    // Get ratings from localStorage - handle errors gracefully
     let avgRating = '0.0';
     try {
-        const ratings = await getRatings(achievementId, 'achievement');
+        const ratings = getRatingsFromAPI(achievementId, 'achievement');
         avgRating = ratings.length > 0 
-            ? (ratings.reduce((acc, r) => acc + r.rating, 0) / ratings.length).toFixed(1)
+            ? (ratings.reduce((acc, r) => acc + (r.rating || 0), 0) / ratings.length).toFixed(1)
             : '0.0';
     } catch (error) {
         console.warn('Could not load ratings for achievement:', achievementId, error);
@@ -1433,12 +1474,12 @@ function attachProjectListeners() {
 }
 
 // Load comments for expanded project card
-async function loadProjectComments(projectId) {
+function loadProjectComments(projectId) {
     const commentsList = document.getElementById(`commentsList-${projectId}`);
     if (!commentsList) return;
     
     try {
-        const comments = await getCommentsFromAPI(projectId, 'project');
+        const comments = getCommentsFromAPI(projectId, 'project');
         
         if (comments.length === 0) {
             commentsList.innerHTML = '<p class="no-comments">No comments yet. Be the first to comment!</p>';
@@ -1483,9 +1524,9 @@ async function loadProjectComments(projectId) {
 }
 
 // Load ratings for expanded project card
-async function loadProjectRatings(projectId) {
+function loadProjectRatings(projectId) {
     try {
-        const ratings = await getRatingsFromAPI(projectId, 'project');
+        const ratings = getRatingsFromAPI(projectId, 'project');
         const avgRating = ratings.length > 0 
             ? (ratings.reduce((acc, r) => acc + (r.rating || 0), 0) / ratings.length).toFixed(1)
             : '0.0';
@@ -1596,12 +1637,10 @@ function setupProjectRatingInput(projectId) {
             
             // Save rating
             try {
-                const userId = localStorage.getItem('userId') || `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-                localStorage.setItem('userId', userId);
-                await submitRating(projectId, 'project', { userId, rating });
+                saveRatingToAPI(projectId, 'project', rating);
                 
                 // Reload ratings to update average
-                await loadProjectRatings(projectId);
+                loadProjectRatings(projectId);
             } catch (error) {
                 console.error('Error saving rating:', error);
                 alert('Error saving rating. Please try again.');
@@ -1611,7 +1650,7 @@ function setupProjectRatingInput(projectId) {
 }
 
 // Add comment to project
-async function addCommentToProject(projectId) {
+function addCommentToProject(projectId) {
     const authorInput = document.getElementById(`commentAuthor-${projectId}`);
     const textInput = document.getElementById(`commentText-${projectId}`);
     
@@ -1629,14 +1668,14 @@ async function addCommentToProject(projectId) {
         const userId = localStorage.getItem('userId') || `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
         localStorage.setItem('userId', userId);
         
-        await addComment(projectId, 'project', { userId, author, text });
+        saveCommentToAPI(projectId, 'project', { userId, author, text });
         
         // Clear inputs
         authorInput.value = '';
         textInput.value = '';
         
         // Reload comments
-        await loadProjectComments(projectId);
+        loadProjectComments(projectId);
     } catch (error) {
         console.error('Error adding comment:', error);
         alert('Error posting comment. Please try again.');
@@ -1645,9 +1684,9 @@ async function addCommentToProject(projectId) {
 
 // Make functions globally available
 window.addCommentToProject = addCommentToProject;
-window.editProjectComment = async function(projectId, commentId) {
+window.editProjectComment = function(projectId, commentId) {
     // Similar to editComment but for project cards
-    const comments = await getCommentsFromAPI(projectId, 'project');
+    const comments = getCommentsFromAPI(projectId, 'project');
     const comment = comments.find(c => (c.id || c._id) === commentId);
     if (!comment) return;
     
@@ -1665,7 +1704,7 @@ window.editProjectComment = async function(projectId, commentId) {
     `;
 };
 
-window.saveProjectCommentEdit = async function(projectId, commentId) {
+window.saveProjectCommentEdit = function(projectId, commentId) {
     const textInput = document.getElementById(`editCommentText-${commentId}`);
     if (!textInput) return;
     
@@ -1676,26 +1715,26 @@ window.saveProjectCommentEdit = async function(projectId, commentId) {
     }
     
     try {
-        await updateComment(projectId, 'project', commentId, { text: newText });
-        await loadProjectComments(projectId);
+        updateCommentInAPI(projectId, 'project', commentId, { text: newText });
+        loadProjectComments(projectId);
     } catch (error) {
         console.error('Error updating comment:', error);
         alert('Error updating comment. Please try again.');
     }
 };
 
-window.cancelProjectCommentEdit = async function(projectId, commentId) {
-    await loadProjectComments(projectId);
+window.cancelProjectCommentEdit = function(projectId, commentId) {
+    loadProjectComments(projectId);
 };
 
-window.deleteProjectComment = async function(projectId, commentId) {
+window.deleteProjectComment = function(projectId, commentId) {
     if (!confirm('Are you sure you want to delete this comment?')) {
         return;
     }
     
     try {
-        await deleteComment(projectId, 'project', commentId);
-        await loadProjectComments(projectId);
+        deleteCommentFromAPI(projectId, 'project', commentId);
+        loadProjectComments(projectId);
     } catch (error) {
         console.error('Error deleting comment:', error);
         alert('Error deleting comment. Please try again.');
@@ -1704,10 +1743,10 @@ window.deleteProjectComment = async function(projectId, commentId) {
 
 function attachAchievementListeners() {
     document.querySelectorAll('.achievement-card').forEach(card => {
-        card.addEventListener('click', async () => {
+        card.addEventListener('click', () => {
             const achievementId = card.getAttribute('data-achievement-id');
             if (achievementId) {
-                await openDetailModal(achievementId, 'achievement');
+                openDetailModal(achievementId, 'achievement');
             }
         });
     });
@@ -1892,11 +1931,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         initStorage();
         updateStarRatings();
         
-        // Load data from API
+        // Load data from hardcoded arrays
         console.log('Loading projects and achievements...');
         try {
-            await loadProjectsFromAPI();
-            await loadAchievementsFromAPI();
+            loadProjectsFromAPI();
+            loadAchievementsFromAPI();
             console.log('Data loaded successfully');
         } catch (error) {
             console.error('Error loading data:', error);

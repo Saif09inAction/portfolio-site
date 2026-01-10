@@ -34,10 +34,7 @@ try {
     'index.html',
     'styles.css',
     'script.js',
-    'translations.json',
-    'api-service.js',
-    'firebase-config.js',
-    'firebase-service.js'
+    'translations.json'
   ];
   
   filesToCopy.forEach(file => {
