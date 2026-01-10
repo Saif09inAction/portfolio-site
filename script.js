@@ -189,18 +189,16 @@ if (mobileMenuToggle && navMenu) {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         
         if (!isActive) {
-            // Don't move menu - keep it in nav-container but ensure parent allows overflow
-            const navbar = document.getElementById('navbar');
-            const navContainer = navMenu.parentElement;
-            
-            // Ensure parent containers don't clip the menu
-            if (navbar) {
-                navbar.style.overflow = 'visible';
-                navbar.style.overflowY = 'visible';
+            // Store original parent for restoring later
+            if (!navMenu.dataset.originalParent) {
+                navMenu.dataset.originalParent = navMenu.parentElement?.tagName || 'nav-container';
             }
-            if (navContainer) {
-                navContainer.style.overflow = 'visible';
-                navContainer.style.overflowY = 'visible';
+            
+            // Move menu to body to escape any parent overflow clipping - this is CRITICAL for visibility
+            const currentParent = navMenu.parentElement;
+            if (currentParent && currentParent !== document.body) {
+                document.body.appendChild(navMenu);
+                console.log('Menu moved to body to escape overflow clipping');
             }
             
             // Set ALL required styles explicitly with theme colors
@@ -307,16 +305,18 @@ if (mobileMenuToggle && navMenu) {
                 console.error('ERROR: Menu is positioned off-screen!');
             }
         } else {
-            // When closing, restore parent overflow settings
+            // When closing, move menu back to original position in nav-container
             const navbar = document.getElementById('navbar');
-            if (navbar) {
-                navbar.style.overflow = '';
-                navbar.style.overflowY = '';
-            }
-            const navContainer = navMenu.parentElement;
-            if (navContainer) {
-                navContainer.style.overflow = '';
-                navContainer.style.overflowY = '';
+            const navContainer = navbar?.querySelector('.nav-container');
+            if (navContainer && navMenu.parentElement === document.body) {
+                // Find where nav-menu should be (before nav-controls)
+                const navControls = navContainer.querySelector('.nav-controls');
+                if (navControls) {
+                    navContainer.insertBefore(navMenu, navControls);
+                } else {
+                    navContainer.appendChild(navMenu);
+                }
+                console.log('Menu moved back to nav-container');
             }
         }
     });
