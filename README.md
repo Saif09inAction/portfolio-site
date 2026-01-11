@@ -44,59 +44,18 @@ Quick setup:
 
 Set up Firestore security rules:
 
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    // Comments collection - allow everyone to read and create
-    // Users can only update/delete their own comments
-    match /comments/{commentId} {
-      allow read: if true;
-      allow create: if true;
-      allow update, delete: if resource.data.userId == request.auth.uid || 
-        request.resource.data.userId == request.auth.uid;
-    }
-    
-    // Ratings collection - allow everyone to read and create/update
-    // Users can only update their own ratings
-    match /ratings/{ratingId} {
-      allow read: if true;
-      allow create: if true;
-      allow update: if resource.data.userId == request.auth.uid || 
-        request.resource.data.userId == request.auth.uid;
-      allow delete: if false; // Prevent deletion of ratings
-    }
-    
-    // Messages - read/write for authenticated admin only
-    match /messages/{messageId} {
-      allow read, write: if request.auth != null;
-    }
-    
-    // Feedback - read/write for authenticated admin, create for all
-    match /feedback/{feedbackId} {
-      allow read, write: if request.auth != null;
-      allow create: if true;
-    }
-  }
-}
-```
+**See `FIRESTORE_RULES.md` for the complete rules and step-by-step instructions.**
 
-**Important**: After setting up the rules, you also need to create Firestore indexes for the queries:
+**Quick setup:**
+1. Go to Firebase Console > Firestore Database > Rules
+2. Copy the rules from `FIRESTORE_RULES.md`
+3. Paste and click "Publish"
+4. Go to Indexes tab and create the required indexes (instructions in `FIRESTORE_RULES.md`)
 
-1. Go to Firebase Console > Firestore Database > Indexes
-2. Click "Create Index"
-3. For Comments query:
-   - Collection ID: `comments`
-   - Fields to index:
-     - `itemId` (Ascending)
-     - `itemType` (Ascending)
-     - `timestamp` (Descending)
-4. For Ratings query:
-   - Collection ID: `ratings`
-   - Fields to index:
-     - `itemId` (Ascending)
-     - `itemType` (Ascending)
-     - `userId` (Ascending)
+**Important Notes:**
+- The portfolio uses localStorage-based userId (not Firebase Auth)
+- Rules allow all users to create/update comments and ratings
+- Application-level security prevents users from editing others' content via userId matching
 
 ### 4. Storage Rules
 

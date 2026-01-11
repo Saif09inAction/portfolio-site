@@ -548,6 +548,7 @@ const detailModal = document.getElementById('detailModal');
 const modalClose = document.getElementById('modalClose');
 let currentItemId = null;
 let currentItemType = null; // 'project' or 'achievement'
+let selectedRating = null; // Track user-selected rating to prevent auto-reset
 
 // Initialize storage (no longer needed with Firestore, but keeping for userId storage)
 function initStorage() {
@@ -571,6 +572,7 @@ function closeDetailModal() {
     document.body.style.overflow = '';
     currentItemId = null;
     currentItemType = null;
+    selectedRating = null; // Clear selected rating when modal closes
     
     // Reset form
     const commentAuthor = document.getElementById('commentAuthor');
@@ -581,6 +583,7 @@ function closeDetailModal() {
     // Reset rating input
     document.querySelectorAll('.rating-star').forEach(star => {
         star.classList.remove('active');
+        star.style.opacity = '';
     });
     const ratingText = document.getElementById('ratingText');
     if (ratingText) ratingText.textContent = 'Click to rate';
@@ -675,9 +678,13 @@ async function deleteCommentFromAPI(itemId, itemType, commentId) {
 
 async function updateCommentInAPI(itemId, itemType, commentId, commentData) {
     try {
+        // Get current userId to include in update for security rule validation
+        const userId = localStorage.getItem('userId') || '';
+        
         const commentRef = doc(db, 'comments', commentId);
         await updateDoc(commentRef, {
             ...commentData,
+            userId: userId, // Include userId so rules can verify ownership
             timestamp: serverTimestamp()
         });
         console.log(`Comment updated: ${commentId}`);
@@ -691,31 +698,84 @@ async function updateCommentInAPI(itemId, itemType, commentId, commentData) {
 // Rating input handlers (now handled in setupRatingInput above)
 
 function setRatingInput(rating) {
+    console.log('setRatingInput called with rating:', rating, 'Previous selectedRating:', selectedRating);
+    selectedRating = rating; // Store the selected rating FIRST
+    console.log('selectedRating updated to:', selectedRating);
+    
     const stars = document.querySelectorAll('.rating-star');
+    const ratingText = document.getElementById('ratingText');
+    
     stars.forEach((star, index) => {
         star.classList.remove('active');
+        star.style.opacity = ''; // Clear hover styles
+        star.removeAttribute('data-hover');
         if (index < rating) {
             star.classList.add('active');
         }
     });
-    document.getElementById('ratingText').textContent = `${rating} ${rating === 1 ? 'star' : 'stars'}`;
+    
+    if (ratingText) {
+        ratingText.textContent = `${rating} ${rating === 1 ? 'star' : 'stars'}`;
+    }
+    
+    console.log('setRatingInput completed, selectedRating is:', selectedRating);
 }
 
 function highlightStars(rating) {
+    // Only preview on hover - add temporary highlight class, don't modify active class
     const stars = document.querySelectorAll('.rating-star');
     stars.forEach((star, index) => {
-        star.classList.remove('active');
         if (index < rating) {
-            star.classList.add('active');
+            // Add temporary highlight for hover preview
+            star.setAttribute('data-hover', 'true');
+            star.style.opacity = '1';
+        } else {
+            star.removeAttribute('data-hover');
+            // Dim non-hovered stars only if they're not selected
+            if (!star.classList.contains('active')) {
+                star.style.opacity = '0.4';
+            }
         }
     });
 }
 
+function restoreRatingDisplay() {
+    // Restore to the selected rating after hover ends - only update visual state, don't call setRatingInput
+    console.log('restoreRatingDisplay called, selectedRating:', selectedRating);
+    const stars = document.querySelectorAll('.rating-star');
+    const ratingText = document.getElementById('ratingText');
+    
+    stars.forEach((star, index) => {
+        star.removeAttribute('data-hover');
+        star.style.opacity = ''; // Reset opacity
+        
+        if (selectedRating !== null && index < selectedRating) {
+            star.classList.add('active');
+        } else {
+            star.classList.remove('active');
+        }
+    });
+    
+    if (ratingText) {
+        if (selectedRating !== null) {
+            ratingText.textContent = `${selectedRating} ${selectedRating === 1 ? 'star' : 'stars'}`;
+        } else {
+            ratingText.textContent = 'Click to rate';
+        }
+    }
+}
+
 function clearRatingInput() {
+    console.log('clearRatingInput called');
+    selectedRating = null; // Clear selected rating
     document.querySelectorAll('.rating-star').forEach(star => {
         star.classList.remove('active');
+        star.style.opacity = '';
     });
-    document.getElementById('ratingText').textContent = 'Click to rate';
+    const ratingText = document.getElementById('ratingText');
+    if (ratingText) {
+        ratingText.textContent = 'Click to rate';
+    }
 }
 
 async function getCurrentRating() {
@@ -1066,16 +1126,25 @@ async function addCommentHandler() {
 
 // Save rating (Firebase version)
 async function saveRatingToAPIWrapper(rating) {
+    console.log('saveRatingToAPIWrapper called with rating:', rating);
     await saveRatingToAPI(currentItemId, currentItemType, rating);
+    // Only update the average rating display, don't reload user's rating
     await loadRatings();
 }
 
 // Setup rating input (called when modal opens)
 function setupRatingInput() {
+    console.log('setupRatingInput called');
     const ratingStars = document.querySelectorAll('.rating-star');
     const ratingText = document.getElementById('ratingText');
+    const ratingInput = document.getElementById('ratingInput');
     
-    // Remove old listeners
+    if (!ratingInput || !ratingText) {
+        console.warn('Rating input elements not found');
+        return;
+    }
+    
+    // Remove old listeners by cloning
     ratingStars.forEach(star => {
         const newStar = star.cloneNode(true);
         star.parentNode.replaceChild(newStar, star);
@@ -1084,34 +1153,65 @@ function setupRatingInput() {
     // Re-query after clone
     const newRatingStars = document.querySelectorAll('.rating-star');
     
+    // Track if user is currently hovering (to prevent click on mouseleave)
+    let isHovering = false;
+    
     newRatingStars.forEach((star, index) => {
-        star.addEventListener('click', async () => {
-            const rating = index + 1;
-            setRatingInput(rating);
-            await saveRatingToAPIWrapper(rating);
+        const starRating = index + 1;
+        
+        // Click handler - this is the ONLY way to commit a rating
+        star.addEventListener('click', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('⭐ Star clicked, new rating:', starRating, 'Previous selectedRating:', selectedRating);
+            
+            // Set the rating immediately - this updates selectedRating variable and DOM
+            selectedRating = starRating; // Update variable first
+            const stars = document.querySelectorAll('.rating-star');
+            stars.forEach((s, i) => {
+                s.classList.remove('active');
+                s.style.opacity = ''; // Clear any hover styles
+                s.removeAttribute('data-hover');
+                if (i < starRating) {
+                    s.classList.add('active');
+                }
+            });
+            ratingText.textContent = `${starRating} ${starRating === 1 ? 'star' : 'stars'}`;
+            
+            console.log('✅ Rating set to:', starRating, 'selectedRating variable:', selectedRating);
+            
+            // Save to API (don't wait for this to update display)
+            saveRatingToAPIWrapper(starRating).then(() => {
+                console.log('💾 Rating saved successfully to API:', starRating);
+            }).catch((error) => {
+                console.error('❌ Error saving rating:', error);
+                // Don't reset on error - keep user's selection
+            });
         });
         
+        // Hover preview - visual only, doesn't commit
         star.addEventListener('mouseenter', () => {
-            highlightStars(index + 1);
-            ratingText.textContent = `${index + 1} ${index === 0 ? 'star' : 'stars'}`;
+            // Only show hover preview if no rating is selected, or show preview but don't change selectedRating
+            isHovering = true;
+            highlightStars(starRating);
+            ratingText.textContent = `${starRating} ${starRating === 1 ? 'star' : 'stars'}`;
         });
     });
     
-    const ratingInput = document.getElementById('ratingInput');
+    // Mouse leave - restore to selected rating, don't fetch from API
     if (ratingInput) {
-        ratingInput.addEventListener('mouseleave', async () => {
-            if (currentItemId && currentItemType) {
-                const ratings = await getRatingsFromAPI(currentItemId, currentItemType);
-                const userId = localStorage.getItem('userId') || '';
-                const userRating = ratings.find(r => r.userId === userId);
-                if (userRating) {
-                    setRatingInput(userRating.rating);
-                } else {
-                    clearRatingInput();
-                }
-            }
+        ratingInput.addEventListener('mouseleave', (e) => {
+            // Small delay to ensure click event has processed first
+            setTimeout(() => {
+                isHovering = false;
+                console.log('Mouse left rating area, restoring to selected rating:', selectedRating);
+                restoreRatingDisplay();
+            }, 10);
         });
     }
+    
+    // Touch events for mobile - reuse the same click handler, no separate handler needed
+    // Click event works on mobile too
 }
 
 // Open detail modal for projects/achievements
@@ -1258,20 +1358,22 @@ function openDetailModal(itemId, itemType) {
                 await loadRatings();
                 console.log('Comments and ratings loaded successfully');
                 
-                // Setup rating input
-                setupRatingInput();
-                
-                // Load user's existing rating
+                // Load user's existing rating FIRST, then setup input
                 if (currentItemId && currentItemType) {
                     const ratings = await getRatingsFromAPI(currentItemId, currentItemType);
                     const userId = localStorage.getItem('userId') || '';
                     const userRating = ratings.find(r => r.userId === userId);
                     if (userRating) {
+                        console.log('Loading existing user rating:', userRating.rating);
                         setRatingInput(userRating.rating);
                     } else {
+                        console.log('No existing rating found');
                         clearRatingInput();
                     }
                 }
+                
+                // Setup rating input AFTER loading existing rating
+                setupRatingInput();
             } catch (error) {
                 console.error('Error loading comments/ratings:', error);
             }
