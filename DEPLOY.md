@@ -6,12 +6,12 @@ The site in **`portfolio-next/`** is the **Next.js** portfolio. The root **`verc
 
 ## Current setup (fixed)
 
-Root **`vercel.json`** now:
+The Next app uses **`output: 'export'`** so `next build` produces static files in **`portfolio-next/out/`** (works on both Netlify and Vercel without a serverless Next runtime).
 
-1. Installs dependencies inside **`portfolio-next/`**
-2. Runs **`npm run build`** there (Next.js)
+- **`vercel.json`**: install + build in `portfolio-next`, **`outputDirectory`**: `portfolio-next/out`
+- **`netlify.toml`**: same build, **`publish`**: `portfolio-next/out`
 
-Redeploy after pulling this change (**Redeploy** in the Vercel dashboard, or push to `main`).
+Redeploy after pulling (**Vercel** or **Netlify**).
 
 ## If the build still fails on Vercel
 
@@ -32,7 +32,9 @@ The Next.js site is in **`portfolio-next/`**, not the repo root. After you conne
 |--------|--------|
 | **Base directory** | `portfolio-next` |
 | **Build command** | `npm run build` |
-| **Publish directory** | *leave empty* — Netlify’s Next.js runtime (OpenNext) handles output; do **not** use `dist` or `.next` here unless Netlify docs ask for it. |
+| **Publish directory** | `out` *(relative to base directory)* **or** leave empty if `netlify.toml` sets `publish = "portfolio-next/out"` from repo root. |
+
+If you still see Netlify’s generic **“Page not found”**, the deploy is almost certainly pointing at the wrong folder (e.g. old `dist`) — clear **Publish directory** in the UI so **`netlify.toml` wins**, or set it to **`out`** with base **`portfolio-next`**.
 
 3. Click through and **deploy**. If the build fails, open the deploy log — often it’s Node version (we pin **20** in `netlify.toml`) or missing `npm install` (Netlify runs install in the base directory before `npm run build`).
 

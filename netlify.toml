@@ -1,9 +1,11 @@
-# Next.js app lives in portfolio-next/ — Netlify runs the build there (OpenNext adapter).
-# https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/
+# Next.js static export: `next build` writes to portfolio-next/out/
+# Publish path is relative to the repo root (required when using base directory).
+# https://nextjs.org/docs/app/building-your-application/deploying/static-exports
 
 [build]
   base = "portfolio-next"
   command = "npm run build"
+  publish = "portfolio-next/out"
 
 [build.environment]
   NODE_VERSION = "20"

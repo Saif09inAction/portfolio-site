@@ -2,5 +2,5 @@
   "version": 2,
   "installCommand": "cd portfolio-next && npm install",
   "buildCommand": "cd portfolio-next && npm run build",
-  "framework": "nextjs"
+  "outputDirectory": "portfolio-next/out"
 }
