@@ -1,0 +1,9 @@
+# Next.js app lives in portfolio-next/ — Netlify runs the build there (OpenNext adapter).
+# https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/
+
+[build]
+  base = "portfolio-next"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "20"
