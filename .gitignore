@@ -3,8 +3,3 @@ uploads/
 .env
 *.log
 .DS_Store
-
-# Duplicate reel sources — deployed copies live in portfolio-next/public/videos/
-/samayras pets.MP4
-/square v3.mp4
-
