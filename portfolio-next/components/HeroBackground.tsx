@@ -133,11 +133,11 @@ export function HeroBackground() {
     };
     window.addEventListener("mousemove", onMove);
 
-    const clock = new THREE.Clock();
+    const t0 = performance.now() / 1000;
     let raf = 0;
     const animate = () => {
       raf = requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
+      const t = performance.now() / 1000 - t0;
       const speed = reduceMotion ? 0.12 : 1;
 
       points.rotation.y = t * 0.028 * speed;

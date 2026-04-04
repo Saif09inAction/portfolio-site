@@ -3,18 +3,37 @@
  * Image paths live under /public/images/ (copy from your existing deploy).
  */
 
+/** Rich case study — shown in project modal */
+export type ProjectDetail = {
+  overview?: string;
+  problem?: string;
+  solution?: string;
+  impact?: string;
+  features?: string[];
+  myRole?: string;
+  /** Deeper tech narrative */
+  techNotes?: string;
+};
+
 export type Project = {
   id: string;
   type: "developer" | "editor";
   title: string;
+  /** Card hook only — ~6–8 words */
+  hook: string;
+  /** Short intro (modal overview fallback) */
   description: string;
   date: string;
   githubUrl: string;
   siteUrl: string;
   technologies: string[];
   thumbnail: string;
-  /** Local MP4 under /public (e.g. /videos/reel.mp4) — carousel + modal use video when set */
+  /** Local MP4 under /public — card preview + modal */
   videoSrc?: string;
+  /** Card + modal media framing: reel = 9:16 (vertical), landscape = 16:9 / 4:3 style */
+  mediaAspect?: "reel" | "landscape";
+  /** Full case study sections */
+  detail?: ProjectDetail;
 };
 
 export type Achievement = {
@@ -23,6 +42,9 @@ export type Achievement = {
   name: string;
   platform: string;
   year: string;
+  /** Card hook — one short line */
+  hook: string;
+  /** Full story in modal */
   description: string;
   thumbnail: string;
   linkedinUrl?: string;
@@ -30,96 +52,162 @@ export type Achievement = {
   skill?: string;
 };
 
-/** Brand portraits (under public/images/profile/) */
+/** Brand portraits — use a real cutout PNG (transparent) at heroPortrait for best results */
 export const siteImages = {
   heroPortrait: "/images/profile/hero-portrait-large.png",
-  aboutPortrait: "/images/profile/portrait-tablet.png",
-  heroAlt: "Saif — developer portrait with holographic card",
-  aboutAlt: "Saif — portrait with digital tablet",
+  aboutPortrait: "/images/profile/saif.jpg",
+  /** Developer section — coding / workstation visual */
+  developerAtWork: "/images/profile/developer-at-work.png",
+  heroAlt: "Saif — developer portrait",
+  aboutAlt: "Saif — portrait",
+  developerAtWorkAlt: "Saif — coding with holographic displays",
 } as const;
 
 export const hero = {
-  line1: "Hey, I'm Saif —",
-  line2: "Full Stack Developer",
-  line3: "& Video Editor",
-  sub: "based in Mumbai, India",
-  intro:
-    "Passionate developer and problem solver, turning complex challenges into elegant solutions through code.",
+  eyebrow: "Saif Salmani",
+  /** Shown as staggered word reveal */
+  headline: "I Build Scalable, High-Performance Web Experiences",
+  role: "Full-stack developer & video editor",
+  location: "Mumbai, India",
+  /** Small tech chips under headline */
+  badges: ["React", "Next.js", "TypeScript", "Node.js", "MongoDB", "Motion"],
 };
 
 export const developerOverview =
-  "I'm a passionate developer and problem solver, turning complex challenges into elegant solutions through code.";
+  "MERN stack, polished UI, and products shipped from hackathons to production.";
 
-export const editorOverview = [
-  "I am an enthusiastic content creator and video editor with hands-on experience in creating engaging digital content for social media, college events, and brand-focused pages. I currently handle video editing for my college's external club Instagram page, where I create and edit most of the reels published on the page. I specialize in both short-form videos (Reels, Shorts) and long-form content, focusing on storytelling, pacing, and audience engagement.",
-  "I have managed and contributed to content creation for college clubs, where I collaborated with teams to plan shoots, capture content, and edit videos that aligned with the event's theme and brand identity. My editing style prioritizes clean visuals, smooth transitions, and strong narrative flow, ensuring content feels professional and impactful. I have also edited videos for friends, demonstrating my versatility and ability to adapt to different creative needs.",
-  "I am proficient in CapCut and Final Cut Pro, and I'm currently learning Adobe Premiere Pro to expand my skill set. Alongside editing, I have experience in basic graphic design, helping enhance videos and social posts with visual elements. I enjoy experimenting with trends, formats, and creative ideas while maintaining consistency and quality. Content creation for me is not just about editing videos, but about communicating ideas effectively and creatively.",
-];
+export const developerTags = ["MERN", "Socket.IO", "UI systems", "Hackathons"];
+
+export const editorOverview =
+  "Short-form & long-form edits — CapCut, Final Cut Pro, and social-first pacing for clubs & brands.";
+
+export const editorTags = ["Reels & Shorts", "CapCut", "Final Cut Pro", "Color & pacing"];
 
 export const projects: Project[] = [
   {
     id: "dev-1",
     type: "developer",
     title: "PrismHold",
+    hook: "Co-founded luxury handmade brand · 100+ units · Amazon & Flipkart.",
     description:
-      "PrismHold is a luxury handmade brand co-founded with my brother. We have sold 100+ units and expanded sales via Amazon & Flipkart. Currently working together on growing the business and developing the brand further.",
+      "Co-founded with my brother: e-commerce, branding, and growth. Live storefront and ongoing product development.",
     date: "2023-11-30",
     githubUrl: "https://github.com/Saif09inAction/Prismhold.store",
     siteUrl: "https://www.prismhold.store/",
     technologies: ["HTML", "CSS", "JavaScript"],
     thumbnail: "/images/projects/prismhold.png",
+    detail: {
+      overview:
+        "PrismHold is a luxury handmade brand co-founded with my brother. We sell on Amazon & Flipkart and iterate on product, packaging, and storefront experience.",
+      problem: "Stand out in handmade e-commerce and scale fulfillment without losing craft identity.",
+      solution:
+        "Built and maintained the web presence, listing strategy, and brand visuals; coordinated ops with marketplaces.",
+      impact: "100+ units sold; repeat customers and ongoing brand growth.",
+      features: ["E-commerce storefront", "Marketplace listings", "Brand-led product pages"],
+      myRole: "Co-founder — product, web, and growth alongside my brother.",
+      techNotes: "HTML/CSS/JS storefront; focus on clarity and trust for luxury positioning.",
+    },
   },
   {
     id: "dev-2",
     type: "developer",
     title: "LinguaSync",
+    hook: "Real-time multilingual MERN chat with instant translation.",
     description:
-      "LinguaSync is a real-time multilingual chat application built using the MERN stack. It enables users to communicate across different languages using instant translation while chatting. The app supports real-time messaging through Socket.IO, secure authentication using JWT, and persistent message storage in MongoDB.",
+      "Socket.IO messaging, JWT auth, MongoDB persistence. Built to let people chat across languages in one thread.",
     date: "2024-01-15",
     githubUrl: "https://github.com/Saif09inAction/linguasync",
     siteUrl: "",
-    technologies: [
-      "React.js (Vite)",
-      "Tailwind CSS",
-      "Node.js",
-      "Express.js",
-      "MongoDB",
-      "Socket.IO",
-      "JWT",
-      "Axios",
-    ],
+    technologies: ["React", "Tailwind", "Node", "Express", "MongoDB", "Socket.IO", "JWT"],
     thumbnail: "/images/projects/lyguasync.png",
+    detail: {
+      overview:
+        "LinguaSync is a MERN chat app where messages can be translated in real time so people who speak different languages can collaborate in one thread.",
+      problem: "Language barriers slow collaboration in global teams and communities.",
+      solution:
+        "Socket.IO for live messaging, JWT sessions, MongoDB persistence, and translation layered on the message pipeline.",
+      impact: "Demo-ready full-stack reference for real-time + i18n patterns.",
+      features: ["Real-time rooms", "JWT auth", "Translation on send/receive", "Mongo persistence"],
+      myRole: "Full-stack — API, client, and real-time layer.",
+      techNotes: "React (Vite) + Tailwind UI; Express + Socket.IO; MongoDB for messages and users.",
+    },
   },
   {
     id: "dev-3",
     type: "developer",
     title: "PlagiaCheck",
+    hook: "Academic plagiarism checks — upload PDF/DOCX/TXT, similarity scoring.",
     description:
-      "PlagiaCheck is a web-based plagiarism detection tool designed for academic use. Users can upload documents (PDF, DOCX, TXT), and the system analyzes content similarity using text-comparison techniques like cosine similarity and term frequency. Firebase is used for authentication and data handling.",
+      "Cosine similarity & TF-based analysis. Firebase for auth and data. Built for coursework and demos.",
     date: "2024-02-20",
     githubUrl: "https://github.com/Saif09inAction/PlagiaCheck",
     siteUrl: "https://saif09inaction.github.io/PlagiaCheck/",
-    technologies: ["HTML", "CSS", "JavaScript", "Node.js", "Express.js", "Firebase"],
+    technologies: ["JavaScript", "Node", "Express", "Firebase"],
     thumbnail: "/images/projects/plagiacheck.png",
   },
   {
     id: "dev-4",
     type: "developer",
     title: "FundFlow – Finance Learning Platform",
+    hook: "Hackathon finance app — AI stock signal, paper trading, news, chat.",
     description:
-      "Finance learning platform built for hackathon and demo day events. Features include AI-powered stock price prediction model, paper trading for risk-free real-time practice, live finance news updates, and community chat for learning and discussion.",
+      "Demo Day build: learning surface with simulated trades, news feed, and community discussion.",
     date: "2024-01-25",
     githubUrl: "https://github.com/Saif09inAction/Fund-Flow-mumbai-hacks",
     siteUrl: "",
-    technologies: ["HTML", "CSS", "JavaScript", "Node.js", "AI/ML"],
+    technologies: ["JavaScript", "Node", "AI/ML"],
     thumbnail: "/images/projects/fundflow.png",
+    detail: {
+      overview:
+        "Hackathon finance learning surface: paper trading, news, community chat, and an ML-inspired stock signal experiment for demo day.",
+      problem: "Make finance concepts approachable under time pressure at a hackathon.",
+      solution:
+        "Rapid UI + API integration; simulated trades and news feed; chat for peer learning; model hook for signals.",
+      impact: "🥈 Demo Day recognition — shipped narrative and working demo.",
+      features: ["Paper trading", "News module", "Community chat", "Signal experiment"],
+      myRole: "Full-stack contributor — features, integration, and pitch support.",
+      techNotes: "Node/JavaScript stack; AI/ML module scoped for demo reliability.",
+    },
+  },
+  {
+    id: "dev-life-lens",
+    type: "developer",
+    title: "LifeLens",
+    hook: "Hackathon story site — AI goggles for blind & deaf users.",
+    description:
+      "Next.js marketing site for LifeLens: narrative scroll, stats, prototypes, and team — Code Paglu's.",
+    date: "2025",
+    githubUrl: "https://github.com/Saif09inAction/Life-Lens",
+    siteUrl: "https://life-lens-flax.vercel.app/",
+    technologies: ["Next.js", "TypeScript", "Tailwind", "Framer Motion", "R3F"],
+    thumbnail: "/images/projects/life-lens.jpg",
+    detail: {
+      overview:
+        "LifeLens is a concept for AI-powered smart goggles that help blind users navigate safely and deaf users follow conversations with live captions. The public site tells that story with chapters, impact numbers, prototype sketches, and team — built for a hackathon as Code Paglu's.",
+      problem:
+        "Blind and deaf people face daily barriers crossing streets, following speech in noise, and getting timely environmental cues.",
+      solution:
+        "A startup-style Next.js site presents research, imagined user journeys, hardware concept (Raspberry Pi, sensors, displays), and clear calls to action — with motion and layout tuned for emotional storytelling.",
+      impact:
+        "Deployed demo at Vercel; repo and narrative package for judges and stakeholders.",
+      features: [
+        "Story-driven sections (problem → journeys → concept → prototypes)",
+        "Dark-mode UI, glass cards, animated counters",
+        "Team & contact; SEO-oriented structure",
+        "R3F-ready stack for future product mockups",
+      ],
+      myRole:
+        "Team Code Paglu's — contributor alongside Sufyan Khan and Arsheel Patel (site build, content, and presentation).",
+      techNotes:
+        "Next.js 16, Tailwind CSS 4, Framer Motion, React Three Fiber per project README. Live: https://life-lens-flax.vercel.app/ · Source: https://github.com/Saif09inAction/Life-Lens",
+    },
   },
   {
     id: "dev-5",
     type: "developer",
     title: "Revora",
-    description:
-      "Revora is an early-stage web project focused on experimenting with UI/UX concepts and application structure. The repository suggests exploration of layout design and interactive components, serving as a foundation for future feature expansion.",
+    hook: "UI/UX playground — layout, motion, and component experiments.",
+    description: "Early-stage lab for interaction patterns and structure before shipping features.",
     date: "2023-09-15",
     githubUrl: "https://github.com/Saif09inAction/Revora",
     siteUrl: "https://revorabysaif.netlify.app/",
@@ -130,8 +218,8 @@ export const projects: Project[] = [
     id: "dev-6",
     type: "developer",
     title: "Family Info App",
-    description:
-      "A family management web application that allows users to add and manage family member details such as names, birthdays, and basic information. The app also highlights upcoming birthdays and important dates, acting as a digital family dashboard.",
+    hook: "Family dashboard — profiles, birthdays, and reminders.",
+    description: "Firebase-backed CRUD with upcoming dates highlighted. Simple household hub.",
     date: "2024-03-10",
     githubUrl: "https://github.com/Saif09inAction/family-info-app",
     siteUrl: "https://familyboard.netlify.app",
@@ -142,8 +230,8 @@ export const projects: Project[] = [
     id: "dev-7",
     type: "developer",
     title: "Country Info",
-    description:
-      "Country Info is a web application that displays information about different countries using external APIs. Users can view details such as country name, flag, region, and other metadata.",
+    hook: "REST-driven country explorer — flags, regions, metadata.",
+    description: "API-driven cards for quick reference and geography demos.",
     date: "2023-12-15",
     githubUrl: "https://github.com/Saif09inAction/Country-Info",
     siteUrl: "https://country-info-app-by-saifsalmani.netlify.app/",
@@ -154,8 +242,8 @@ export const projects: Project[] = [
     id: "dev-8",
     type: "developer",
     title: "YouTube Clone",
-    description:
-      "A front-end clone of YouTube created to practice layout structuring, responsive design, and visual replication of a real-world platform.",
+    hook: "Responsive YouTube UI clone — layout & grid fidelity.",
+    description: "Front-end practice: responsive shell and visual parity with the real product.",
     date: "2023-10-20",
     githubUrl: "https://github.com/Saif09inAction/youtube-clone",
     siteUrl: "https://youtubeclone-by-saif.netlify.app/",
@@ -163,90 +251,88 @@ export const projects: Project[] = [
     thumbnail: "/images/projects/youtubeclone.png",
   },
   {
-    id: "edit-reel-samayras-pets",
+    id: "edit-reel-1",
     type: "editor",
-    title: "Samayra's Pets — pet store reel",
-    description:
-      "Client: local pet store. Edited a vertical reel to showcase the shop and products for social — pacing, cuts, and look tailored for Instagram/Reels so the brand feels warm and approachable.",
+    title: "Reel 1",
+    hook: "Vertical short-form — pacing & hooks for feeds.",
+    description: "Edited reel for social: vertical format, retention-focused cuts.",
     date: "2025",
     githubUrl: "",
     siteUrl: "",
-    technologies: ["Client work", "Reels", "Retail / pets"],
+    technologies: ["Reels", "Short-form", "CapCut"],
     thumbnail: "/images/projects/externalclub.png",
-    videoSrc: "/videos/samayras-pets.mp4",
+    videoSrc: "/videos/reel-1.mp4",
+    mediaAspect: "reel",
   },
   {
-    id: "edit-reel-square-v3",
+    id: "edit-reel-2",
     type: "editor",
-    title: "Square v3 — real estate building",
-    description:
-      "Client: real estate. Edited this reel to promote a building on social — pacing and framing aimed at short-form feeds so the property reads clearly and holds attention.",
+    title: "Reel 2",
+    hook: "Social edit — motion & clarity in 9:16.",
+    description: "Vertical reel: rhythm, transitions, and brand-safe framing.",
     date: "2025",
     githubUrl: "",
     siteUrl: "",
-    technologies: ["Client work", "Reels", "Real estate"],
+    technologies: ["Reels", "Short-form", "CapCut"],
     thumbnail: "/images/projects/externalclub.png",
-    videoSrc: "/videos/square-v3.mp4",
+    videoSrc: "/videos/reel-2.mp4",
+    mediaAspect: "reel",
   },
   {
-    id: "edit-1",
+    id: "edit-reel-3",
     type: "editor",
-    title: "College Club Instagram Reel",
-    description:
-      "Created engaging Instagram reels for college external club page. Edited dynamic short-form content with smooth transitions, trending effects, and engaging storytelling.",
-    date: "2024-12-15",
+    title: "Reel 3",
+    hook: "Feed-ready cut — hook-first structure.",
+    description: "Short-form vertical video tuned for Instagram-style feeds.",
+    date: "2025",
     githubUrl: "",
-    siteUrl: "https://www.instagram.com/reel/DS-RH0Uj74Q/?igsh=cDl4MG9nY2RmdnJq",
-    technologies: ["CapCut", "Final Cut Pro", "Premiere Pro"],
+    siteUrl: "",
+    technologies: ["Reels", "Short-form", "CapCut"],
     thumbnail: "/images/projects/externalclub.png",
+    videoSrc: "/videos/reel-3.mp4",
+    mediaAspect: "reel",
   },
   {
-    id: "edit-2",
+    id: "edit-reel-4",
     type: "editor",
-    title: "College Club Social Media Content",
-    description:
-      "Produced and edited social media reels for college club Instagram page. Focused on rhythm-based editing, color grading, and seamless cuts.",
-    date: "2024-11-20",
+    title: "Reel 4",
+    hook: "Vertical story — pacing & polish.",
+    description: "Edited reel showcasing timing, grade, and end-card clarity.",
+    date: "2025",
     githubUrl: "",
-    siteUrl: "https://www.instagram.com/reel/DO89iq-EtjS/?igsh=NGtoMDFqczJ3NjI5",
-    technologies: ["CapCut", "Final Cut Pro", "Premiere Pro"],
+    siteUrl: "",
+    technologies: ["Reels", "Short-form", "CapCut"],
     thumbnail: "/images/projects/externalclub.png",
+    videoSrc: "/videos/reel-4.mp4",
+    mediaAspect: "reel",
   },
   {
-    id: "edit-3",
+    id: "edit-reel-5",
     type: "editor",
-    title: "College Club Instagram Reel Series",
-    description:
-      "Edited multiple Instagram reels for college external club. Trending transitions, visual effects, and compelling narratives end-to-end.",
-    date: "2024-10-18",
+    title: "Reel 5",
+    hook: "Vertical edit — retention & rhythm.",
+    description: "Short-form reel: pacing, hooks, and feed-friendly structure.",
+    date: "2025",
     githubUrl: "",
-    siteUrl: "https://www.instagram.com/reel/DOiwm8bCGe_/?igsh=MThxODBhaWoyYWZx",
-    technologies: ["CapCut", "Final Cut Pro", "Premiere Pro"],
+    siteUrl: "",
+    technologies: ["Reels", "Short-form", "CapCut"],
     thumbnail: "/images/projects/externalclub.png",
+    videoSrc: "/videos/reel-5.mp4",
+    mediaAspect: "reel",
   },
   {
-    id: "edit-4",
+    id: "edit-reel-6",
     type: "editor",
-    title: "Social Media Video Editing",
-    description:
-      "Professional video content for college club social media. Short-form and long-form with pacing and audience engagement in mind.",
-    date: "2024-09-22",
+    title: "Reel 6",
+    hook: "Social-first cut — polish & clarity.",
+    description: "Edited vertical video for social: motion, grade, and clear storytelling.",
+    date: "2025",
     githubUrl: "",
-    siteUrl: "https://www.instagram.com/reel/DGa2H8bN9Bv/?igsh=MXVlb2E5NTBkMXd1eQ==",
-    technologies: ["CapCut", "Final Cut Pro", "Premiere Pro"],
+    siteUrl: "",
+    technologies: ["Reels", "Short-form", "CapCut"],
     thumbnail: "/images/projects/externalclub.png",
-  },
-  {
-    id: "edit-5",
-    type: "editor",
-    title: "College Club Content Creation",
-    description:
-      "Managed and edited video content for college external club Instagram page. Planning shoots, capturing content, and editing aligned with brand identity.",
-    date: "2024-08-30",
-    githubUrl: "",
-    siteUrl: "https://www.instagram.com/reel/DGzlWrQS1-m/?igsh=MW14cGo0Zmcxams3Mg==",
-    technologies: ["CapCut", "Final Cut Pro", "Premiere Pro"],
-    thumbnail: "/images/projects/externalclub.png",
+    videoSrc: "/videos/reel-6.mp4",
+    mediaAspect: "reel",
   },
 ];
 
@@ -257,8 +343,8 @@ export const achievements: Achievement[] = [
     name: "🥈 1st Runner-Up – DemoDay 2025",
     platform: "ITM Skills University & LetsUpgrade",
     year: "2025",
-    description:
-      "Secured 1st Runner-Up position at Demo Day organized by ITM Skills University. Built a finance learning app featuring AI-powered stock price prediction, paper trading, live finance news updates, and community chat functionality.",
+    hook: "Demo Day 🥈 — finance learning app",
+    description: "Demo Day 🥈 — finance app with AI signals, paper trading, news & chat.",
     thumbnail: "/images/achievements/DemoDay 2025 (1st Runner-Up).png",
     linkedinUrl:
       "https://www.linkedin.com/posts/saif-salmani-38b63a30b_financeapp-ai-demoday-activity-7358619143362736130-Ix3e?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE7wMJsBpGf8OfntguvZE7ddl_5AIEmDzOk",
@@ -270,8 +356,8 @@ export const achievements: Achievement[] = [
     name: "Marketing Intern – LetsUpgrade",
     platform: "LetsUpgrade",
     year: "2024-2025",
-    description:
-      "Successfully completed two internships with LetsUpgrade as a Marketing Intern. Worked on business analysis, product improvement ideas, quality checking (QC) of projects, data collection and research, while learning corporate workflows.",
+    hook: "Marketing intern — LetsUpgrade cohorts",
+    description: "Two cohorts — analysis, QC, and product feedback.",
     thumbnail: "/images/achievements/ Quality Control Leadership.png",
     linkedinUrl:
       "https://www.linkedin.com/posts/saif-salmani-38b63a30b_internshipexperience-letsupgrade-marketinginternship-activity-7311539032281272320-IE5q?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE7wMJsBpGf8OfntguvZE7ddl_5AIEmDzOk",
@@ -283,8 +369,8 @@ export const achievements: Achievement[] = [
     name: "Entrepreneurial Achievement – PrismHold",
     platform: "Co-Founder",
     year: "2024",
-    description:
-      "Co-founded a luxury handmade brand with my brother, sold 100+ units, and expanded sales via Amazon & Flipkart. Currently working together on growing the business.",
+    hook: "Co-founder — PrismHold handmade brand",
+    description: "Co-founder — 100+ units via Amazon & Flipkart.",
     thumbnail: "/images/achievements/Entrepreneurial.PNG",
     position: "Co-Founder & Entrepreneur",
   },
@@ -294,8 +380,8 @@ export const achievements: Achievement[] = [
     name: "Mumbai Hacks 2024 – Guinness World Records",
     platform: "Mumbai Hacks",
     year: "2024",
-    description:
-      "Honored to be part of history at Mumbai Hacks 2024, officially recognized as the world's largest hackathon by Guinness World Records!",
+    hook: "Guinness-scale Mumbai Hacks participant",
+    description: "World’s largest hackathon — Guinness record event.",
     thumbnail: "/images/achievements/Mumbai Hacks 2024.png",
     linkedinUrl:
       "https://www.linkedin.com/posts/saif-salmani-38b63a30b_mumbaihacks2k24-worldrecord-guinnessworldrecords-activity-7256566133988769793-6MQe?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE7wMJsBpGf8OfntguvZE7ddl_5AIEmDzOk",
@@ -307,8 +393,8 @@ export const achievements: Achievement[] = [
     name: "PIWOT Imagine Hackathon 2025",
     platform: "PIWOT",
     year: "2025",
-    description:
-      "Attended PIWOT Imagine Hackathon 2025 at Jio Convention Centre. Team made it to the demo round, showcasing innovative ideas.",
+    hook: "PIWOT hackathon — demo round qualifier",
+    description: "Jio Convention Centre — reached demo round.",
     thumbnail: "/images/achievements/PIWOT Hackathon.png",
     linkedinUrl:
       "https://www.linkedin.com/posts/saif-salmani-38b63a30b_hackathonexperience-innovation-teamwork-activity-7289224601560072192-JZDF?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE7wMJsBpGf8OfntguvZE7ddl_5AIEmDzOk",
@@ -320,8 +406,8 @@ export const achievements: Achievement[] = [
     name: "Avalanche Hackathon – Mumbai Edition",
     platform: "Avalanche",
     year: "2024",
-    description:
-      "Participated in Avalanche Hackathon – Mumbai Edition. Connected with Web3 builders and explored projects built on Avalanche.",
+    hook: "Avalanche Web3 hackathon — Mumbai",
+    description: "Web3 builders & Avalanche ecosystem — Mumbai.",
     thumbnail: "/images/achievements/Avalanche Hackathon.png",
     linkedinUrl:
       "https://www.linkedin.com/posts/saif-salmani-38b63a30b_avalanche-hackathon-web3-activity-7364003970584911875-3MZF?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE7wMJsBpGf8OfntguvZE7ddl_5AIEmDzOk",
@@ -333,8 +419,8 @@ export const achievements: Achievement[] = [
     name: "Stellar Hackathon – Pune",
     platform: "Stellar Hackathon",
     year: "2024",
-    description:
-      "Participated in a multi-team hackathon environment. Exposure to diverse ideas, competitive problem-solving, and real-world use cases.",
+    hook: "Stellar hackathon — Pune sprint",
+    description: "Multi-team builds & competitive sprints.",
     thumbnail: "/images/achievements/stellar.png",
     position: "Participant",
   },
@@ -344,8 +430,8 @@ export const achievements: Achievement[] = [
     name: "ITM DemoDay",
     platform: "ITM Skills University",
     year: "2024",
-    description:
-      "Presented a project to judges and peers. Evaluated on innovation, execution, and business potential.",
+    hook: "ITM DemoDay — judged pitch",
+    description: "Judged pitch — innovation & execution.",
     thumbnail: "/images/achievements/demoday .png",
     position: "Participant",
   },
@@ -355,8 +441,8 @@ export const achievements: Achievement[] = [
     name: "Mumbai Hacks 2025",
     platform: "Mumbai Hacks",
     year: "2025",
-    description:
-      "Returned as a participant with improved technical and presentation skills. Demonstrated growth through better project structuring and pitching.",
+    hook: "Mumbai Hacks return — sharper pitch",
+    description: "Stronger pitch & product narrative — return run.",
     thumbnail: "/images/achievements/mumbai hacks 2025.png",
     position: "Participant",
   },
@@ -366,8 +452,8 @@ export const achievements: Achievement[] = [
     name: "🥈 1st Runner-Up – DemoDay 2025",
     platform: "ITM Skills University & LetsUpgrade",
     year: "2025",
-    description:
-      "Secured 1st Runner-Up position at Demo Day. Built a finance learning app with AI stock prediction, paper trading, live finance news, and community chat as part of Code Blooded Brothers team.",
+    hook: "Demo Day 🥈 — team innovation",
+    description: "Demo Day 🥈 — Code Blooded Brothers team build.",
     thumbnail: "/images/achievements/DemoDay 2025 (1st Runner-Up).png",
     linkedinUrl:
       "https://www.linkedin.com/posts/saif-salmani-38b63a30b_financeapp-ai-demoday-activity-7358619143362736130-Ix3e?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE7wMJsBpGf8OfntguvZE7ddl_5AIEmDzOk",
@@ -379,8 +465,8 @@ export const achievements: Achievement[] = [
     name: "PrismHold – Co-Founder",
     platform: "Entrepreneurship",
     year: "2024",
-    description:
-      "Co-founded luxury handmade brand with my brother, sold 100+ units via Amazon & Flipkart. Currently working together on growing the business.",
+    hook: "PrismHold co-founder — e-commerce",
+    description: "Co-founder — e-com & brand growth.",
     thumbnail: "/images/achievements/Entrepreneurial.PNG",
     skill: "E-commerce & Marketing",
   },
@@ -390,8 +476,8 @@ export const achievements: Achievement[] = [
     name: "Marketing Intern – LetsUpgrade",
     platform: "LetsUpgrade",
     year: "2024-2025",
-    description:
-      "Completed two internships (Dec 2024 & Feb 2025) as Marketing Intern. Worked on business analysis, product improvement, quality checking of projects, and learned corporate workflows.",
+    hook: "LetsUpgrade — marketing & QC",
+    description: "Marketing intern — analysis & QC across two cohorts.",
     thumbnail: "/images/achievements/ Quality Control Leadership.png",
     skill: "Business Analysis & Quality Control",
   },
@@ -399,94 +485,61 @@ export const achievements: Achievement[] = [
 
 export const developerSkillCategories = [
   {
-    title: "Programming Languages",
-    tags: ["Python", "Java", "C++", "JavaScript"],
-    progress: 0.88,
+    title: "Stack",
+    tags: ["React", "Next.js", "TypeScript", "Node", "Express", "MongoDB"],
   },
   {
-    title: "Frontend Development",
-    tags: ["HTML", "CSS", "JavaScript", "React.js"],
-    progress: 0.9,
+    title: "Foundations",
+    tags: ["DSA", "System design basics", "REST", "JWT", "Socket.IO"],
   },
   {
-    title: "Backend Development",
-    tags: ["Node.js", "Express.js"],
-    progress: 0.82,
-  },
-  {
-    title: "Databases & Backend Services",
-    tags: ["MongoDB", "Firebase / Firestore"],
-    progress: 0.85,
-  },
-  {
-    title: "Core Computer Science",
-    tags: ["DSA", "Problem Solving", "Logic Building", "Backend Architecture Basics"],
-    progress: 0.87,
-  },
-  {
-    title: "No-Code / Low-Code Tools",
-    tags: ["WordPress", "Webflow", "Wix"],
-    progress: 0.7,
+    title: "Ship",
+    tags: ["Firebase", "Vite", "Tailwind", "Git", "Vercel / Netlify"],
   },
 ];
 
 export const editorSkillCategories = [
   {
-    title: "Video Editing",
-    tags: [
-      "Short-form (Reels, Shorts)",
-      "Long-form editing",
-      "Social media content",
-      "Event & fest videos",
-      "Storytelling through edits",
-      "Instagram Reel creation",
-      "College club content",
-    ],
-    progress: 0.92,
+    title: "Edit",
+    tags: ["Reels & Shorts", "Long-form", "Club & brand content", "Pacing & grade"],
   },
   {
-    title: "Editing Software",
-    tags: ["CapCut", "Final Cut Pro", "Adobe Premiere Pro (Learning)"],
-    progress: 0.88,
-  },
-  {
-    title: "Graphic Design",
-    tags: ["Social media creatives", "Visual assets", "Basic branding support"],
-    progress: 0.75,
+    title: "Tools",
+    tags: ["CapCut", "Final Cut Pro", "Premiere (learning)"],
   },
 ];
 
 export const about = {
+  /** One punchy line + optional second short line */
   paragraphs: [
-    "I am a passionate Computer Engineering student with a strong interest in software development, entrepreneurship, and technology-driven problem solving. I have hands-on experience in web development, backend systems, and real-world project execution, along with exposure to quality control, data analysis, and business operations through internships and startup experience.",
-    "Alongside development, I have a creative side with experience in video editing and digital media, allowing me to blend technical skills with storytelling and content creation. I enjoy building practical solutions, learning new technologies, and working in fast-paced, collaborative environments such as hackathons and demo days. I am continuously focused on improving my skills and contributing to impactful tech projects.",
+    "Computer Engineering @ ITM — I ship full-stack web, compete in hackathons, and co-run a handmade brand.",
   ],
+  /** Visual chips (no long paragraph) */
+  focusTags: ["MERN", "Hackathons", "Product", "Video", "Startup"],
   education: {
-    title: "Bachelor of Technology (BTech) – Computer Science Engineering",
-    place: "ITM Skills University, Mumbai, India",
-    period: "January 2024 – January 2028",
-    body: "Pursuing a degree in Computer Science Engineering. Building a strong foundation in programming languages, Data Structures & Algorithms, and frontend/backend development. Actively involved in project-based learning, hackathons, and demo events. Achieved 🥈 1st Runner-Up at DemoDay 2025 for innovation and business potential.",
+    title: "BTech — Computer Science Engineering",
+    place: "ITM Skills University, Mumbai",
+    period: "2024 – 2028",
+    body: "DSA, systems, and shipped apps — DemoDay 🥈, multiple hackathons, real clients.",
   },
   keyAchievements: [
-    "🥈 1st Runner-Up – DemoDay 2025 (ITM Skills University & LetsUpgrade) - Finance Learning App with AI Stock Prediction",
-    "Co-founded PrismHold with my brother – Sold 100+ luxury handmade units via Amazon & Flipkart, currently working together on growing the business",
-    "Marketing Intern at LetsUpgrade (Dec 2024 & Feb 2025) – Business analysis, QC, and product development",
-    "Participated in Mumbai Hacks 2024 – Guinness World Records for World's Largest Hackathon",
-    "Reached Demo Round – PIWOT Imagine Hackathon 2025 at Jio Convention Centre",
-    "Built 8+ projects including LinguaSync, PlagiaCheck, FundFlow, and Family Info App",
+    "🥈 DemoDay 2025 — finance learning app",
+    "Co-founder — PrismHold · 100+ units sold",
+    "LetsUpgrade — marketing & QC internships",
+    "Mumbai Hacks — Guinness-scale event",
+    "PIWOT — demo round",
+    "8+ shipped repos (LinguaSync, PlagiaCheck, …)",
   ],
-  skillsSummary:
-    "Full-stack developer proficient in MERN stack, video editing, and graphic design. Strong foundation in Data Structures & Algorithms, problem-solving, and entrepreneurship. Experienced in product development, e-commerce operations, business analysis, and quality control. Participated in multiple hackathons including Guinness World Record Mumbai Hacks 2024, gaining exposure to Web3, blockchain (Avalanche), and innovative tech solutions.",
   internships: [
     {
       title: "PrismHold — Co-Founder",
       period: "2024",
-      body: "Co-founded luxury handmade brand with my brother. Product development, e-commerce platform handling (Amazon, Flipkart), marketing strategy, vendor & logistics management, business operations & execution, entrepreneurship & leadership. Currently working together on growing the business.",
+      body: "E-commerce, ops, and growth — handmade brand with my brother.",
     },
     {
       title: "LetsUpgrade — Marketing Intern",
-      period: "December 2024 & February 2025",
-      body: "Business analysis and product improvement ideas, Quality Control (QC) of projects being developed, data collection and research, learning corporate workflows, team collaboration, and product development cycles.",
+      period: "Dec 2024 & Feb 2025",
+      body: "QC, product feedback loops, and GTM research.",
     },
   ],
   languages: [
@@ -497,17 +550,17 @@ export const about = {
 };
 
 export const ideas = {
-  subtitle: "Project and startup ideas I'm working on or exploring",
+  subtitle: "Labs & experiments",
   cards: [
-    { status: "Idea" as const, title: "Uploading Soon", problem: "Content will be available shortly." },
-    { status: "In Progress" as const, title: "Uploading Soon", problem: "Content will be available shortly." },
-    { status: "Built" as const, title: "Uploading Soon", problem: "Content will be available shortly." },
-    { status: "Idea" as const, title: "Uploading Soon", problem: "Content will be available shortly." },
+    { status: "Idea" as const, title: "Coming soon", problem: "—" },
+    { status: "In Progress" as const, title: "Coming soon", problem: "—" },
+    { status: "Built" as const, title: "Coming soon", problem: "—" },
+    { status: "Idea" as const, title: "Coming soon", problem: "—" },
   ],
 };
 
 export const contact = {
-  subtitle: "Let's connect and create something amazing together",
+  subtitle: "Collaborations & opportunities",
   links: [
     { label: "GitHub", href: "https://github.com/Saif09inAction", icon: "github" as const },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/saif-salmani-38b63a30b/", icon: "linkedin" as const },

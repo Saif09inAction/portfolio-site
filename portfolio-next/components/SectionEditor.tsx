@@ -1,30 +1,23 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useMemo } from "react";
-import { editorOverview, projects } from "@/lib/data";
-import { DiscoverCarousel } from "./DiscoverCarousel";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useMemo, useRef } from "react";
+import { editorOverview, editorTags, projects } from "@/lib/data";
+import { getFadeUpChild } from "@/lib/reveal-variants";
+import { ProjectGrid } from "./project/ProjectGrid";
 
-/**
- * Place all `videoSrc` editor reels in the middle of the row (between other projects)
- * so the carousel can open centered on them.
- */
-function editorProjectsForCarousel() {
-  const editor = projects.filter((p) => p.type === "editor");
-  const featured = editor.filter((p) => p.videoSrc);
-  const rest = editor.filter((p) => !p.videoSrc);
-  if (featured.length === 0) {
-    return { list: editor, centerBetween: undefined as readonly [number, number] | undefined };
-  }
-  const mid = Math.floor(rest.length / 2);
-  const list = [...rest.slice(0, mid), ...featured, ...rest.slice(mid)];
-  const from = mid;
-  const to = mid + featured.length - 1;
-  return { list, centerBetween: [from, to] as const };
-}
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+} as const;
 
 export function SectionEditor() {
-  const { list: editProjects, centerBetween } = useMemo(() => editorProjectsForCarousel(), []);
+  const reduce = useReducedMotion();
+  const editProjects = useMemo(() => projects.filter((p) => p.type === "editor"), []);
+  const introRef = useRef<HTMLDivElement>(null);
+  const introInView = useInView(introRef, { amount: 0.15, margin: "0px 0px -12% 0px" });
+  const child = getFadeUpChild(!!reduce);
+
   return (
     <section
       id="editor"
@@ -32,38 +25,40 @@ export function SectionEditor() {
     >
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          ref={introRef}
+          initial="hidden"
+          animate={introInView ? "visible" : "hidden"}
+          variants={stagger}
         >
-          <h2 className="text-center text-4xl font-bold tracking-tight md:text-left md:text-5xl">
+          <motion.h2
+            variants={child}
+            className="text-center text-4xl font-bold tracking-tight md:text-left md:text-5xl"
+          >
             Video <span className="text-gradient">Editor</span>
-          </h2>
+          </motion.h2>
+
+          <div className="mx-auto mt-8 max-w-4xl md:mx-0">
+            <motion.p variants={child} className="text-center text-lg text-zinc-300 md:text-left">
+              {editorOverview}
+            </motion.p>
+            <motion.div
+              variants={child}
+              className="mt-4 flex flex-wrap justify-center gap-2 md:justify-start"
+            >
+              {editorTags.map((t) => (
+                <span
+                  key={t}
+                  className="rounded-full border border-[#bf5fff]/25 bg-[#bf5fff]/10 px-3 py-1 text-xs font-medium text-zinc-200"
+                >
+                  {t}
+                </span>
+              ))}
+            </motion.div>
+          </div>
         </motion.div>
 
-        <div className="mx-auto mt-10 max-w-4xl space-y-6 text-center md:text-left">
-          {editorOverview.map((para, i) => (
-            <motion.p
-              key={i}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
-              className="text-lg leading-relaxed text-zinc-400"
-            >
-              {para}
-            </motion.p>
-          ))}
-        </div>
-
-        <div className="mt-16">
-          <DiscoverCarousel
-            title="Editing projects"
-            subtitle="Featured reels load in the center — drag or Shift+scroll; tap a card for full video."
-            projects={editProjects}
-            initialCenterBetween={centerBetween}
-          />
+        <div className="mt-14">
+          <ProjectGrid title="Editing projects" projects={editProjects} />
         </div>
       </div>
     </section>

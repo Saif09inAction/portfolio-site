@@ -14,9 +14,14 @@ export function HeroDevShowcase() {
     : { duration: 32, repeat: Infinity, ease: "linear" as const };
 
   return (
-    <>
+    <motion.div
+      className="pointer-events-none absolute inset-0 z-[1]"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.95, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[min(46vh,520px)] overflow-hidden"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[min(46vh,520px)] overflow-hidden"
         aria-hidden
       >
         <div className="dev-grid-floor" />
@@ -86,6 +91,6 @@ export function HeroDevShowcase() {
           </div>
         </motion.div>
       </div>
-    </>
+    </motion.div>
   );
 }

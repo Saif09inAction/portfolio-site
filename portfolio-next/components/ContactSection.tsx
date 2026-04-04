@@ -1,7 +1,10 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
 import { contact } from "@/lib/data";
+import { getStaggerContainer, getStaggerItem } from "@/components/motion/stagger-variants";
+import { revealEase } from "@/lib/motion-presets";
 
 const icons = {
   github: (
@@ -28,47 +31,72 @@ const icons = {
 
 export function ContactSection() {
   const reduce = useReducedMotion();
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(wrapRef, { amount: 0.15, margin: "0px 0px -12% 0px" });
+
+  const headVariants = reduce
+    ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
+    : {
+        hidden: { opacity: 0, y: 36, scale: 0.96, filter: "blur(8px)" },
+        visible: {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          transition: { duration: 0.68, ease: revealEase },
+        },
+      };
+
+  const subVariants = reduce
+    ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
+    : {
+        hidden: { opacity: 0, y: 22, filter: "blur(6px)" },
+        visible: {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          transition: { duration: 0.62, ease: revealEase, delay: 0.1 },
+        },
+      };
+
+  const linkContainer = getStaggerContainer(0.08, 0.18, !!reduce);
+  const linkItem = getStaggerItem(!!reduce);
 
   return (
     <section
       id="contact"
       className="section-mesh-bg relative border-t border-white/5 py-24 md:py-32"
     >
-      <div className="mx-auto max-w-3xl px-4 text-center md:px-8">
+      <div ref={wrapRef} className="mx-auto max-w-3xl px-4 text-center md:px-8">
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={headVariants}
           className="text-4xl font-bold md:text-5xl"
         >
           <span className="text-gradient">Contact</span>
         </motion.h2>
         <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.06 }}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={subVariants}
           className="mt-4 text-zinc-500"
         >
           {contact.subtitle}
         </motion.p>
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={linkContainer}
           className="mt-12 flex flex-wrap justify-center gap-4 [perspective:1000px]"
         >
-          {contact.links.map((link, i) => (
+          {contact.links.map((link) => (
             <motion.a
               key={link.href}
               href={link.href}
               target={link.href.startsWith("mailto") ? undefined : "_blank"}
               rel={link.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-              initial={{ opacity: 0, y: 16, rotateX: 12 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.12 + i * 0.07, type: "spring", stiffness: 220, damping: 22 }}
+              variants={linkItem}
               whileHover={
                 reduce
                   ? { scale: 1.04 }

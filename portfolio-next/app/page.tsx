@@ -1,12 +1,28 @@
-import { AboutSection } from "@/components/AboutSection";
-import { ContactSection } from "@/components/ContactSection";
-import { Footer } from "@/components/Footer";
+import dynamic from "next/dynamic";
 import { Hero } from "@/components/Hero";
-import { IdeasSection } from "@/components/IdeasSection";
-import { SectionDeveloper } from "@/components/SectionDeveloper";
-import { SectionEditor } from "@/components/SectionEditor";
-import { SkillsSection } from "@/components/SkillsSection";
-import { TimelineSection } from "@/components/TimelineSection";
+
+const SectionDeveloper = dynamic(() =>
+  import("@/components/SectionDeveloper").then((m) => ({ default: m.SectionDeveloper }))
+);
+const SectionEditor = dynamic(() =>
+  import("@/components/SectionEditor").then((m) => ({ default: m.SectionEditor }))
+);
+const IdeasSection = dynamic(() =>
+  import("@/components/IdeasSection").then((m) => ({ default: m.IdeasSection }))
+);
+const AboutSection = dynamic(() =>
+  import("@/components/AboutSection").then((m) => ({ default: m.AboutSection }))
+);
+const SkillsSection = dynamic(() =>
+  import("@/components/SkillsSection").then((m) => ({ default: m.SkillsSection }))
+);
+const TimelineSection = dynamic(() =>
+  import("@/components/TimelineSection").then((m) => ({ default: m.TimelineSection }))
+);
+const ContactSection = dynamic(() =>
+  import("@/components/ContactSection").then((m) => ({ default: m.ContactSection }))
+);
+const Footer = dynamic(() => import("@/components/Footer").then((m) => ({ default: m.Footer })));
 
 export default function Home() {
   return (

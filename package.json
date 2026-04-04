@@ -1,20 +1,12 @@
 {
   "name": "saif-portfolio",
-  "version": "1.0.0",
-  "description": "Saif's Portfolio Website - Static Site",
-  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Portfolio monorepo — Next.js app in portfolio-next/",
   "scripts": {
-    "dev": "npx serve . -p 3000",
-    "dev:next": "npm run dev --prefix portfolio-next",
-    "build": "node build.js",
-    "build:next": "npm install --prefix portfolio-next && npm run build --prefix portfolio-next",
+    "dev": "npm run dev --prefix portfolio-next",
+    "build": "npm run build --prefix portfolio-next",
     "vercel-build": "cd portfolio-next && npm install && npm run build",
-    "start": "npx serve . -p 3000"
-  },
-  "devDependencies": {
-    "serve": "^14.2.1"
-  },
-  "dependencies": {
-    "firebase": "^12.7.0"
+    "lint": "npm run lint --prefix portfolio-next"
   }
 }

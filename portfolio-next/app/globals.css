@@ -61,6 +61,32 @@ html.lenis body {
   color: transparent;
 }
 
+.headline-glow {
+  text-shadow:
+    0 0 40px rgba(57, 255, 20, 0.12),
+    0 0 80px rgba(0, 245, 212, 0.06);
+}
+
+.avatar-float {
+  animation: avatar-float 5.5s ease-in-out infinite;
+}
+
+@keyframes avatar-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-float {
+    animation: none;
+  }
+}
+
 .glass-panel {
   background: var(--glass);
   backdrop-filter: blur(20px);
@@ -91,6 +117,63 @@ html.lenis body {
 .carousel-scroll::-webkit-scrollbar-thumb {
   background: linear-gradient(90deg, var(--neon-green), var(--neon-purple));
   border-radius: 3px;
+}
+
+/* Project cards — IDE / terminal vibe */
+.project-card-scanline {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.project-card-scanline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(57, 255, 20, 0.07),
+    rgba(0, 245, 212, 0.04),
+    transparent
+  );
+  animation: project-card-scan 5.5s linear infinite;
+}
+@keyframes project-card-scan {
+  0% {
+    transform: translateY(-120%);
+  }
+  100% {
+    transform: translateY(320%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-card-scanline::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+.project-card-cursor {
+  animation: project-card-blink 1.1s step-end infinite;
+}
+@keyframes project-card-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-card-cursor {
+    animation: none;
+  }
 }
 
 /* Project modal: native scroll + Lenis won’t steal wheel */

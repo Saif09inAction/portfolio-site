@@ -52,7 +52,7 @@ export function CustomCursor() {
       </motion.div>
       {/* Ring — follows with slight lag */}
       <motion.div
-        className="pointer-events-none fixed left-0 top-0 z-[310] h-10 w-10 rounded-full border-2 border-[#39ff14]/70 shadow-[0_0_16px_rgba(57,255,20,0.35)]"
+        className="pointer-events-none fixed left-0 top-0 z-[310] h-12 w-12 rounded-full border border-[#39ff14]/40 shadow-[0_0_24px_rgba(57,255,20,0.25),inset_0_0_20px_rgba(57,255,20,0.08)]"
         style={{
           x: sx,
           y: sy,

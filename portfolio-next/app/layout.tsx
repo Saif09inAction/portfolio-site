@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${syne.variable} ${jetbrains.variable} h-full scroll-smooth`}>
-      <body className="min-h-full bg-[#030306] text-zinc-100 antialiased">
+      <body className="min-h-full text-zinc-100 antialiased">
         <ClientShell>{children}</ClientShell>
       </body>
     </html>
